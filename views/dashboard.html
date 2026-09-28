@@ -1,0 +1,342 @@
+<!-- ========================================================================= -->
+<!-- MÓDULO HTML: DASHBOARD PRINCIPAL (ENTORNO EXCLUSIVO DE LA EMPRESA)        -->
+<!-- Futuro Laravel Blade: resources/views/dashboard/index.blade.php           -->
+<!-- ========================================================================= -->
+<section id="view-dashboard" class="view-section">
+  <div class="dashboard-layout">
+    
+    <!-- SIDEBAR LATERAL -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <a href="javascript:void(0)" class="landing-brand" style="color: var(--text-inverse);" onclick="window.ContentAI.navigateTo('view-landing')">
+          <div class="brand-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          </div>
+          <span style="font-size: 1.15rem;">ContentAI</span>
+          <span class="brand-tag-text" style="background: rgba(255,255,255,0.1); color: #818CF8;">PYMES</span>
+        </a>
+      </div>
+
+      <!-- Tarjeta de la Empresa Exclusiva del Usuario -->
+      <div class="sidebar-profile-card">
+        <div class="profile-avatar-circle" id="sidebar-avatar">C</div>
+        <div class="profile-info-block">
+          <div class="profile-company-name" id="sidebar-company-name">Café Artesanal La Cumbre</div>
+          <span class="profile-company-sector" id="sidebar-company-sector">Gastronomía & Alimentos</span>
+        </div>
+      </div>
+
+      <!-- Indicador de Exclusividad -->
+      <div style="margin: 0 16px 12px; padding: 6px 10px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; font-size: 0.7rem; color: #34D399; display: flex; align-items: center; gap: 6px;">
+        <span style="width: 6px; height: 6px; background: #10B981; border-radius: 50%;"></span>
+        <span>Empresa Vinculada a tu Cuenta</span>
+      </div>
+
+      <!-- Menú de Navegación del Dashboard -->
+      <nav class="sidebar-nav-menu">
+        <div class="sidebar-section-label">Módulos de Copys</div>
+
+        <!-- BOTÓN TAB A: MOTOR DE GENERACIÓN IA -->
+        <div class="sidebar-nav-item active" id="menu-tab-generator" onclick="window.ContentAI.switchDashboardTab('tab-generator')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          <span>Generador IA</span>
+          <span class="sidebar-item-pill">Tab A</span>
+        </div>
+
+        <!-- BOTÓN TAB B: REVISIÓN Y APROBACIÓN (HISTORIAL) -->
+        <div class="sidebar-nav-item" id="menu-tab-review" onclick="window.ContentAI.switchDashboardTab('tab-review')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Revisión y Aprobación</span>
+          <span class="sidebar-item-pill">Tab B</span>
+        </div>
+
+        <div class="sidebar-section-label" style="margin-top: 14px;">Administración</div>
+
+        <div class="sidebar-nav-item" onclick="window.ContentAI.navigateTo('view-onboarding')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Ajustar Datos de mi Empresa</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-nav-item" style="color: #F87171;" onclick="window.ContentAI.logout()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Cerrar Sesión</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- VIEWPORT PRINCIPAL -->
+    <main class="dashboard-viewport">
+      
+      <!-- Topbar Contract: Breadcrumb + Acciones -->
+      <header class="dashboard-topbar">
+        <div class="breadcrumb-trail">
+          <span class="breadcrumb-root">ContentAI</span>
+          <span style="color: var(--border-strong);">/</span>
+          <span class="breadcrumb-active" id="breadcrumb-active-label">Generador de Copys IA</span>
+        </div>
+
+        <div class="topbar-actions-zone">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-secondary); background: var(--canvas); padding: 6px 14px; border-radius: var(--radius-full); border: 1px solid var(--border-default);">
+            <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+            <span id="topbar-brand-name">Café Artesanal La Cumbre</span>
+          </div>
+
+          <button class="btn btn-primary btn-sm" onclick="window.ContentAI.switchDashboardTab('tab-generator')">
+            <span>+ Nuevo Copy</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Contenedor de Pestañas -->
+      <div class="dashboard-content-box">
+        
+        <!-- =============================================================== -->
+        <!-- TAB A: MOTOR DE GENERACIÓN IA                                   -->
+        <!-- =============================================================== -->
+        <div id="tab-generator" class="dashboard-tab-pane active">
+          
+          <div class="generator-card">
+            
+            <!-- OVERLAY DE CARGA DE 2 SEGUNDOS -->
+            <div class="loading-overlay" id="generator-loading-overlay">
+              <div class="radar-loader-wrapper">
+                <div class="radar-loader-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3 1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                </div>
+              </div>
+
+              <h3 style="font-size: 1.3rem; margin-bottom: 6px; color: var(--text-primary);">Generando Contenido para tu Empresa...</h3>
+              <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 420px;">
+                El motor está procesando la campaña con el tono exclusivo y clientes ideales de tu empresa.
+              </p>
+
+              <div class="loading-steps-track">
+                <div class="loading-step-item active" id="load-step-1">
+                  <span class="loading-step-dot"></span>
+                  <span>1. Leyendo contexto exclusivo de tu empresa...</span>
+                </div>
+                <div class="loading-step-item" id="load-step-2">
+                  <span class="loading-step-dot"></span>
+                  <span>2. Inyectando tono de voz configurado...</span>
+                </div>
+                <div class="loading-step-item" id="load-step-3">
+                  <span class="loading-step-dot"></span>
+                  <span>3. Redactando copy optimizado para el canal...</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cabecera -->
+            <div style="margin-bottom: 24px;">
+              <div class="metadata-line" style="margin-bottom: 6px;">
+                <span style="font-weight: 700; color: var(--primary);">Motor de Generación</span>
+                <span class="metadata-separator">·</span>
+                <span id="generator-header-company-note">Vinculado a: Café Artesanal La Cumbre</span>
+              </div>
+              <h2 style="font-size: 1.55rem;">Crea una Nueva Campaña Comercial</h2>
+            </div>
+
+            <!-- Formulario del Generador -->
+            <form id="generator-form" onsubmit="window.ContentAI.handleGenerateSubmit(event)">
+              
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="gen-content-type">Tipo de Contenido Comercial <span class="required">*</span></label>
+                  <select id="gen-content-type" class="form-select" required>
+                    <option value="Post de Facebook" selected>Post de Facebook (Copy persuasivo con emojis y llamada a la acción)</option>
+                    <option value="Post de Instagram con Hashtags">Post de Instagram (Hook visual + storytelling + hashtags nicho)</option>
+                    <option value="Email Marketing">Email Marketing (Asunto + cuerpo de valor + botón CTA)</option>
+                    <option value="Mensaje Promocional WhatsApp">Mensaje de WhatsApp Business (Directo, amigable con oferta)</option>
+                    <option value="Landing Page">Landing Page (Título H1 + beneficios + cierre comercial)</option>
+                  </select>
+                  <span class="form-hint">Estructura el mensaje de acuerdo a las reglas del canal.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="gen-objective">Objetivo Comercial de la Campaña</label>
+                  <select id="gen-objective" class="form-select">
+                    <option value="Ventas Directas y Conversión" selected>Ventas Directas y Conversión (Oferta / Descuento)</option>
+                    <option value="Lanzamiento de Nuevo Producto">Lanzamiento de Nuevo Producto o Servicio</option>
+                    <option value="Educación y Valor">Educación de Valor y Consejos (Generar Confianza)</option>
+                    <option value="Fidelización">Fidelización de Clientes Actuales</option>
+                  </select>
+                  <span class="form-hint">Orienta la psicología del texto hacia la conversión.</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <label class="form-label" for="gen-campaign-topic" style="margin-bottom: 0;">
+                    ¿De qué trata esta campaña o publicación? <span class="required">*</span>
+                  </label>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);" id="topic-char-count">0 / 500 caracteres</span>
+                </div>
+
+                <textarea 
+                  id="gen-campaign-topic" 
+                  class="form-control" 
+                  rows="4" 
+                  required 
+                  placeholder="Describe tu idea, promoción, producto, descuento especial o tema de la semana..."
+                  oninput="window.ContentAI.updateTopicCharCount(this)"
+                >Lanzamiento de nuestro nuevo café de origen Nariño con 20% de descuento durante este fin de semana. Tueste medio, notas a panela y frutos rojos. Envío gratis en compras mayores a $50.000.</textarea>
+
+                <div class="suggestion-chips-container">
+                  <span style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center;">Ideas sugeridas:</span>
+                  <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('Promoción especial 2x1 en postres artesanales para parejas este viernes después de las 6:00 PM.')">
+                    Promo 2x1 de Fin de Semana
+                  </button>
+                  <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('Lanzamiento de producto exclusivo con stock limitado a 50 unidades y 15% de descuento preventa.')">
+                    Lanzamiento Edición Limitada
+                  </button>
+                  <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('3 consejos de valor para nuestros clientes sobre cómo cuidar y aprovechar al máximo nuestro producto.')">
+                    Consejos de Valor para Clientes
+                  </button>
+                </div>
+              </div>
+
+              <!-- Botón de Generación -->
+              <div style="margin-top: 32px; display: flex; justify-content: flex-end; align-items: center; gap: 16px;">
+                <span style="font-size: 0.85rem; color: var(--text-muted);">
+                  Generación contextual en 2 segundos
+                </span>
+
+                <button type="submit" class="btn btn-primary btn-lg animate-pulse-glow" id="btn-generate-ai">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                  <span>Generar con IA</span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+
+
+        <!-- =============================================================== -->
+        <!-- TAB B: REVISIÓN Y APROBACIÓN (HISTORIAL)                         -->
+        <!-- =============================================================== -->
+        <div id="tab-review" class="dashboard-tab-pane">
+          
+          <div class="review-card">
+            
+            <!-- Metadatos de la Generación -->
+            <div class="review-meta-row">
+              <div class="metadata-line">
+                <span style="font-weight: 700; color: var(--primary);" id="review-badge-type">Post de Facebook</span>
+                <span class="metadata-separator">·</span>
+                <span id="review-badge-tone">Tono: Cercano y Cálido</span>
+                <span class="metadata-separator">·</span>
+                <span id="review-badge-company" style="font-weight: 600;">Café Artesanal La Cumbre</span>
+              </div>
+
+              <div class="metadata-line">
+                <span class="tabular-nums" id="review-word-count">115 palabras</span>
+                <span class="metadata-separator">·</span>
+                <span class="tabular-nums" id="review-char-count">740 caracteres</span>
+              </div>
+            </div>
+
+            <!-- Selector de Modo: Editor vs Vista Previa en Vivo -->
+            <div class="preview-mode-switch">
+              <div class="segmented-control">
+                <button type="button" class="segmented-btn active" id="btn-mode-editor" onclick="window.ContentAI.toggleEditorMode('editor')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  <span>Editor de Texto</span>
+                </button>
+                <button type="button" class="segmented-btn" id="btn-mode-preview" onclick="window.ContentAI.toggleEditorMode('preview')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                  <span>Vista Previa en Vivo del Canal</span>
+                </button>
+              </div>
+
+              <span id="edit-status-badge" style="font-size: 0.78rem; color: var(--text-muted); margin-left: auto;">
+                Modo de edición directa
+              </span>
+            </div>
+
+            <!-- ÁREA 1: TEXTAREA EDITABLE -->
+            <textarea 
+              id="preview-generated-text" 
+              class="editor-textarea" 
+              placeholder="El texto generado por la IA aparecerá aquí..."
+              oninput="window.ContentAI.handleTextareaEdit(this)"
+            >✨ ¿Hueles eso? Es el aroma a café recién tostado llegando directo a tu mesa. ☕🌿
+
+En Café Artesanal La Cumbre estamos de fiesta: te presentamos nuestro nuevo origen Nariño, cosechado a mano con notas dulces a panela y frutos rojos que transformarán tus mañanas.
+
+🎉 PROMO EXCLUSIVA DE FIN DE SEMANA:
+Llévate tu bolsa con un 20% DE DESCUENTO especial. Y si tu pedido supera los $50.000, el envío va 100% por nuestra cuenta hasta tu puerta. 📦✨
+
+👇 Dale clic al botón de abajo o escríbenos a nuestro WhatsApp para pedir el tuyo antes de que se agote el lote de esta semana. ¡Apoya a nuestros caficultores locales!</textarea>
+
+            <!-- ÁREA 2: MAQUETA DE VISTA PREVIA EN VIVO -->
+            <div id="live-channel-preview-container" class="live-channel-preview-container">
+              <!-- Se llena dinámicamente desde src/js/previews.js -->
+            </div>
+
+            <!-- Barra de Acciones -->
+            <div class="review-action-row">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button type="button" class="btn btn-secondary" onclick="window.ContentAI.focusAndEditTextarea()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  <span>Editar</span>
+                </button>
+
+                <button type="button" class="btn btn-secondary" onclick="window.ContentAI.copyToClipboard()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span>Copiar Texto</span>
+                </button>
+
+                <button type="button" class="btn btn-secondary" onclick="window.ContentAI.regenerateVariant()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                  <span>Regenerar Variante</span>
+                </button>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <!-- Botón Descartar -->
+                <button type="button" class="btn btn-danger" onclick="window.ContentAI.discardCurrentContent()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                  <span>Descartar</span>
+                </button>
+
+                <!-- Botón Aprobar (Guardar) -->
+                <button type="button" class="btn btn-success" onclick="window.ContentAI.approveAndSaveContent()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Aprobar (Guardar)</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- HISTORIAL DE CONTENIDOS APROBADOS DE LA EMPRESA -->
+          <div class="history-card">
+            <div class="history-header">
+              <div>
+                <h3 style="font-size: 1.2rem;">Historial de Contenidos Aprobados</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">
+                  Copys guardados exclusivamente para los canales de tu empresa.
+                </p>
+              </div>
+
+              <span style="font-weight: 700; font-size: 0.82rem; color: var(--success);" id="history-counter-badge">1 Aprobado</span>
+            </div>
+
+            <div id="history-items-container">
+              <!-- Se inyecta desde src/js/review.js -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+</section>

@@ -1,0 +1,424 @@
+/**
+ * ContentAI - PYMES | Dashboard Layout, Sidebar & Main Content Styles
+ */
+
+/* LAYOUT PRINCIPAL DEL DASHBOARD */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--canvas);
+}
+
+/* SIDEBAR LATERAL (260px - 280px por especificación SaaS) */
+.dashboard-sidebar {
+  width: 270px;
+  background-color: var(--surface-sidebar);
+  color: var(--text-inverse);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 1px solid var(--border-dark);
+  z-index: 40;
+}
+
+.sidebar-header {
+  padding: 22px 20px;
+  border-bottom: 1px solid var(--border-dark);
+}
+
+/* Tarjeta del Perfil de la PYME Activo */
+.sidebar-profile-card {
+  margin: 16px 16px 8px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-avatar-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-inverse);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.profile-info-block {
+  overflow: hidden;
+}
+
+.profile-company-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-inverse);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-company-sector {
+  font-size: 0.72rem;
+  color: #94A3B8;
+  display: block;
+}
+
+/* MENÚ DEL SIDEBAR */
+.sidebar-nav-menu {
+  padding: 16px 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-section-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748B;
+  padding: 10px 12px 4px;
+  font-weight: 700;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  color: #94A3B8;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  border: 1px solid transparent;
+  user-select: none;
+}
+
+.sidebar-nav-item:hover {
+  color: var(--text-inverse);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-nav-item.active {
+  background: var(--primary-gradient);
+  color: var(--text-inverse);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
+
+.sidebar-item-pill {
+  margin-left: auto;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border-dark);
+}
+
+/* ÁREA DE CONTENIDO PRINCIPAL */
+.dashboard-viewport {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* TOPBAR SUPERIOR (Contrato SaaS: Breadcrumbs + Acciones) */
+.dashboard-topbar {
+  height: 68px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.breadcrumb-trail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.breadcrumb-root {
+  color: var(--text-muted);
+}
+
+.breadcrumb-active {
+  color: var(--text-primary);
+}
+
+.topbar-actions-zone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* CONTENIDO DE PESTAÑAS (TAB PANE) */
+.dashboard-content-box {
+  padding: 32px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.dashboard-tab-pane {
+  display: none;
+}
+
+.dashboard-tab-pane.active {
+  display: block;
+  animation: fadeIn 0.25s var(--ease-spring) forwards;
+}
+
+/* ========================================================================= */
+/* TAB A: MOTOR DE GENERACIÓN IA                                            */
+/* ========================================================================= */
+.generator-card {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+  padding: 36px;
+  position: relative;
+}
+
+.suggestion-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.prompt-chip {
+  background: var(--canvas);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.prompt-chip:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary-subtle);
+}
+
+/* ESTADO DE CARGA ANIMADO (Radar Pulse de 2 segundos) */
+.loading-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius-xl);
+  z-index: 25;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.loading-overlay.active {
+  display: flex;
+}
+
+.radar-loader-wrapper {
+  width: 72px;
+  height: 72px;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.radar-loader-wrapper::before, .radar-loader-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  opacity: 0;
+  animation: radarPulse 1.8s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.radar-loader-wrapper::after {
+  animation-delay: 0.9s;
+}
+
+.radar-loader-icon {
+  position: absolute;
+  inset: 12px;
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.loading-steps-track {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: 340px;
+}
+
+.loading-step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all var(--trans-fast);
+}
+
+.loading-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--border-strong);
+  transition: all var(--trans-fast);
+}
+
+.loading-step-item.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.loading-step-item.active .loading-step-dot {
+  background-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* ========================================================================= */
+/* TAB B: REVISIÓN Y APROBACIÓN                                             */
+/* ========================================================================= */
+.review-card {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.review-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: 20px;
+}
+
+.editor-textarea {
+  width: 100%;
+  min-height: 240px;
+  padding: 20px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background-color: var(--canvas);
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-md);
+  outline: none;
+  resize: vertical;
+  transition: all var(--trans-fast);
+}
+
+.editor-textarea:focus {
+  border-color: var(--primary);
+  background-color: var(--surface);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.review-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* HISTORIAL DE APROBADOS */
+.history-card {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.history-item-row {
+  padding: 16px;
+  background: var(--canvas);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  transition: all var(--trans-fast);
+}
+
+.history-item-row:hover {
+  background: var(--surface);
+  border-color: var(--primary-subtle);
+  box-shadow: var(--shadow-xs);
+}
+
+@media (max-width: 900px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .dashboard-content-box {
+    padding: 20px;
+  }
+}

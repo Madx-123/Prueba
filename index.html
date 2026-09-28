@@ -1,11 +1,949 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ContentAI - PYMES | Plataforma de Contenido Comercial con IA</title>
+  <meta name="description" content="Plataforma web para que PYMES generen, gestionen y evalúen contenido comercial con Inteligencia Artificial." />
+  <meta property="og:title" content="ContentAI - PYMES | Plataforma de Contenido Comercial con IA" />
+  <meta property="og:description" content="Plataforma web para que PYMES generen, gestionen y evalúen contenido comercial con Inteligencia Artificial." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Tipografía Moderna SaaS: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- ========================================================================= -->
+  <!-- HOJA DE ESTILOS MODULAR EN CSS3 PURO (Compatible con Live Server y Vite)   -->
+  <!-- ========================================================================= -->
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    
+
+  <!-- ========================================================================= -->
+  <!-- CONTENEDOR PRINCIPAL SPA                                                  -->
+  <!-- Funciona al 100% abriendo en VS Code con Live Server o navegador web      -->
+  <!-- ========================================================================= -->
+  <div id="app-root">
+
+    <!-- ======================================================================= -->
+    <!-- 1. VISTA: LANDING PAGE (Futuro Blade: resources/views/pages/landing)    -->
+    <!-- ======================================================================= -->
+    <section id="view-landing" class="view-section active">
+      
+      <!-- Top Bar: 3 Zonas Estrictas -->
+      <header class="landing-navbar">
+        <div class="container landing-nav-container">
+          
+          <!-- Zona 1: Brand Wordmark -->
+          <a href="javascript:void(0)" class="landing-brand" onclick="window.ContentAI.navigateTo('view-landing')">
+            <div class="brand-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+                <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
+              </svg>
+            </div>
+            <span>ContentAI</span>
+            <span class="brand-tag-text">PYMES</span>
+          </a>
+
+          <!-- Zona 2: Nav Links -->
+          <nav class="landing-nav-links">
+            <a class="landing-nav-link" href="#propuesta">Propuesta</a>
+            <a class="landing-nav-link" href="#beneficios">Beneficios</a>
+            <a class="landing-nav-link" href="#seguridad">Tu Empresa</a>
+          </nav>
+
+          <!-- Zona 3: Acciones Primarias -->
+          <div class="landing-nav-actions">
+            <button class="btn btn-secondary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">
+              Iniciar Sesión
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">
+              Registrar mi Empresa
+            </button>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- Hero Section -->
+      <main class="hero-section" id="propuesta">
+        <div class="container">
+          <div class="hero-grid">
+            
+            <!-- Columna Izquierda: Copy de Conversión -->
+            <div class="hero-content">
+              <div class="hero-kicker">
+                <span>Plataforma Exclusiva para Pequeñas y Medianas Empresas</span>
+              </div>
+
+              <h1 class="hero-title">
+                Genera contenido comercial adaptado a tu <span class="gradient-text">identidad de marca</span> con IA, sin usar prompts genéricos.
+              </h1>
+
+              <p class="hero-description">
+                Registra tu empresa una sola vez. Nuestro motor aprende tu sector, tus clientes y tu tono para que todo el contenido comercial sea 100% fiel y exclusivo a tu negocio.
+              </p>
+
+              <div class="hero-cta-group">
+                <button class="btn btn-primary btn-lg" onclick="window.ContentAI.navigateTo('view-auth')">
+                  <span>Registrar mi Empresa</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </button>
+                
+                <button class="btn btn-secondary btn-lg" onclick="window.ContentAI.openAppDemo()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                  <span>Ver Entorno de Trabajo</span>
+                </button>
+              </div>
+
+              <!-- Adyacencia de Pruebas Cuantitativas -->
+              <div class="hero-proof-strip">
+                <div class="proof-item">
+                  <strong class="tabular-nums">1 Empresa</strong>
+                  <span>Dedicada a tu cuenta de usuario</span>
+                </div>
+                <div class="proof-item">
+                  <strong class="tabular-nums">10x</strong>
+                  <span>Más rápido que redacción manual</span>
+                </div>
+                <div class="proof-item">
+                  <strong class="tabular-nums">100%</strong>
+                  <span>Alineado a tu tono comercial</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Mockup Visual -->
+            <div class="hero-mockup-wrapper">
+              <div class="hero-mockup-card">
+                <div class="mockup-header-bar">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="mockup-status-dot"></span>
+                    <strong style="font-size: 0.85rem; color: var(--text-primary);">Entorno Comercial Dedicado</strong>
+                  </div>
+                  <div class="metadata-line">
+                    <span>Tu Marca</span>
+                    <span class="metadata-separator">·</span>
+                    <span>Canales Activos</span>
+                  </div>
+                </div>
+
+                <!-- Banner Vectorial del Negocio Registrado -->
+                <div style="background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%); border-radius: var(--radius-md); padding: 20px; color: white; margin-bottom: 14px;">
+                  <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85;">Empresa Registrada en la Cuenta</span>
+                  <h4 style="color: white; font-size: 1.25rem; margin: 4px 0 2px;" id="landing-hero-company-name">Tu Empresa Comercial</h4>
+                  <p style="color: #C7D2FE; font-size: 0.82rem;" id="landing-hero-company-sector">Configuración estratégica exclusiva de marca</p>
+                </div>
+
+                <div class="mockup-body-preview">
+                  <p><strong>Campaña Publicitaria Generada a la Medida:</strong></p>
+                  <p style="margin-top: 8px;">
+                    Cada publicación, correo y mensaje generado se nutre únicamente del perfil registrado de tu empresa, garantizando coherencia en todos tus canales sin desviarse de tus objetivos comerciales.
+                  </p>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 0.8rem; color: var(--text-muted);">
+                  <span>Entorno de trabajo seguro y privado</span>
+                  <span style="color: var(--primary); font-weight: 600;">Identidad Protegida</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+      <!-- Sección de Beneficios -->
+      <section id="beneficios" class="features-section">
+        <div class="container">
+          <div class="features-header">
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; display: block;">ARQUITECTURA DE CONTENIDO COMERCIAL</span>
+            <h2 style="font-size: 2.1rem; margin-bottom: 12px;">Tu Empresa es el Centro de Todo el Contenido</h2>
+            <p>A diferencia de los chats generales donde debes reescribir quién eres en cada mensaje, ContentAI vincula tu cuenta directamente con la ficha de tu empresa.</p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-box">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <h3 class="feature-title">01. Registro Único de Empresa</h3>
+              <p>Al ingresar defines la identidad de tu negocio: nombre, actividad, público objetivo y tono. Tu cuenta queda vinculada exclusivamente a ella.</p>
+            </div>
+
+            <div class="feature-box">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <h3 class="feature-title">02. Redacción Multi-Canal</h3>
+              <p>El motor adapta cada campaña para Facebook, Instagram, Email Marketing y WhatsApp, siempre usando el contexto registrado de tu empresa.</p>
+            </div>
+
+            <div class="feature-box">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+              </div>
+              <h3 class="feature-title">03. Historial Aprobado</h3>
+              <p>Todos los borradores que apruebes se guardan en el archivo histórico de tu negocio, listos para copiar, editar o republicar cuando desees.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="landing-footer">
+        <div class="container footer-content">
+          <div>
+            <strong style="color: var(--text-inverse); font-size: 1rem;">ContentAI - PYMES</strong>
+            <p style="margin-top: 4px; font-size: 0.8rem;">
+              Proyecto Universitario de Ingeniería de Software · Arquitectura HTML, CSS y Vanilla JS Puro
+            </p>
+          </div>
+          <div>
+            <button class="btn btn-secondary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">Acceso al Sistema</button>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 2. VISTA: AUTENTICACIÓN (Futuro Blade: resources/views/auth/login)       -->
+    <!-- ======================================================================= -->
+    <section id="view-auth" class="view-section">
+      <div class="auth-wrapper">
+        <div class="auth-card">
+          
+          <div class="auth-header">
+            <div class="auth-badge-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+              </svg>
+            </div>
+            <h2 style="font-size: 1.6rem; margin-bottom: 4px;">Acceso a ContentAI</h2>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">Cada usuario gestiona de forma exclusiva su propia empresa</p>
+          </div>
+
+          <!-- Selector Segmentado de Login / Registro -->
+          <div class="segmented-control" style="margin-bottom: 24px;">
+            <button type="button" class="segmented-btn active" id="tab-btn-login" onclick="window.ContentAI.toggleAuthMode('login')">
+              Iniciar Sesión
+            </button>
+            <button type="button" class="segmented-btn" id="tab-btn-register" onclick="window.ContentAI.toggleAuthMode('register')">
+              Crear Cuenta PYME
+            </button>
+          </div>
+
+          <!-- Formulario de Autenticación -->
+          <form id="auth-form" onsubmit="window.ContentAI.handleAuthSubmit(event)">
+            
+            <div class="form-group" id="group-register-name" style="display: none;">
+              <div class="field-label-group">
+                <span class="field-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <label class="form-label" for="auth-name" style="margin-bottom: 0;">Nombre del Titular / Administrador <span class="required">*</span></label>
+              </div>
+              <input type="text" id="auth-name" class="form-control" placeholder="Ej. Carlos Mendoza">
+            </div>
+
+            <div class="form-group">
+              <div class="field-label-group">
+                <span class="field-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </span>
+                <label class="form-label" for="auth-email" style="margin-bottom: 0;">Correo Electrónico Corporativo <span class="required">*</span></label>
+              </div>
+              <input type="email" id="auth-email" class="form-control" required value="gerencia@lacumbre.com">
+            </div>
+
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <div class="field-label-group" style="margin-bottom: 0;">
+                  <span class="field-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  </span>
+                  <label class="form-label" for="auth-password" style="margin-bottom: 0;">Contraseña <span class="required">*</span></label>
+                </div>
+                <a href="javascript:void(0)" style="font-size: 0.78rem; color: var(--primary); text-decoration: none;">¿Olvidaste tu clave?</a>
+              </div>
+              <input type="password" id="auth-password" class="form-control" required value="pyme2026">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top: 10px;">
+              <span id="auth-btn-text">Ingresar a la Plataforma</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </form>
+
+          <div class="auth-demo-card">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+              <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+            </svg>
+            <span><strong>Regla de Negocio:</strong> Al ingresar, registrarás tu empresa. Todo el entorno de trabajo del Dashboard quedará restringido única y exclusivamente a ella.</span>
+          </div>
+
+          <div style="text-align: center; margin-top: 24px;">
+            <a href="javascript:void(0)" onclick="window.ContentAI.navigateTo('view-landing')" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+              <span>Volver a la página de inicio</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 3. VISTA: ONBOARDING / PERFIL (Futuro Blade: resources/views/onboarding)-->
+    <!-- ======================================================================= -->
+    <section id="view-onboarding" class="view-section">
+      <div class="onboarding-wrapper">
+        <div class="onboarding-container">
+          
+          <div class="onboarding-card">
+            
+            <!-- Cabecera y Barra de Progreso Estratégica -->
+            <div class="onboarding-header">
+              <div class="onboarding-stepper">
+                <div class="step-indicator-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="M2 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="M12 22v-4"/><path d="m19.07 19.07-2.83-2.83"/><path d="M22 12h-4"/><path d="m19.07 4.93-2.83 2.83"/>
+                  </svg>
+                  <span>Fase 01 de 02 · Registro Exclusivo de Empresa</span>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">Progreso de Configuración</span>
+                  <div class="progress-track">
+                    <div class="progress-bar-fill"></div>
+                  </div>
+                </div>
+              </div>
+
+              <h2 class="onboarding-title">Registra tu Empresa en la Plataforma</h2>
+              <p class="onboarding-subtitle">
+                Define la ficha técnica de tu PYME. Una vez registrada, tu usuario trabajará <strong>única y exclusivamente con esta empresa</strong> en todos los generadores y flujos de revisión.
+              </p>
+            </div>
+
+            <!-- Botón de Asistencia Rápida para Demostración -->
+            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--canvas); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 12px 18px; margin-bottom: 24px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);">
+                  <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+                </svg>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">¿Deseas autocompletar el formulario con datos de prueba para evaluar el prototipo?</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="window.ContentAI.loadDemoCompanyAutofill()">
+                Autocompletar Ejemplo
+              </button>
+            </div>
+
+            <!-- Formulario de Configuración Estratégica -->
+            <form id="onboarding-form" onsubmit="window.ContentAI.handleOnboardingSubmit(event)">
+              
+              <!-- SECCIÓN 01: IDENTIDAD Y ACTIVIDAD COMERCIAL -->
+              <div class="form-section-divider">
+                <div class="form-section-badge">
+                  <div class="form-section-badge-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>
+                    </svg>
+                  </div>
+                  <span>01. Identidad y Actividad Comercial</span>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                
+                <!-- Campo: Nombre de la Empresa -->
+                <div class="form-group">
+                  <div class="field-label-group">
+                    <span class="field-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                      </svg>
+                    </span>
+                    <label class="form-label" for="company-name" style="margin-bottom: 0;">
+                      Nombre de tu Empresa <span class="required">*</span>
+                    </label>
+                  </div>
+                  <input type="text" id="company-name" class="form-control" required value="Café Artesanal La Cumbre" placeholder="Ingresa el nombre comercial de tu negocio">
+                  <span class="form-hint">Tu usuario quedará anclado permanentemente a esta empresa.</span>
+                </div>
+
+                <!-- Campo: Sector Económico -->
+                <div class="form-group">
+                  <div class="field-label-group">
+                    <span class="field-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                      </svg>
+                    </span>
+                    <label class="form-label" for="company-sector" style="margin-bottom: 0;">
+                      Actividad Económica / Sector <span class="required">*</span>
+                    </label>
+                  </div>
+                  <select id="company-sector" class="form-select" required>
+                    <option value="Gastronomía & Alimentos" selected>Gastronomía, Cafeterías & Alimentos Artesanales</option>
+                    <option value="Comercio Minorista / Retail">Comercio Minorista / Moda / Retail Físico & Online</option>
+                    <option value="Servicios Profesionales">Servicios Profesionales, Asesoría & Consultoría</option>
+                    <option value="Salud & Bienestar">Salud, Estética & Cuidado Personal</option>
+                    <option value="Tecnología & Servicios Digitales">Tecnología, Soluciones Cloud & Software</option>
+                    <option value="Educación & Cursos">Educación, Capacitación Profesional & Talleres</option>
+                  </select>
+                  <span class="form-hint">Orienta la selección de terminología técnica y comercial.</span>
+                </div>
+
+              </div>
+
+              <!-- SECCIÓN 02: AUDIENCIA Y VOZ DE MARCA -->
+              <div class="form-section-divider">
+                <div class="form-section-badge">
+                  <div class="form-section-badge-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                  </div>
+                  <span>02. Audiencia Objetivo y Tono de Comunicación</span>
+                </div>
+              </div>
+
+              <!-- Campo: Público Objetivo -->
+              <div class="form-group">
+                <div class="field-label-group">
+                  <span class="field-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/>
+                    </svg>
+                  </span>
+                  <label class="form-label" for="company-audience" style="margin-bottom: 0;">
+                    Público Objetivo (Clientes Ideales) <span class="required">*</span>
+                  </label>
+                </div>
+                <textarea id="company-audience" class="form-control" rows="3" required placeholder="Describe las características demográficas, intereses y principales necesidades de tus compradores...">Amantes del café de especialidad y profesionales de 25 a 45 años que buscan productos de origen local, apoyan a caficultores y aprecian la trazabilidad del grano.</textarea>
+                <span class="form-hint">Permite al motor estructurar ganchos persuasivos adaptados a las prioridades de tus clientes.</span>
+              </div>
+
+              <!-- Campo: Tono de Comunicación -->
+              <div class="form-group">
+                <div class="field-label-group">
+                  <span class="field-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                    </svg>
+                  </span>
+                  <label class="form-label" for="company-tone" style="margin-bottom: 0;">
+                    Identidad de Marca y Tono de Comunicación <span class="required">*</span>
+                  </label>
+                </div>
+                <select id="company-tone" class="form-select" required>
+                  <option value="Cercano, Amigable y Cálido" selected>Cercano, Amigable y Cálido (Enfoque empático, trato de confianza y proximidad)</option>
+                  <option value="Formal, Corporativo y Respetuoso">Formal, Corporativo y Respetuoso (Ideal B2B, consultoría estratégica y servicios corporativos)</option>
+                  <option value="Técnico, Especializado y Riguroso">Técnico y Especializado (Énfasis en métricas, especificaciones y precisión metodológica)</option>
+                  <option value="Enérgico, Motivador e Inspirador">Enérgico y Motivador (Orientado a la acción, vitalidad, superación y dinamismo)</option>
+                  <option value="Elegante, Exclusivo y Sofisticado">Elegante y Sofisticado (Distinción, alta gama, sobriedad y posicionamiento premium)</option>
+                </select>
+                <span class="form-hint">Regula la personalidad verbal, los adjetivos y el nivel de formalidad en cada texto generado.</span>
+              </div>
+
+              <!-- SECCIÓN 03: CANALES DE DISTRIBUCIÓN -->
+              <div class="form-section-divider">
+                <div class="form-section-badge">
+                  <div class="form-section-badge-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                  </div>
+                  <span>03. Canales de Distribución Comercial Activos</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <span class="form-hint" style="margin-bottom: 8px;">Selecciona las plataformas donde tu empresa publica y vende activamente:</span>
+
+                <div class="channel-tiles-grid">
+                  
+                  <!-- Facebook -->
+                  <label class="channel-tile checked">
+                    <div class="channel-tile-left">
+                      <div class="channel-tile-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                      </div>
+                      <span class="channel-tile-name">Facebook</span>
+                    </div>
+                    <input type="checkbox" name="channels" value="Facebook" checked onchange="window.ContentAI.toggleTileClass(this)">
+                    <div class="channel-tile-checkbox">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                  </label>
+
+                  <!-- Instagram -->
+                  <label class="channel-tile checked">
+                    <div class="channel-tile-left">
+                      <div class="channel-tile-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                      </div>
+                      <span class="channel-tile-name">Instagram</span>
+                    </div>
+                    <input type="checkbox" name="channels" value="Instagram" checked onchange="window.ContentAI.toggleTileClass(this)">
+                    <div class="channel-tile-checkbox">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                  </label>
+
+                  <!-- Email Marketing -->
+                  <label class="channel-tile checked">
+                    <div class="channel-tile-left">
+                      <div class="channel-tile-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                        </svg>
+                      </div>
+                      <span class="channel-tile-name">Email Marketing</span>
+                    </div>
+                    <input type="checkbox" name="channels" value="Email Marketing" checked onchange="window.ContentAI.toggleTileClass(this)">
+                    <div class="channel-tile-checkbox">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                  </label>
+
+                  <!-- WhatsApp Business -->
+                  <label class="channel-tile checked">
+                    <div class="channel-tile-left">
+                      <div class="channel-tile-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                      </div>
+                      <span class="channel-tile-name">WhatsApp Business</span>
+                    </div>
+                    <input type="checkbox" name="channels" value="WhatsApp Business" checked onchange="window.ContentAI.toggleTileClass(this)">
+                    <div class="channel-tile-checkbox">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                  </label>
+
+                  <!-- LinkedIn -->
+                  <label class="channel-tile">
+                    <div class="channel-tile-left">
+                      <div class="channel-tile-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
+                        </svg>
+                      </div>
+                      <span class="channel-tile-name">LinkedIn B2B</span>
+                    </div>
+                    <input type="checkbox" name="channels" value="LinkedIn" onchange="window.ContentAI.toggleTileClass(this)">
+                    <div class="channel-tile-checkbox">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                  </label>
+
+                  <!-- Landing Web -->
+                  <label class="channel-tile">
+                    <div class="channel-tile-left">
+                      <div class="channel-tile-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                      </div>
+                      <span class="channel-tile-name">Landing Page</span>
+                    </div>
+                    <input type="checkbox" name="channels" value="Landing Page / Web" onchange="window.ContentAI.toggleTileClass(this)">
+                    <div class="channel-tile-checkbox">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                  </label>
+
+                </div>
+              </div>
+
+              <!-- Footer y Acciones -->
+              <div class="onboarding-actions-footer">
+                <div class="actions-note">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  <span>Tu sesión de trabajo quedará vinculada exclusivamente a esta empresa.</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" style="box-shadow: 0 4px 16px var(--primary-glow);">
+                  <span>Registrar Empresa y Abrir Dashboard</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 4. VISTA: DASHBOARD COMERCIAL (Futuro Blade: resources/views/dashboard) -->
+    <!-- ======================================================================= -->
+    <section id="view-dashboard" class="view-section">
+      <div class="dashboard-layout">
+        
+        <!-- SIDEBAR LATERAL -->
+        <aside class="dashboard-sidebar">
+          <div class="sidebar-header">
+            <a href="javascript:void(0)" class="landing-brand" style="color: var(--text-inverse);" onclick="window.ContentAI.navigateTo('view-landing')">
+              <div class="brand-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+              </div>
+              <span style="font-size: 1.15rem;">ContentAI</span>
+              <span class="brand-tag-text" style="background: rgba(255,255,255,0.1); color: #818CF8;">PYMES</span>
+            </a>
+          </div>
+
+          <!-- Tarjeta de la Empresa Exclusiva del Usuario -->
+          <div class="sidebar-profile-card">
+            <div class="profile-avatar-circle" id="sidebar-avatar">C</div>
+            <div class="profile-info-block">
+              <div class="profile-company-name" id="sidebar-company-name">Café Artesanal La Cumbre</div>
+              <span class="profile-company-sector" id="sidebar-company-sector">Gastronomía & Alimentos</span>
+            </div>
+          </div>
+
+          <!-- Indicador de Exclusividad -->
+          <div style="margin: 0 16px 12px; padding: 6px 10px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; font-size: 0.7rem; color: #34D399; display: flex; align-items: center; gap: 6px;">
+            <span style="width: 6px; height: 6px; background: #10B981; border-radius: 50%;"></span>
+            <span>Empresa Vinculada a tu Cuenta</span>
+          </div>
+
+          <!-- Menú de Navegación del Dashboard -->
+          <nav class="sidebar-nav-menu">
+            <div class="sidebar-section-label">Módulos de Copys</div>
+
+            <!-- BOTÓN TAB A: MOTOR DE GENERACIÓN IA -->
+            <div class="sidebar-nav-item active" id="menu-tab-generator" onclick="window.ContentAI.switchDashboardTab('tab-generator')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+              <span>Generador IA</span>
+              <span class="sidebar-item-pill">Tab A</span>
+            </div>
+
+            <!-- BOTÓN TAB B: REVISIÓN Y APROBACIÓN (HISTORIAL) -->
+            <div class="sidebar-nav-item" id="menu-tab-review" onclick="window.ContentAI.switchDashboardTab('tab-review')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <span>Revisión y Aprobación</span>
+              <span class="sidebar-item-pill">Tab B</span>
+            </div>
+
+            <div class="sidebar-section-label" style="margin-top: 14px;">Administración</div>
+
+            <div class="sidebar-nav-item" onclick="window.ContentAI.navigateTo('view-onboarding')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>Ajustar Datos de mi Empresa</span>
+            </div>
+          </nav>
+
+          <div class="sidebar-footer">
+            <div class="sidebar-nav-item" style="color: #F87171;" onclick="window.ContentAI.logout()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Cerrar Sesión</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- VIEWPORT PRINCIPAL -->
+        <main class="dashboard-viewport">
+          
+          <!-- Topbar: Breadcrumb + Acciones -->
+          <header class="dashboard-topbar">
+            <div class="breadcrumb-trail">
+              <span class="breadcrumb-root">ContentAI</span>
+              <span style="color: var(--border-strong);">/</span>
+              <span class="breadcrumb-active" id="breadcrumb-active-label">Generador de Copys IA</span>
+            </div>
+
+            <div class="topbar-actions-zone">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-secondary); background: var(--canvas); padding: 6px 14px; border-radius: var(--radius-full); border: 1px solid var(--border-default);">
+                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                <span id="topbar-brand-name">Café Artesanal La Cumbre</span>
+              </div>
+
+              <button class="btn btn-primary btn-sm" onclick="window.ContentAI.switchDashboardTab('tab-generator')">
+                <span>+ Nuevo Copy</span>
+              </button>
+            </div>
+          </header>
+
+          <!-- Contenedor de Pestañas -->
+          <div class="dashboard-content-box">
+            
+            <!-- ============================================================= -->
+            <!-- TAB A: MOTOR DE GENERACIÓN IA                                 -->
+            <!-- ============================================================= -->
+            <div id="tab-generator" class="dashboard-tab-pane active">
+              
+              <div class="generator-card">
+                
+                <!-- OVERLAY DE CARGA DE 2 SEGUNDOS -->
+                <div class="loading-overlay" id="generator-loading-overlay">
+                  <div class="radar-loader-wrapper">
+                    <div class="radar-loader-icon">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3 1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                    </div>
+                  </div>
+
+                  <h3 style="font-size: 1.3rem; margin-bottom: 6px; color: var(--text-primary);">Generando Contenido para tu Empresa...</h3>
+                  <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 420px;">
+                    El motor está procesando la campaña con el tono exclusivo y clientes ideales de tu empresa.
+                  </p>
+
+                  <div class="loading-steps-track">
+                    <div class="loading-step-item active" id="load-step-1">
+                      <span class="loading-step-dot"></span>
+                      <span>1. Leyendo contexto exclusivo de tu empresa...</span>
+                    </div>
+                    <div class="loading-step-item" id="load-step-2">
+                      <span class="loading-step-dot"></span>
+                      <span>2. Inyectando tono de voz configurado...</span>
+                    </div>
+                    <div class="loading-step-item" id="load-step-3">
+                      <span class="loading-step-dot"></span>
+                      <span>3. Redactando copy optimizado para el canal...</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cabecera -->
+                <div style="margin-bottom: 24px;">
+                  <div class="metadata-line" style="margin-bottom: 6px;">
+                    <span style="font-weight: 700; color: var(--primary);">Motor de Generación</span>
+                    <span class="metadata-separator">·</span>
+                    <span id="generator-header-company-note">Vinculado a: Café Artesanal La Cumbre</span>
+                  </div>
+                  <h2 style="font-size: 1.55rem;">Crea una Nueva Campaña Comercial</h2>
+                </div>
+
+                <!-- Formulario del Generador -->
+                <form id="generator-form" onsubmit="window.ContentAI.handleGenerateSubmit(event)">
+                  
+                  <div class="form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" for="gen-content-type">Tipo de Contenido Comercial <span class="required">*</span></label>
+                      <select id="gen-content-type" class="form-select" required>
+                        <option value="Post de Facebook" selected>Post de Facebook (Copy persuasivo con emojis y llamada a la acción)</option>
+                        <option value="Post de Instagram con Hashtags">Post de Instagram (Hook visual + storytelling + hashtags nicho)</option>
+                        <option value="Email Marketing">Email Marketing (Asunto + cuerpo de valor + botón CTA)</option>
+                        <option value="Mensaje Promocional WhatsApp">Mensaje de WhatsApp Business (Directo, amigable con oferta)</option>
+                        <option value="Landing Page">Landing Page (Título H1 + beneficios + cierre comercial)</option>
+                      </select>
+                      <span class="form-hint">Estructura el mensaje de acuerdo a las reglas del canal.</span>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="gen-objective">Objetivo Comercial de la Campaña</label>
+                      <select id="gen-objective" class="form-select">
+                        <option value="Ventas Directas y Conversión" selected>Ventas Directas y Conversión (Oferta / Descuento)</option>
+                        <option value="Lanzamiento de Nuevo Producto">Lanzamiento de Nuevo Producto o Servicio</option>
+                        <option value="Educación y Valor">Educación de Valor y Consejos (Generar Confianza)</option>
+                        <option value="Fidelización">Fidelización de Clientes Actuales</option>
+                      </select>
+                      <span class="form-hint">Orienta la psicología del texto hacia la conversión.</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                      <label class="form-label" for="gen-campaign-topic" style="margin-bottom: 0;">
+                        ¿De qué trata esta campaña o publicación? <span class="required">*</span>
+                      </label>
+                      <span style="font-size: 0.78rem; color: var(--text-muted);" id="topic-char-count">0 / 500 caracteres</span>
+                    </div>
+
+                    <textarea 
+                      id="gen-campaign-topic" 
+                      class="form-control" 
+                      rows="4" 
+                      required 
+                      placeholder="Describe tu idea, promoción, producto, descuento especial o tema de la semana..."
+                      oninput="window.ContentAI.updateTopicCharCount(this)"
+                    >Lanzamiento de nuestro nuevo café de origen Nariño con 20% de descuento durante este fin de semana. Tueste medio, notas a panela y frutos rojos. Envío gratis en compras mayores a $50.000.</textarea>
+
+                    <div class="suggestion-chips-container">
+                      <span style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center;">Ideas sugeridas:</span>
+                      <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('Promoción especial 2x1 en postres artesanales para parejas este viernes después de las 6:00 PM.')">
+                        Promo 2x1 de Fin de Semana
+                      </button>
+                      <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('Lanzamiento de producto exclusivo con stock limitado a 50 unidades y 15% de descuento preventa.')">
+                        Lanzamiento Edición Limitada
+                      </button>
+                      <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('3 consejos de valor para nuestros clientes sobre cómo cuidar y aprovechar al máximo nuestro producto.')">
+                        Consejos de Valor para Clientes
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Botón de Generación -->
+                  <div style="margin-top: 32px; display: flex; justify-content: flex-end; align-items: center; gap: 16px;">
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">
+                      Generación contextual en 2 segundos
+                    </span>
+
+                    <button type="submit" class="btn btn-primary btn-lg animate-pulse-glow" id="btn-generate-ai">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3 1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                      <span>Generar con IA</span>
+                    </button>
+                  </div>
+
+                </form>
+              </div>
+
+            </div>
+
+
+            <!-- ============================================================= -->
+            <!-- TAB B: REVISIÓN Y APROBACIÓN (HISTORIAL)                     -->
+            <!-- ============================================================= -->
+            <div id="tab-review" class="dashboard-tab-pane">
+              
+              <div class="review-card">
+                
+                <!-- Metadatos de la Generación -->
+                <div class="review-meta-row">
+                  <div class="metadata-line">
+                    <span style="font-weight: 700; color: var(--primary);" id="review-badge-type">Post de Facebook</span>
+                    <span class="metadata-separator">·</span>
+                    <span id="review-badge-tone">Tono: Cercano y Cálido</span>
+                    <span class="metadata-separator">·</span>
+                    <span id="review-badge-company" style="font-weight: 600;">Café Artesanal La Cumbre</span>
+                  </div>
+
+                  <div class="metadata-line">
+                    <span class="tabular-nums" id="review-word-count">115 palabras</span>
+                    <span class="metadata-separator">·</span>
+                    <span class="tabular-nums" id="review-char-count">740 caracteres</span>
+                  </div>
+                </div>
+
+                <!-- Selector de Modo: Editor vs Vista Previa en Vivo -->
+                <div class="preview-mode-switch">
+                  <div class="segmented-control">
+                    <button type="button" class="segmented-btn active" id="btn-mode-editor" onclick="window.ContentAI.toggleEditorMode('editor')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                      <span>Editor de Texto</span>
+                    </button>
+                    <button type="button" class="segmented-btn" id="btn-mode-preview" onclick="window.ContentAI.toggleEditorMode('preview')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                      <span>Vista Previa en Vivo del Canal</span>
+                    </button>
+                  </div>
+
+                  <span id="edit-status-badge" style="font-size: 0.78rem; color: var(--text-muted); margin-left: auto;">
+                    Modo de edición directa
+                  </span>
+                </div>
+
+                <!-- ÁREA 1: TEXTAREA EDITABLE -->
+                <textarea 
+                  id="preview-generated-text" 
+                  class="editor-textarea" 
+                  placeholder="El texto generado por la IA aparecerá aquí..."
+                  oninput="window.ContentAI.handleTextareaEdit(this)"
+                >✨ ¿Hueles eso? Es el aroma a café recién tostado llegando directo a tu mesa. ☕🌿
+
+En Café Artesanal La Cumbre estamos de fiesta: te presentamos nuestro nuevo origen Nariño, cosechado a mano con notas dulces a panela y frutos rojos que transformarán tus mañanas.
+
+🎉 PROMO EXCLUSIVA DE FIN DE SEMANA:
+Llévate tu bolsa con un 20% DE DESCUENTO especial. Y si tu pedido supera los $50.000, el envío va 100% por nuestra cuenta hasta tu puerta. 📦✨
+
+👇 Dale clic al botón de abajo o escríbenos a nuestro WhatsApp para pedir el tuyo antes de que se agote el lote de esta semana. ¡Apoya a nuestros caficultores locales!</textarea>
+
+                <!-- ÁREA 2: MAQUETA DE VISTA PREVIA EN VIVO -->
+                <div id="live-channel-preview-container" class="live-channel-preview-container">
+                  <!-- Se renderiza dinámicamente desde src/js/previews.js -->
+                </div>
+
+                <!-- Barra de Acciones -->
+                <div class="review-action-row">
+                  
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <button type="button" class="btn btn-secondary" onclick="window.ContentAI.focusAndEditTextarea()">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                      <span>Editar</span>
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" onclick="window.ContentAI.copyToClipboard()">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                      <span>Copiar Texto</span>
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" onclick="window.ContentAI.regenerateVariant()">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                      <span>Regenerar Variante</span>
+                    </button>
+                  </div>
+
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <!-- Botón Descartar -->
+                    <button type="button" class="btn btn-danger" onclick="window.ContentAI.discardCurrentContent()">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                      <span>Descartar</span>
+                    </button>
+
+                    <!-- Botón Aprobar (Guardar) -->
+                    <button type="button" class="btn btn-success" onclick="window.ContentAI.approveAndSaveContent()">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>Aprobar (Guardar)</span>
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- HISTORIAL DE CONTENIDOS APROBADOS DE LA EMPRESA -->
+              <div class="history-card">
+                <div class="history-header">
+                  <div>
+                    <h3 style="font-size: 1.2rem;">Historial de Contenidos Aprobados</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">
+                      Copys guardados exclusivamente para los canales de tu empresa.
+                    </p>
+                  </div>
+
+                  <span style="font-weight: 700; font-size: 0.82rem; color: var(--success);" id="history-counter-badge">1 Aprobado</span>
+                </div>
+
+                <div id="history-items-container">
+                  <!-- Se inyecta dinámicamente desde src/js/review.js -->
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </main>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Contenedor de Notificaciones Toast -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ========================================================================= -->
+  <!-- SCRIPT PRINCIPAL MODULAR (ES6 NATIVO - Compatible con Live Server y Vite) -->
+  <!-- ========================================================================= -->
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>

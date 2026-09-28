@@ -1,0 +1,294 @@
+<!-- ========================================================================= -->
+<!-- MÓDULO HTML: ONBOARDING (REGISTRO EXCLUSIVO DE LA EMPRESA)                -->
+<!-- Futuro Laravel Blade: resources/views/onboarding/profile.blade.php        -->
+<!-- ========================================================================= -->
+<section id="view-onboarding" class="view-section">
+  <div class="onboarding-wrapper">
+    <div class="onboarding-container">
+      
+      <div class="onboarding-card">
+        
+        <!-- Cabecera y Barra de Progreso Estratégica -->
+        <div class="onboarding-header">
+          <div class="onboarding-stepper">
+            <div class="step-indicator-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="M2 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="M12 22v-4"/><path d="m19.07 19.07-2.83-2.83"/><path d="M22 12h-4"/><path d="m19.07 4.93-2.83 2.83"/>
+              </svg>
+              <span>Fase 01 de 02 · Registro Exclusivo de Empresa</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">Progreso de Configuración</span>
+              <div class="progress-track">
+                <div class="progress-bar-fill"></div>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="onboarding-title">Registra tu Empresa en la Plataforma</h2>
+          <p class="onboarding-subtitle">
+            Define la ficha técnica de tu PYME. Una vez registrada, tu usuario trabajará <strong>única y exclusivamente con esta empresa</strong> en todos los generadores y flujos de revisión.
+          </p>
+        </div>
+
+        <!-- Botón de Asistencia Rápida para Demostración Docente (Opcional) -->
+        <div style="display: flex; align-items: center; justify-content: space-between; background: var(--canvas); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 12px 18px; margin-bottom: 24px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);">
+              <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+            </svg>
+            <span style="font-size: 0.85rem; color: var(--text-secondary);">¿Deseas autocompletar el formulario con datos de prueba para evaluar el prototipo?</span>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="window.ContentAI.loadDemoCompanyAutofill()">
+            Autocompletar Ejemplo
+          </button>
+        </div>
+
+        <!-- Formulario de Configuración Estratégica -->
+        <form id="onboarding-form" onsubmit="window.ContentAI.handleOnboardingSubmit(event)">
+          
+          <!-- SECCIÓN 01: IDENTIDAD Y ACTIVIDAD COMERCIAL -->
+          <div class="form-section-divider">
+            <div class="form-section-badge">
+              <div class="form-section-badge-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>
+                </svg>
+              </div>
+              <span>01. Identidad y Actividad Comercial</span>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            
+            <!-- Campo: Nombre de la Empresa -->
+            <div class="form-group">
+              <div class="field-label-group">
+                <span class="field-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </span>
+                <label class="form-label" for="company-name" style="margin-bottom: 0;">
+                  Nombre de tu Empresa <span class="required">*</span>
+                </label>
+              </div>
+              <input type="text" id="company-name" class="form-control" required value="Café Artesanal La Cumbre" placeholder="Ingresa el nombre comercial de tu negocio">
+              <span class="form-hint">Tu usuario quedará anclado permanentemente a esta empresa.</span>
+            </div>
+
+            <!-- Campo: Sector Económico -->
+            <div class="form-group">
+              <div class="field-label-group">
+                <span class="field-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                </span>
+                <label class="form-label" for="company-sector" style="margin-bottom: 0;">
+                  Actividad Económica / Sector <span class="required">*</span>
+                </label>
+              </div>
+              <select id="company-sector" class="form-select" required>
+                <option value="Gastronomía & Alimentos" selected>Gastronomía, Cafeterías & Alimentos Artesanales</option>
+                <option value="Comercio Minorista / Retail">Comercio Minorista / Moda / Retail Físico & Online</option>
+                <option value="Servicios Profesionales">Servicios Profesionales, Asesoría & Consultoría</option>
+                <option value="Salud & Bienestar">Salud, Estética & Cuidado Personal</option>
+                <option value="Tecnología & Servicios Digitales">Tecnología, Soluciones Cloud & Software</option>
+                <option value="Educación & Cursos">Educación, Capacitación Profesional & Talleres</option>
+              </select>
+              <span class="form-hint">Orienta la selección de terminología técnica y comercial.</span>
+            </div>
+
+          </div>
+
+          <!-- SECCIÓN 02: AUDIENCIA Y VOZ DE MARCA -->
+          <div class="form-section-divider">
+            <div class="form-section-badge">
+              <div class="form-section-badge-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <span>02. Audiencia Objetivo y Tono de Comunicación</span>
+            </div>
+          </div>
+
+          <!-- Campo: Público Objetivo -->
+          <div class="form-group">
+            <div class="field-label-group">
+              <span class="field-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/>
+                </svg>
+              </span>
+              <label class="form-label" for="company-audience" style="margin-bottom: 0;">
+                Público Objetivo (Clientes Ideales) <span class="required">*</span>
+              </label>
+            </div>
+            <textarea id="company-audience" class="form-control" rows="3" required placeholder="Describe las características demográficas, intereses y principales necesidades de tus compradores...">Amantes del café de especialidad y profesionales de 25 a 45 años que buscan productos de origen local, apoyan a caficultores y aprecian la trazabilidad del grano.</textarea>
+            <span class="form-hint">Permite al motor estructurar ganchos persuasivos adaptados a las prioridades de tus clientes.</span>
+          </div>
+
+          <!-- Campo: Tono de Comunicación -->
+          <div class="form-group">
+            <div class="field-label-group">
+              <span class="field-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                </svg>
+              </span>
+              <label class="form-label" for="company-tone" style="margin-bottom: 0;">
+                Identidad de Marca y Tono de Comunicación <span class="required">*</span>
+              </label>
+            </div>
+            <select id="company-tone" class="form-select" required>
+              <option value="Cercano, Amigable y Cálido" selected>Cercano, Amigable y Cálido (Enfoque empático, trato de confianza y proximidad)</option>
+              <option value="Formal, Corporativo y Respetuoso">Formal, Corporativo y Respetuoso (Ideal B2B, consultoría estratégica y servicios corporativos)</option>
+              <option value="Técnico, Especializado y Riguroso">Técnico y Especializado (Énfasis en métricas, especificaciones y precisión metodológica)</option>
+              <option value="Enérgico, Motivador e Inspirador">Enérgico y Motivador (Orientado a la acción, vitalidad, superación y dinamismo)</option>
+              <option value="Elegante, Exclusivo y Sofisticado">Elegante y Sofisticado (Distinción, alta gama, sobriedad y posicionamiento premium)</option>
+            </select>
+            <span class="form-hint">Regula la personalidad verbal, los adjetivos y el nivel de formalidad en cada texto generado.</span>
+          </div>
+
+          <!-- SECCIÓN 03: CANALES DE DISTRIBUCIÓN -->
+          <div class="form-section-divider">
+            <div class="form-section-badge">
+              <div class="form-section-badge-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+              </div>
+              <span>03. Canales de Distribución Comercial Activos</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <span class="form-hint" style="margin-bottom: 8px;">Selecciona las plataformas donde tu empresa publica y vende activamente:</span>
+
+            <div class="channel-tiles-grid">
+              
+              <!-- Facebook -->
+              <label class="channel-tile checked">
+                <div class="channel-tile-left">
+                  <div class="channel-tile-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </div>
+                  <span class="channel-tile-name">Facebook</span>
+                </div>
+                <input type="checkbox" name="channels" value="Facebook" checked onchange="window.ContentAI.toggleTileClass(this)">
+                <div class="channel-tile-checkbox">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+
+              <!-- Instagram -->
+              <label class="channel-tile checked">
+                <div class="channel-tile-left">
+                  <div class="channel-tile-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                  </div>
+                  <span class="channel-tile-name">Instagram</span>
+                </div>
+                <input type="checkbox" name="channels" value="Instagram" checked onchange="window.ContentAI.toggleTileClass(this)">
+                <div class="channel-tile-checkbox">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+
+              <!-- Email Marketing -->
+              <label class="channel-tile checked">
+                <div class="channel-tile-left">
+                  <div class="channel-tile-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                  </div>
+                  <span class="channel-tile-name">Email Marketing</span>
+                </div>
+                <input type="checkbox" name="channels" value="Email Marketing" checked onchange="window.ContentAI.toggleTileClass(this)">
+                <div class="channel-tile-checkbox">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+
+              <!-- WhatsApp Business -->
+              <label class="channel-tile checked">
+                <div class="channel-tile-left">
+                  <div class="channel-tile-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                  </div>
+                  <span class="channel-tile-name">WhatsApp Business</span>
+                </div>
+                <input type="checkbox" name="channels" value="WhatsApp Business" checked onchange="window.ContentAI.toggleTileClass(this)">
+                <div class="channel-tile-checkbox">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+
+              <!-- LinkedIn -->
+              <label class="channel-tile">
+                <div class="channel-tile-left">
+                  <div class="channel-tile-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
+                    </svg>
+                  </div>
+                  <span class="channel-tile-name">LinkedIn B2B</span>
+                </div>
+                <input type="checkbox" name="channels" value="LinkedIn" onchange="window.ContentAI.toggleTileClass(this)">
+                <div class="channel-tile-checkbox">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+
+              <!-- Landing Web -->
+              <label class="channel-tile">
+                <div class="channel-tile-left">
+                  <div class="channel-tile-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                  </div>
+                  <span class="channel-tile-name">Landing Page</span>
+                </div>
+                <input type="checkbox" name="channels" value="Landing Page / Web" onchange="window.ContentAI.toggleTileClass(this)">
+                <div class="channel-tile-checkbox">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+          <!-- Footer y Acciones -->
+          <div class="onboarding-actions-footer">
+            <div class="actions-note">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>Tu sesión de trabajo quedará vinculada exclusivamente a esta empresa.</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="box-shadow: 0 4px 16px var(--primary-glow);">
+              <span>Registrar Empresa y Abrir Dashboard</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>

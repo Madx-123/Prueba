@@ -1,0 +1,186 @@
+<!-- ========================================================================= -->
+<!-- MÓDULO HTML: LANDING PAGE                                                 -->
+<!-- Futuro Laravel Blade: resources/views/pages/landing.blade.php             -->
+<!-- ========================================================================= -->
+<section id="view-landing" class="view-section active">
+  
+  <!-- Top Bar Contract: 3 Zonas Estrictas -->
+  <header class="landing-navbar">
+    <div class="container landing-nav-container">
+      
+      <!-- Zona 1: Brand Wordmark -->
+      <a href="javascript:void(0)" class="landing-brand" onclick="window.ContentAI.navigateTo('view-landing')">
+        <div class="brand-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+            <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
+          </svg>
+        </div>
+        <span>ContentAI</span>
+        <span class="brand-tag-text">PYMES</span>
+      </a>
+
+      <!-- Zona 2: Nav Links -->
+      <nav class="landing-nav-links">
+        <a class="landing-nav-link" href="#propuesta">Propuesta</a>
+        <a class="landing-nav-link" href="#beneficios">Beneficios</a>
+        <a class="landing-nav-link" href="#seguridad">Tu Empresa</a>
+      </nav>
+
+      <!-- Zona 3: Acciones Primarias -->
+      <div class="landing-nav-actions">
+        <button class="btn btn-secondary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">
+          Iniciar Sesión
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">
+          Registrar mi Empresa
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="hero-section" id="propuesta">
+    <div class="container">
+      <div class="hero-grid">
+        
+        <!-- Columna Izquierda: Copy de Conversión -->
+        <div class="hero-content">
+          <div class="hero-kicker">
+            <span>Plataforma Exclusiva para Pequeñas y Medianas Empresas</span>
+          </div>
+
+          <h1 class="hero-title">
+            Genera contenido comercial adaptado a tu <span class="gradient-text">identidad de marca</span> con IA, sin usar prompts genéricos.
+          </h1>
+
+          <p class="hero-description">
+            Registra tu empresa una sola vez. Nuestro motor aprende tu sector, tus clientes y tu tono para que todo el contenido comercial sea 100% fiel y exclusivo a tu negocio.
+          </p>
+
+          <div class="hero-cta-group">
+            <button class="btn btn-primary btn-lg" onclick="window.ContentAI.navigateTo('view-auth')">
+              <span>Registrar mi Empresa</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+              </svg>
+            </button>
+            
+            <button class="btn btn-secondary btn-lg" onclick="window.ContentAI.openAppDemo()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              <span>Ver Entorno de Trabajo</span>
+            </button>
+          </div>
+
+          <!-- Adyacencia de Pruebas Cuantitativas -->
+          <div class="hero-proof-strip">
+            <div class="proof-item">
+              <strong class="tabular-nums">1 Empresa</strong>
+              <span>Dedicada a tu cuenta de usuario</span>
+            </div>
+            <div class="proof-item">
+              <strong class="tabular-nums">10x</strong>
+              <span>Más rápido que redacción manual</span>
+            </div>
+            <div class="proof-item">
+              <strong class="tabular-nums">100%</strong>
+              <span>Alineado a tu tono comercial</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Mockup Visual -->
+        <div class="hero-mockup-wrapper">
+          <div class="hero-mockup-card">
+            <div class="mockup-header-bar">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="mockup-status-dot"></span>
+                <strong style="font-size: 0.85rem; color: var(--text-primary);">Entorno Comercial Dedicado</strong>
+              </div>
+              <div class="metadata-line">
+                <span>Tu Marca</span>
+                <span class="metadata-separator">·</span>
+                <span>Canales Activos</span>
+              </div>
+            </div>
+
+            <!-- Banner Vectorial del Negocio Registrado -->
+            <div style="background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%); border-radius: var(--radius-md); padding: 20px; color: white; margin-bottom: 14px;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85;">Empresa Registrada en la Cuenta</span>
+              <h4 style="color: white; font-size: 1.25rem; margin: 4px 0 2px;" id="landing-hero-company-name">Tu Empresa Comercial</h4>
+              <p style="color: #C7D2FE; font-size: 0.82rem;" id="landing-hero-company-sector">Configuración estratégica exclusiva de marca</p>
+            </div>
+
+            <div class="mockup-body-preview">
+              <p><strong>Campaña Publicitaria Generada a la Medida:</strong></p>
+              <p style="margin-top: 8px;">
+                Cada publicación, correo y mensaje generado se nutre únicamente del perfil registrado de tu empresa, garantizando coherencia en todos tus canales sin desviarse de tus objetivos comerciales.
+              </p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 0.8rem; color: var(--text-muted);">
+              <span>Entorno de trabajo seguro y privado</span>
+              <span style="color: var(--primary); font-weight: 600;">Identidad Protegida</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Sección de Beneficios -->
+  <section id="beneficios" class="features-section">
+    <div class="container">
+      <div class="features-header">
+        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; display: block;">ARQUITECTURA DE CONTENIDO COMERCIAL</span>
+        <h2 style="font-size: 2.1rem; margin-bottom: 12px;">Tu Empresa es el Centro de Todo el Contenido</h2>
+        <p>A diferencia de los chats generales donde debes reescribir quién eres en cada mensaje, ContentAI vincula tu cuenta directamente con la ficha de tu empresa.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 class="feature-title">01. Registro Único de Empresa</h3>
+          <p>Al ingresar defines la identidad de tu negocio: nombre, actividad, público objetivo y tono. Tu cuenta queda vinculada exclusivamente a ella.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3 class="feature-title">02. Redacción Multi-Canal</h3>
+          <p>El motor adapta cada campaña para Facebook, Instagram, Email Marketing y WhatsApp, siempre usando el contexto registrado de tu empresa.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+          </div>
+          <h3 class="feature-title">03. Historial Aprobado</h3>
+          <p>Todos los borradores que apruebes se guardan en el archivo histórico de tu negocio, listos para copiar, editar o republicar cuando desees.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="container footer-content">
+      <div>
+        <strong style="color: var(--text-inverse); font-size: 1rem;">ContentAI - PYMES</strong>
+        <p style="margin-top: 4px; font-size: 0.8rem;">
+          Proyecto Universitario de Ingeniería de Software · Módulos HTML separados para migración a Laravel Blade
+        </p>
+      </div>
+      <div>
+        <button class="btn btn-secondary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">Acceso al Sistema</button>
+      </div>
+    </div>
+  </footer>
+</section>

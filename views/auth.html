@@ -1,0 +1,86 @@
+<!-- ========================================================================= -->
+<!-- MÓDULO HTML: AUTENTICACIÓN (LOGIN / REGISTRO)                             -->
+<!-- Futuro Laravel Blade: resources/views/auth/login.blade.php                 -->
+<!-- ========================================================================= -->
+<section id="view-auth" class="view-section">
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      
+      <div class="auth-header">
+        <div class="auth-badge-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+          </svg>
+        </div>
+        <h2 style="font-size: 1.6rem; margin-bottom: 4px;">Acceso a ContentAI</h2>
+        <p style="font-size: 0.88rem; color: var(--text-secondary);">Cada usuario gestiona de forma exclusiva su propia empresa</p>
+      </div>
+
+      <!-- Selector Segmentado de Login / Registro -->
+      <div class="segmented-control" style="margin-bottom: 24px;">
+        <button type="button" class="segmented-btn active" id="tab-btn-login" onclick="window.ContentAI.toggleAuthMode('login')">
+          Iniciar Sesión
+        </button>
+        <button type="button" class="segmented-btn" id="tab-btn-register" onclick="window.ContentAI.toggleAuthMode('register')">
+          Crear Cuenta PYME
+        </button>
+      </div>
+
+      <!-- Formulario de Autenticación -->
+      <form id="auth-form" onsubmit="window.ContentAI.handleAuthSubmit(event)">
+        
+        <div class="form-group" id="group-register-name" style="display: none;">
+          <div class="field-label-group">
+            <span class="field-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <label class="form-label" for="auth-name" style="margin-bottom: 0;">Nombre del Titular / Administrador <span class="required">*</span></label>
+          </div>
+          <input type="text" id="auth-name" class="form-control" placeholder="Ej. Carlos Mendoza">
+        </div>
+
+        <div class="form-group">
+          <div class="field-label-group">
+            <span class="field-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </span>
+            <label class="form-label" for="auth-email" style="margin-bottom: 0;">Correo Electrónico Corporativo <span class="required">*</span></label>
+          </div>
+          <input type="email" id="auth-email" class="form-control" required value="gerencia@lacumbre.com">
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <div class="field-label-group" style="margin-bottom: 0;">
+              <span class="field-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <label class="form-label" for="auth-password" style="margin-bottom: 0;">Contraseña <span class="required">*</span></label>
+            </div>
+            <a href="javascript:void(0)" style="font-size: 0.78rem; color: var(--primary); text-decoration: none;">¿Olvidaste tu clave?</a>
+          </div>
+          <input type="password" id="auth-password" class="form-control" required value="pyme2026">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top: 10px;">
+          <span id="auth-btn-text">Ingresar a la Plataforma</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <div class="auth-demo-card">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+          <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+        </svg>
+        <span><strong>Regla de Negocio:</strong> Al ingresar, registrarás tu empresa. Todo el entorno de trabajo del Dashboard quedará restringido única y exclusivamente a ella.</span>
+      </div>
+
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="javascript:void(0)" onclick="window.ContentAI.navigateTo('view-landing')" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          <span>Volver a la página de inicio</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

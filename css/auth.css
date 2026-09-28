@@ -1,0 +1,54 @@
+/**
+ * ContentAI - PYMES | Auth Styles (Login / Registro)
+ */
+
+.auth-wrapper {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: radial-gradient(circle at 50% 30%, #EEF2FF 0%, #F8FAFC 80%);
+}
+
+.auth-card {
+  background: var(--surface);
+  width: 100%;
+  max-width: 460px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-lg);
+  padding: 40px;
+  position: relative;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-badge-icon {
+  width: 54px;
+  height: 54px;
+  background: var(--primary-gradient);
+  color: var(--text-inverse);
+  border-radius: var(--radius-md);
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow);
+}
+
+.auth-demo-card {
+  margin-top: 24px;
+  padding: 14px 16px;
+  background: var(--primary-light);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--primary-subtle);
+  font-size: 0.82rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

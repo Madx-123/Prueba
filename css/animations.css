@@ -1,0 +1,118 @@
+/**
+ * ContentAI - PYMES | Animaciones y Microinteracciones Fluidas
+ * Diseñado con timing curves naturales y optimizado para compositor (transform, opacity)
+ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes radarPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(79, 70, 229, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes floatSmooth {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+/* Clases Utilitarias de Animación */
+.animate-fade-in {
+  animation: fadeIn 0.28s var(--ease-spring) forwards;
+}
+
+.animate-slide-up {
+  animation: slideInUp 0.3s var(--ease-spring) forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+.heart-pop {
+  animation: heartPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Transiciones entre Vistas */
+.view-section {
+  display: none;
+  opacity: 0;
+  transition: opacity var(--trans-normal);
+}
+
+.view-section.active {
+  display: block;
+  opacity: 1;
+  animation: fadeIn 0.25s var(--ease-spring) forwards;
+}
+
+/* Cumplimiento de Accesibilidad (prefers-reduced-motion) */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

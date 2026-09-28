@@ -1,0 +1,13 @@
+/**
+ * ContentAI - PYMES | Master CSS Stylesheet
+ * Importa los módulos especializados por responsabilidad
+ */
+
+@import "./variables.css";
+@import "./base.css";
+@import "./animations.css";
+@import "./landing.css";
+@import "./auth.css";
+@import "./onboarding.css";
+@import "./dashboard.css";
+@import "./previews.css";
