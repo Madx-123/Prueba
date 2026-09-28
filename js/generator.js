@@ -1,182 +1,107 @@
 /**
- * ContentAI - PYMES | Main Orchestrator & Initialization Module
- * Expone la API pública window.ContentAI y coordina los módulos de la aplicación
- * Carga de forma modular las vistas HTML desde /src/views/*.html
+ * ContentAI - PYMES | AI Content Generation Engine Simulation
+ * Simulación de 2 segundos con pasos progresivos y redacción contextual por canal
  */
 
 import { store } from './store.js';
-import { navigateTo, switchDashboardTab } from './navigation.js';
-import { initProfiles, handleOnboardingSubmit, loadDemoCompanyAutofill } from './profiles.js';
-import { handleGenerateSubmit } from './generator.js';
-import { 
-  initReview, 
-  handleTextareaEdit, 
-  focusAndEditTextarea, 
-  copyToClipboard, 
-  regenerateVariant, 
-  discardCurrentContent, 
-  approveAndSaveContent,
-  loadHistoryToEditor 
-} from './review.js';
-import { initPreviews, toggleEditorMode, toggleLike } from './previews.js';
+import { switchDashboardTab } from './navigation.js';
+import { showToast } from './app.js';
+import { renderLivePreview } from './previews.js';
 
-// Sistema de Notificaciones Toast
-export function showToast(message, type = 'info') {
-  const container = document.getElementById('toast-container');
-  if (!container) return;
-
-  const toast = document.createElement('div');
-  toast.className = `toast toast-${type} animate-slide-up`;
-
-  const icon = type === 'success' ? '✓' : 'ℹ';
-  toast.innerHTML = `
-    <span style="font-weight: 700; background: rgba(255,255,255,0.2); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">
-      ${icon}
-    </span>
-    <span>${message}</span>
-  `;
-
-  container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(10px)';
-    toast.style.transition = 'all 0.3s ease';
-    setTimeout(() => toast.remove(), 300);
-  }, 3500);
-}
-
-// Control del Formulario de Autenticación
-export function toggleAuthMode(mode) {
-  const tabLogin = document.getElementById('tab-btn-login');
-  const tabRegister = document.getElementById('tab-btn-register');
-  const nameGroup = document.getElementById('group-register-name');
-  const submitText = document.getElementById('auth-btn-text');
-
-  if (mode === 'login') {
-    tabLogin?.classList.add('active');
-    tabRegister?.classList.remove('active');
-    if (nameGroup) nameGroup.style.display = 'none';
-    if (submitText) submitText.textContent = 'Ingresar a la Plataforma';
-  } else {
-    tabLogin?.classList.remove('active');
-    tabRegister?.classList.add('active');
-    if (nameGroup) nameGroup.style.display = 'block';
-    if (submitText) submitText.textContent = 'Crear Cuenta PYME y Continuar';
-  }
-}
-
-// Envío de Autenticación con Enrutamiento Inteligente
-export function handleAuthSubmit(event) {
+export function handleGenerateSubmit(event) {
   event.preventDefault();
-  const email = document.getElementById('auth-email')?.value || 'gerencia@lacumbre.com';
-  
-  store.setState({
-    user: {
-      ...store.getState().user,
-      email: email,
-      isLoggedIn: true
-    }
-  });
 
-  showToast(`¡Bienvenido! Sesión iniciada como ${email}`, 'success');
+  const contentType = document.getElementById('gen-content-type').value;
+  const objective = document.getElementById('gen-objective').value;
+  const topic = document.getElementById('gen-campaign-topic').value.trim();
 
-  // Si el usuario ya tiene su empresa registrada, entra directo al Dashboard.
-  // Si no, va al Onboarding para registrar su única empresa.
+  if (!topic) {
+    showToast('Por favor describe el tema de la campaña', 'info');
+    return;
+  }
+
+  const overlay = document.getElementById('generator-loading-overlay');
+  const btn = document.getElementById('btn-generate-ai');
+
+  // Activar estado de carga animado
+  if (overlay) overlay.classList.add('active');
+  if (btn) btn.disabled = true;
+
+  // Pasos secuenciales de la animación de 2 segundos (2000 ms)
+  const step1 = document.getElementById('load-step-1');
+  const step2 = document.getElementById('load-step-2');
+  const step3 = document.getElementById('load-step-3');
+
+  if (step1) step1.classList.add('active');
+  if (step2) step2.classList.remove('active');
+  if (step3) step3.classList.remove('active');
+
   setTimeout(() => {
-    if (store.getState().isCompanyRegistered) {
-      navigateTo('view-dashboard', 'tab-generator');
-    } else {
-      navigateTo('view-onboarding');
-    }
-  }, 350);
+    if (step2) step2.classList.add('active');
+  }, 700);
+
+  setTimeout(() => {
+    if (step3) step3.classList.add('active');
+  }, 1400);
+
+  // Culminación a los 2 segundos exactos
+  setTimeout(() => {
+    if (overlay) overlay.classList.remove('active');
+    if (btn) btn.disabled = false;
+
+    // Generar copy comercial contextualizado
+    const generatedCopy = craftAICommercialCopy(contentType, objective, topic);
+
+    store.setState({
+      currentGeneration: {
+        contentType,
+        objective,
+        topic,
+        generatedText: generatedCopy
+      }
+    });
+
+    // Actualizar editor de texto
+    const textarea = document.getElementById('preview-generated-text');
+    if (textarea) textarea.value = generatedCopy;
+
+    // Actualizar badge de tipo
+    const typeBadge = document.getElementById('review-badge-type');
+    if (typeBadge) typeBadge.textContent = contentType;
+
+    // Renderizar la vista previa en vivo del canal
+    renderLivePreview();
+
+    showToast('¡Contenido generado exitosamente con la identidad de tu PYME!', 'success');
+
+    // Cambio automático al Tab B por requerimiento
+    switchDashboardTab('tab-review');
+
+  }, 2000);
 }
 
-// Abre el entorno de trabajo directamente desde la Landing
-export function openAppDemo() {
-  if (store.getState().isCompanyRegistered) {
-    navigateTo('view-dashboard', 'tab-generator');
-  } else {
-    navigateTo('view-onboarding');
+export function craftAICommercialCopy(type, objective, topic) {
+  const profile = store.getState().companyProfile;
+  const name = profile.name || 'Nuestra Empresa';
+  const audience = profile.audience || 'nuestros clientes';
+  const tone = profile.tone || 'Cercano';
+
+  if (type.includes('Facebook')) {
+    return `☕✨ ¡Novedades exclusivas en ${name}! ✨🌿\n\n📌 ¿De qué se trata?\n${topic}\n\nSabemos lo importante que es para ti disfrutar de productos auténticos y apoyar el talento y la producción local. Esta campaña fue pensada especialmente para quienes buscan calidad sin rodeos.\n\n🎁 BENEFICIO PARA NUESTRA COMUNIDAD:\nComenta "QUIERO" o escríbenos directamente por mensaje privado para reclamar tu beneficio antes de agotar existencia.\n\n👇 ¡Haz clic en el enlace o contáctanos hoy mismo!`;
   }
-}
-
-// Cierre de Sesión
-export function logout() {
-  store.setState({
-    user: {
-      ...store.getState().user,
-      isLoggedIn: false
-    }
-  });
-  showToast('Has cerrado sesión correctamente.', 'info');
-  navigateTo('view-landing');
-}
-
-export function toggleTileClass(checkbox) {
-  const parent = checkbox.closest('.channel-tile');
-  if (parent) {
-    parent.classList.toggle('checked', checkbox.checked);
+  else if (type.includes('Instagram')) {
+    return `✨ Hecho con pasión, pensado para tu día a día. En ${name} cuidamos cada detalle. 📸\n\n${topic}\n\nDiseñado especialmente para quienes como tú valoran la autenticidad y el compromiso real. 🤍\n\n💬 Cuéntanos en los comentarios: ¿qué es lo primero que buscas al elegir un producto artesanal?\n\n.\n.\n#${name.replace(/[^a-zA-Z0-9]/g, '')} #ComercioLocal #PYMES #CalidadArtesanal #ConsumoConsciente #Emprendimiento`;
   }
-}
-
-export function applySuggestion(text) {
-  const textarea = document.getElementById('gen-campaign-topic');
-  if (textarea) {
-    textarea.value = text;
-    textarea.focus();
-    updateTopicCharCount(textarea);
+  else if (type.includes('WhatsApp')) {
+    return `¡Hola! 👋 Te saludamos con mucho cariño desde *${name}*.\n\nQueremos compartirte una promoción especial:\n\n✨ *${topic}*\n\nSi deseas hacer tu pedido o tienes alguna duda, respóndenos a este mensaje con la palabra *PEDIDO* y nuestro equipo te atenderá con gusto en este instante. 📦🚀`;
   }
-}
-
-export function updateTopicCharCount(textarea) {
-  const countEl = document.getElementById('topic-char-count');
-  if (countEl) {
-    countEl.textContent = `${textarea.value.length} / 500 caracteres`;
+  else if (type.includes('Email')) {
+    return `ASUNTO: 📬 Una invitación especial de ${name} para ti\nPREHEAD: Descubre la nueva propuesta que preparamos para tu bienestar.\n\nEstimado/a cliente,\n\nEn ${name} tenemos el compromiso de ofrecerte siempre lo mejor. Por ello, hoy te presentamos:\n\n👉 ${topic}\n\n¿Por qué es importante para ti?\nPorque conocemos tus necesidades y creamos soluciones a tu medida.\n\n[ BOTÓN: APROVECHAR PROMOCIÓN EXCLUSIVA ]\n\nUn cordial saludo,\nEl equipo de ${name}`;
   }
-}
-
-// Exponer en window.ContentAI para accesibilidad directa desde handlers de HTML
-window.ContentAI = {
-  navigateTo,
-  switchDashboardTab,
-  toggleAuthMode,
-  handleAuthSubmit,
-  handleOnboardingSubmit,
-  loadDemoCompanyAutofill,
-  handleGenerateSubmit,
-  handleTextareaEdit,
-  focusAndEditTextarea,
-  copyToClipboard,
-  regenerateVariant,
-  discardCurrentContent,
-  approveAndSaveContent,
-  loadHistoryToEditor,
-  copyHistoryText: (text) => {
-    navigator.clipboard.writeText(text).then(() => showToast('📋 Copiado al portapapeles.', 'success'));
-  },
-  toggleEditorMode,
-  toggleLike,
-  toggleTileClass,
-  applySuggestion,
-  updateTopicCharCount,
-  openAppDemo,
-  logout
-};
-
-// Inicialización de la aplicación: Setup de Controladores para Live Server y Vite
-function initApp() {
-  // 1. Inicializar controladores de perfiles, vistas previas y revisiones
-  initProfiles();
-  initPreviews();
-  initReview();
-
-  // 2. Establecer la vista inicial activa
-  navigateTo('view-landing');
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
-} else {
-  initApp();
+  else if (type.includes('Landing')) {
+    return `[ ENCABEZADO PRINCIPAL (H1) ]\nLa mejor experiencia artesanal la vives con ${name}.\n\n[ SUBTÍTULO PERSUASIVO ]\n${topic}\n\n[ 3 RAZONES PARA ELEGIRNOS ]\n1. Calidad Certificada: Cuidado minucioso en cada lote y proceso.\n2. Trato Humano y Cercano: Respaldado por personas comprometidas con tu satisfacción.\n3. Garantía y Rapidez: Entregas seguras y atención inmediata a tus requerimientos.\n\n[ LLAMADA A LA ACCIÓN (CTA) ]:\n"Solicitar Información Ahora / Comprar con Envío Gratis"`;
+  }
+  else {
+    return `En ${name} reafirmamos nuestro compromiso con la innovación en el sector.\n\n${topic}\n\nUna propuesta estructurada para generar impacto medible y valor sostenible. ¿Cómo gestiona tu equipo estas prioridades en la actualidad?\n\n#Innovación #PYMES #LiderazgoEmpresarial #${name.replace(/[^a-zA-Z0-9]/g, '')}`;
+  }
 }
