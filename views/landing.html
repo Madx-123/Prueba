@@ -1,186 +1,307 @@
 <!-- ========================================================================= -->
-<!-- MÓDULO HTML: LANDING PAGE                                                 -->
+<!-- MÓDULO HTML: LANDING PAGE ESTILO LUSION.CO                                -->
 <!-- Futuro Laravel Blade: resources/views/pages/landing.blade.php             -->
 <!-- ========================================================================= -->
-<section id="view-landing" class="view-section active">
+<section id="view-landing" class="view-section active lusion-landing-wrapper">
   
-  <!-- Top Bar Contract: 3 Zonas Estrictas -->
-  <header class="landing-navbar">
-    <div class="container landing-nav-container">
+  <!-- Fondo Canvas Interactivo de Partículas, Ondas Fluidas y Resplandores Lusion -->
+  <canvas id="lusion-canvas"></canvas>
+  
+  <!-- Textura de Grano Sutil Cinematográfico -->
+  <div class="lusion-noise-overlay"></div>
+
+  <!-- Cursor Fluido Dinámico (Lusion Style) -->
+  <div class="lusion-cursor-follower"></div>
+  <div class="lusion-cursor-dot"></div>
+
+  <!-- Top Bar: Floating Glass Pill Navbar (Estilo Lusion) -->
+  <header class="lusion-navbar">
+    <div class="lusion-nav-pill-container">
       
-      <!-- Zona 1: Brand Wordmark -->
-      <a href="javascript:void(0)" class="landing-brand" onclick="window.ContentAI.navigateTo('view-landing')">
-        <div class="brand-icon-box">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Brand Wordmark con Isotipo Brillante -->
+      <a href="javascript:void(0)" class="lusion-brand" onclick="window.ContentAI.navigateTo('view-landing')">
+        <div class="lusion-brand-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
-            <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
           </svg>
         </div>
-        <span>ContentAI</span>
-        <span class="brand-tag-text">PYMES</span>
+        <span class="lusion-brand-name">ContentAI</span>
+        <span class="lusion-brand-pill">PYMES</span>
       </a>
 
-      <!-- Zona 2: Nav Links -->
-      <nav class="landing-nav-links">
-        <a class="landing-nav-link" href="#propuesta">Propuesta</a>
-        <a class="landing-nav-link" href="#beneficios">Beneficios</a>
-        <a class="landing-nav-link" href="#seguridad">Tu Empresa</a>
+      <!-- Nav Links con Línea Cinética al Hover -->
+      <nav class="lusion-nav-links">
+        <a class="lusion-nav-link" href="#propuesta">Experiencia</a>
+        <a class="lusion-nav-link" href="#showcase">Entorno Dedicado</a>
+        <a class="lusion-nav-link" href="#capacidades">Capacidades</a>
+        <a class="lusion-nav-link" href="#seguridad">Seguridad PYME</a>
       </nav>
 
-      <!-- Zona 3: Acciones Primarias -->
-      <div class="landing-nav-actions">
-        <button class="btn btn-secondary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">
-          Iniciar Sesión
+      <!-- Acciones con Botones Magnéticos Redondeados -->
+      <div class="lusion-nav-actions">
+        <button class="lusion-magnetic-btn lusion-btn-ghost" onclick="window.ContentAI.navigateTo('view-auth')">
+          <span class="btn-label-magnetic">Iniciar Sesión</span>
         </button>
-        <button class="btn btn-primary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">
-          Registrar mi Empresa
+        <button class="lusion-magnetic-btn lusion-btn-glow" onclick="window.ContentAI.navigateTo('view-auth')">
+          <span class="btn-label-magnetic">Registrar Empresa</span>
         </button>
       </div>
 
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <main class="hero-section" id="propuesta">
-    <div class="container">
-      <div class="hero-grid">
-        
-        <!-- Columna Izquierda: Copy de Conversión -->
-        <div class="hero-content">
-          <div class="hero-kicker">
-            <span>Plataforma Exclusiva para Pequeñas y Medianas Empresas</span>
-          </div>
-
-          <h1 class="hero-title">
-            Genera contenido comercial adaptado a tu <span class="gradient-text">identidad de marca</span> con IA, sin usar prompts genéricos.
-          </h1>
-
-          <p class="hero-description">
-            Registra tu empresa una sola vez. Nuestro motor aprende tu sector, tus clientes y tu tono para que todo el contenido comercial sea 100% fiel y exclusivo a tu negocio.
-          </p>
-
-          <div class="hero-cta-group">
-            <button class="btn btn-primary btn-lg" onclick="window.ContentAI.navigateTo('view-auth')">
-              <span>Registrar mi Empresa</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-              </svg>
-            </button>
-            
-            <button class="btn btn-secondary btn-lg" onclick="window.ContentAI.openAppDemo()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="5 3 19 12 5 21 5 3"/>
-              </svg>
-              <span>Ver Entorno de Trabajo</span>
-            </button>
-          </div>
-
-          <!-- Adyacencia de Pruebas Cuantitativas -->
-          <div class="hero-proof-strip">
-            <div class="proof-item">
-              <strong class="tabular-nums">1 Empresa</strong>
-              <span>Dedicada a tu cuenta de usuario</span>
-            </div>
-            <div class="proof-item">
-              <strong class="tabular-nums">10x</strong>
-              <span>Más rápido que redacción manual</span>
-            </div>
-            <div class="proof-item">
-              <strong class="tabular-nums">100%</strong>
-              <span>Alineado a tu tono comercial</span>
-            </div>
-          </div>
+  <!-- Hero Section Immersivo Lusion -->
+  <main class="lusion-hero-section" id="propuesta">
+    <div class="lusion-hero-container">
+      
+      <!-- Kicker Pill con Ecualizador de Audio / Engine Pulse -->
+      <div class="lusion-hero-kicker-strip">
+        <div class="lusion-sound-visualizer">
+          <span class="lusion-eq-bar"></span>
+          <span class="lusion-eq-bar"></span>
+          <span class="lusion-eq-bar"></span>
+          <span class="lusion-eq-bar"></span>
         </div>
-
-        <!-- Columna Derecha: Mockup Visual -->
-        <div class="hero-mockup-wrapper">
-          <div class="hero-mockup-card">
-            <div class="mockup-header-bar">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="mockup-status-dot"></span>
-                <strong style="font-size: 0.85rem; color: var(--text-primary);">Entorno Comercial Dedicado</strong>
-              </div>
-              <div class="metadata-line">
-                <span>Tu Marca</span>
-                <span class="metadata-separator">·</span>
-                <span>Canales Activos</span>
-              </div>
-            </div>
-
-            <!-- Banner Vectorial del Negocio Registrado -->
-            <div style="background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%); border-radius: var(--radius-md); padding: 20px; color: white; margin-bottom: 14px;">
-              <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85;">Empresa Registrada en la Cuenta</span>
-              <h4 style="color: white; font-size: 1.25rem; margin: 4px 0 2px;" id="landing-hero-company-name">Tu Empresa Comercial</h4>
-              <p style="color: #C7D2FE; font-size: 0.82rem;" id="landing-hero-company-sector">Configuración estratégica exclusiva de marca</p>
-            </div>
-
-            <div class="mockup-body-preview">
-              <p><strong>Campaña Publicitaria Generada a la Medida:</strong></p>
-              <p style="margin-top: 8px;">
-                Cada publicación, correo y mensaje generado se nutre únicamente del perfil registrado de tu empresa, garantizando coherencia en todos tus canales sin desviarse de tus objetivos comerciales.
-              </p>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 0.8rem; color: var(--text-muted);">
-              <span>Entorno de trabajo seguro y privado</span>
-              <span style="color: var(--primary); font-weight: 600;">Identidad Protegida</span>
-            </div>
-          </div>
-        </div>
-
+        <span>MOTOR GENERATIVO COMERCIAL DEDICADO · MODELO EXCLUSIVO</span>
       </div>
+
+      <!-- Titular Cinético de Alto Impacto -->
+      <h1 class="lusion-hero-headline">
+        El contenido comercial de tu empresa, <span class="lusion-text-gradient-shimmer">impulsado con IA sensorial</span> y <span class="lusion-text-iridescent">cero prompts genéricos.</span>
+      </h1>
+
+      <p class="lusion-hero-subtext">
+        Diseñado con la precisión y estética de los estudios creativos globales. Registra tu empresa una sola vez y genera campañas hiper-calibradas a tu tono de voz, audiencia y objetivos comerciales.
+      </p>
+
+      <!-- Fila de Botones Magnéticos Interactivos -->
+      <div class="lusion-hero-cta-row">
+        <button class="lusion-magnetic-btn lusion-btn-accent" style="padding: 14px 34px; font-size: 1.05rem;" onclick="window.ContentAI.navigateTo('view-auth')">
+          <span class="btn-label-magnetic">
+            <span>Registrar mi Empresa</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
+          </span>
+        </button>
+        
+        <button class="lusion-magnetic-btn lusion-btn-ghost" style="padding: 14px 28px; font-size: 1.05rem;" onclick="window.ContentAI.openAppDemo()">
+          <span class="btn-label-magnetic">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            <span>Explorar Espacio de Trabajo</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- Cinta de Métricas de Precisión (Estilo Minimalista) -->
+      <div class="lusion-metrics-ribbon">
+        <div class="lusion-metric-col">
+          <span class="lusion-metric-value tabular-nums">1:1</span>
+          <span class="lusion-metric-label">Empresa Única por Cuenta</span>
+        </div>
+        <div class="lusion-metric-col">
+          <span class="lusion-metric-value tabular-nums">2.0s</span>
+          <span class="lusion-metric-label">Latencia de Generación</span>
+        </div>
+        <div class="lusion-metric-col">
+          <span class="lusion-metric-value tabular-nums">100%</span>
+          <span class="lusion-metric-label">Alineación de Marca</span>
+        </div>
+        <div class="lusion-metric-col">
+          <span class="lusion-metric-value tabular-nums">4</span>
+          <span class="lusion-metric-label">Formatos Multi-Canal</span>
+        </div>
+      </div>
+
     </div>
   </main>
 
-  <!-- Sección de Beneficios -->
-  <section id="beneficios" class="features-section">
-    <div class="container">
-      <div class="features-header">
-        <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; display: block;">ARQUITECTURA DE CONTENIDO COMERCIAL</span>
-        <h2 style="font-size: 2.1rem; margin-bottom: 12px;">Tu Empresa es el Centro de Todo el Contenido</h2>
-        <p>A diferencia de los chats generales donde debes reescribir quién eres en cada mensaje, ContentAI vincula tu cuenta directamente con la ficha de tu empresa.</p>
+  <!-- 3D Tilt Showcase Section: Tarjeta Interactiva con Iluminación Especular -->
+  <section class="lusion-showcase-section" id="showcase">
+    <div class="lusion-hero-container">
+      
+      <div class="lusion-showcase-grid">
+        
+        <!-- Tarjeta 3D Tilt Principal con Mockup Interactivo -->
+        <div class="lusion-glass-card lusion-hover-tilt">
+          <div class="lusion-card-glare"></div>
+          
+          <div class="lusion-card-header">
+            <div class="lusion-status-indicator">
+              <span class="lusion-pulse-dot"></span>
+              <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF;">Ambiente Operativo Protegido</span>
+            </div>
+            <span class="lusion-tag-mono">CONEXIÓN DEDICADA 256-BIT</span>
+          </div>
+
+          <!-- Banner de la Empresa Registrada -->
+          <div class="lusion-registered-company-banner">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+              <span class="lusion-tag-mono" style="color: #A5B4FC;">PERFIL DE NEGOCIO ACTIVO</span>
+              <span style="font-size: 0.75rem; background: rgba(99, 102, 241, 0.3); border: 1px solid rgba(165, 180, 252, 0.4); color: #E0E7FF; padding: 2px 10px; border-radius: 9999px;">
+                Exclusivo
+              </span>
+            </div>
+            <h3 class="lusion-company-title" id="landing-hero-company-name">Café La Cumbre Gourmet</h3>
+            <p class="lusion-company-meta" id="landing-hero-company-sector">Gastronomía y Café de Especialidad · Tono: Cercano y Profesional</p>
+            
+            <div class="lusion-preview-copy-box">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 0.78rem; font-weight: 600; color: #818CF8;">COPIA PUBLICITARIA CALIBRADA:</span>
+                <span style="font-size: 0.75rem; color: #64748B;">Instagram & Facebook</span>
+              </div>
+              <p style="margin: 0; font-style: italic;">
+                "En cada grano tostado en frío de Café La Cumbre no solo hay aroma, sino la devoción de quienes valoran las mañanas con carácter. Descubre nuestro nuevo lote de origen colombiano hoy mismo con envío prioritario."
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #64748B; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px;">
+            <span>Regla estricta: Ningún prompt ajeno contamina tu perfil</span>
+            <span style="color: #818CF8; font-weight: 600;">Sincronizado</span>
+          </div>
+        </div>
+
+        <!-- Columna Lateral: Tarjetas de Capacidades Futuristas -->
+        <div class="lusion-side-feature-stack">
+          <div class="lusion-mini-card">
+            <span class="lusion-feature-num">01 / ARQUITECTURA PRIVADA</span>
+            <h4 class="lusion-mini-title">Una Cuenta, Una Empresa</h4>
+            <p class="lusion-mini-desc">
+              El usuario que ingresa registra únicamente los parámetros de su negocio. El modelo asimila tu identidad sin dispersión de datos.
+            </p>
+          </div>
+
+          <div class="lusion-mini-card">
+            <span class="lusion-feature-num">02 / CANALES COMERCIALES</span>
+            <h4 class="lusion-mini-title">Adaptación Multi-Formato</h4>
+            <p class="lusion-mini-desc">
+              Genera piezas simultáneas para Facebook, Instagram Feed, WhatsApp Business y Email Marketing respetando las reglas de cada red.
+            </p>
+          </div>
+
+          <div class="lusion-mini-card">
+            <span class="lusion-feature-num">03 / AUDITORÍA & HISTORIAL</span>
+            <h4 class="lusion-mini-title">Revisión y Aprobación</h4>
+            <p class="lusion-mini-desc">
+              Pestaña dedicada de curación editorial: edita en tiempo real, califica con me gusta y conserva solo el contenido que apruebes.
+            </p>
+          </div>
+        </div>
+
       </div>
 
-      <div class="features-grid">
-        <div class="feature-box">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+  </section>
+
+  <!-- Bento Grid Immersivo: Capacidades Técnicas Estilo Lusion -->
+  <section class="lusion-bento-section" id="capacidades">
+    <div class="lusion-hero-container">
+      
+      <div class="lusion-section-header">
+        <span class="lusion-eyebrow">TECNOLOGÍA SENSORIAL</span>
+        <h2 class="lusion-section-title">
+          Potencia de Grado Estudio para el Crecimiento de tu PYME
+        </h2>
+        <p class="lusion-section-desc">
+          Cada interacción está diseñada para eliminar la fatiga creativa, acelerando el ciclo comercial de tu empresa con copys persuasivos y profesionales.
+        </p>
+      </div>
+
+      <div class="lusion-bento-grid">
+        
+        <div class="lusion-bento-item">
+          <div>
+            <div class="lusion-bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3 class="lusion-bento-title">Retorno Inmediato</h3>
+            <p class="lusion-bento-text">
+              Reducción del 90% en tiempos de producción comercial. Tu equipo dedica minutos en lugar de horas en la planificación de copys.
+            </p>
           </div>
-          <h3 class="feature-title">01. Registro Único de Empresa</h3>
-          <p>Al ingresar defines la identidad de tu negocio: nombre, actividad, público objetivo y tono. Tu cuenta queda vinculada exclusivamente a ella.</p>
+          <div class="lusion-interactive-badge">
+            <span>Rendimiento Óptimo</span>
+            <span>→</span>
+          </div>
         </div>
 
-        <div class="feature-box">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+        <div class="lusion-bento-item">
+          <div>
+            <div class="lusion-bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            </div>
+            <h3 class="lusion-bento-title">Micro-Variantes A/B</h3>
+            <p class="lusion-bento-text">
+              Generación de múltiples alternativas por canal para evaluar qué enfoque conecta con mayor fuerza emocional con tus clientes.
+            </p>
           </div>
-          <h3 class="feature-title">02. Redacción Multi-Canal</h3>
-          <p>El motor adapta cada campaña para Facebook, Instagram, Email Marketing y WhatsApp, siempre usando el contexto registrado de tu empresa.</p>
+          <div class="lusion-interactive-badge">
+            <span>Variaciones Dinámicas</span>
+            <span>→</span>
+          </div>
         </div>
 
-        <div class="feature-box">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+        <div class="lusion-bento-item">
+          <div>
+            <div class="lusion-bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+            </div>
+            <h3 class="lusion-bento-title">Aislamiento Total</h3>
+            <p class="lusion-bento-text">
+              Tus datos comerciales, productos y estrategias permanecen cifrados y vinculados estrictamente a tu identidad empresarial.
+            </p>
           </div>
-          <h3 class="feature-title">03. Historial Aprobado</h3>
-          <p>Todos los borradores que apruebes se guardan en el archivo histórico de tu negocio, listos para copiar, editar o republicar cuando desees.</p>
+          <div class="lusion-interactive-badge">
+            <span>Privacidad Blindada</span>
+            <span>→</span>
+          </div>
         </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Banner de Conversión Final con Iluminación Radial Lusion -->
+  <section class="lusion-cta-banner-section" id="seguridad">
+    <div class="lusion-hero-container">
+      <div class="lusion-cta-box">
+        <h2 class="lusion-cta-title">Comienza a potenciar la voz comercial de tu empresa</h2>
+        <p class="lusion-cta-sub">
+          Configura tu empresa en menos de 2 minutos. Accede al generador inteligente y a la suite completa de revisión multicanal.
+        </p>
+        <button class="lusion-magnetic-btn lusion-btn-glow" style="padding: 16px 40px; font-size: 1.1rem;" onclick="window.ContentAI.navigateTo('view-auth')">
+          <span class="btn-label-magnetic">
+            <span>Registrar mi Empresa Ahora</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="landing-footer">
-    <div class="container footer-content">
-      <div>
-        <strong style="color: var(--text-inverse); font-size: 1rem;">ContentAI - PYMES</strong>
-        <p style="margin-top: 4px; font-size: 0.8rem;">
-          Proyecto Universitario de Ingeniería de Software · Módulos HTML separados para migración a Laravel Blade
-        </p>
+  <!-- Footer Minimalista Oscuro -->
+  <footer class="lusion-footer">
+    <div class="lusion-footer-container">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div class="lusion-brand-mark" style="width: 24px; height: 24px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+        </div>
+        <strong style="color: #FFFFFF;">ContentAI - PYMES</strong>
+        <span style="color: #334155;">·</span>
+        <span style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">Experiencia Lusion Interactive</span>
       </div>
-      <div>
-        <button class="btn btn-secondary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">Acceso al Sistema</button>
+
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <span style="font-size: 0.8rem;">HTML5 · CSS3 · Vanilla JS Puro</span>
+        <button class="lusion-magnetic-btn lusion-btn-ghost" style="padding: 6px 16px; font-size: 0.8rem;" onclick="window.ContentAI.navigateTo('view-auth')">
+          <span class="btn-label-magnetic">Acceso al Sistema</span>
+        </button>
       </div>
     </div>
   </footer>
+
 </section>

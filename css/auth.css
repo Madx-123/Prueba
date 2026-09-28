@@ -1,18 +1,20 @@
 /**
  * ContentAI - PYMES | Auth Styles (Login / Registro)
+ * Clean Slate & Platinum Theme (Blanco / Casi Plomo)
  */
 
 .auth-wrapper {
-  min-height: calc(100vh - 120px);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
-  background: radial-gradient(circle at 50% 30%, #EEF2FF 0%, #F8FAFC 80%);
+  padding: 60px 20px;
+  background-color: var(--canvas);
+  position: relative;
 }
 
 .auth-card {
-  background: var(--surface);
+  background: #FFFFFF;
   width: 100%;
   max-width: 460px;
   border-radius: var(--radius-xl);
@@ -20,6 +22,18 @@
   box-shadow: var(--shadow-lg);
   padding: 40px;
   position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary);
 }
 
 .auth-header {
@@ -27,28 +41,42 @@
   margin-bottom: 28px;
 }
 
+.auth-header h2 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.auth-header p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
 .auth-badge-icon {
-  width: 54px;
-  height: 54px;
-  background: var(--primary-gradient);
-  color: var(--text-inverse);
+  width: 52px;
+  height: 52px;
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid var(--primary-subtle);
   border-radius: var(--radius-md);
   margin: 0 auto 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
 }
 
 .auth-demo-card {
   margin-top: 24px;
   padding: 14px 16px;
-  background: var(--primary-light);
+  background: var(--surface-muted);
   border-radius: var(--radius-md);
-  border: 1px dashed var(--primary-subtle);
+  border: 1px dashed var(--border-strong);
   font-size: 0.82rem;
-  color: var(--primary);
+  color: var(--text-secondary);
+  line-height: 1.5;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
 }

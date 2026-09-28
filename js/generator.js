@@ -69,14 +69,27 @@ export function handleGenerateSubmit(event) {
     const typeBadge = document.getElementById('review-badge-type');
     if (typeBadge) typeBadge.textContent = contentType;
 
+    // Sincronizar red activa de preview
+    let network = 'Facebook';
+    if (contentType.includes('Instagram')) network = 'Instagram';
+    else if (contentType.includes('TikTok')) network = 'TikTok';
+    else if (contentType.includes('WhatsApp')) network = 'WhatsApp';
+    else if (contentType.includes('Email')) network = 'Email';
+
+    store.setState({
+      currentGeneration: {
+        contentType,
+        objective,
+        topic,
+        generatedText: generatedCopy,
+        previewNetwork: network
+      }
+    });
+
     // Renderizar la vista previa en vivo del canal
     renderLivePreview();
 
     showToast('¡Contenido generado exitosamente con la identidad de tu PYME!', 'success');
-
-    // Cambio automático al Tab B por requerimiento
-    switchDashboardTab('tab-review');
-
   }, 2000);
 }
 
@@ -86,22 +99,23 @@ export function craftAICommercialCopy(type, objective, topic) {
   const audience = profile.audience || 'nuestros clientes';
   const tone = profile.tone || 'Cercano';
 
-  if (type.includes('Facebook')) {
-    return `☕✨ ¡Novedades exclusivas en ${name}! ✨🌿\n\n📌 ¿De qué se trata?\n${topic}\n\nSabemos lo importante que es para ti disfrutar de productos auténticos y apoyar el talento y la producción local. Esta campaña fue pensada especialmente para quienes buscan calidad sin rodeos.\n\n🎁 BENEFICIO PARA NUESTRA COMUNIDAD:\nComenta "QUIERO" o escríbenos directamente por mensaje privado para reclamar tu beneficio antes de agotar existencia.\n\n👇 ¡Haz clic en el enlace o contáctanos hoy mismo!`;
+  if (type.includes('TikTok')) {
+    return `🔥 ¡Para de hacer scroll si buscas lo mejor de ${name}! 😱✨\n\n${topic}\n\nLo que nadie te cuenta sobre los productos de producción local es que marcan una diferencia brutal en calidad. 🌿\n\n👉 Guarda este video y comenta "OFERTA" para mandarte un 20% de descuento directo al DM.\n\n#${name.replace(/[^a-zA-Z0-9]/g, '')} #Emprendimiento #PYME #Viral #ComercioLocal #Tips`;
   }
   else if (type.includes('Instagram')) {
-    return `✨ Hecho con pasión, pensado para tu día a día. En ${name} cuidamos cada detalle. 📸\n\n${topic}\n\nDiseñado especialmente para quienes como tú valoran la autenticidad y el compromiso real. 🤍\n\n💬 Cuéntanos en los comentarios: ¿qué es lo primero que buscas al elegir un producto artesanal?\n\n.\n.\n#${name.replace(/[^a-zA-Z0-9]/g, '')} #ComercioLocal #PYMES #CalidadArtesanal #ConsumoConsciente #Emprendimiento`;
+    return `✨ Hecho con pasión, pensado para tu día a día. En **${name}** cuidamos cada detalle. 📸🌿\n\n${topic}\n\nDiseñado especialmente para quienes como tú valoran la autenticidad y el compromiso real. 🤍\n\n💬 Cuéntanos en los comentarios: ¿qué es lo primero que buscas al elegir un producto artesanal?\n\n.\n.\n#${name.replace(/[^a-zA-Z0-9]/g, '')} #ComercioLocal #PYMES #CalidadArtesanal #ConsumoConsciente #Emprendimiento`;
   }
   else if (type.includes('WhatsApp')) {
     return `¡Hola! 👋 Te saludamos con mucho cariño desde *${name}*.\n\nQueremos compartirte una promoción especial:\n\n✨ *${topic}*\n\nSi deseas hacer tu pedido o tienes alguna duda, respóndenos a este mensaje con la palabra *PEDIDO* y nuestro equipo te atenderá con gusto en este instante. 📦🚀`;
   }
   else if (type.includes('Email')) {
-    return `ASUNTO: 📬 Una invitación especial de ${name} para ti\nPREHEAD: Descubre la nueva propuesta que preparamos para tu bienestar.\n\nEstimado/a cliente,\n\nEn ${name} tenemos el compromiso de ofrecerte siempre lo mejor. Por ello, hoy te presentamos:\n\n👉 ${topic}\n\n¿Por qué es importante para ti?\nPorque conocemos tus necesidades y creamos soluciones a tu medida.\n\n[ BOTÓN: APROVECHAR PROMOCIÓN EXCLUSIVA ]\n\nUn cordial saludo,\nEl equipo de ${name}`;
+    return `ASUNTO: 📬 Una invitación especial de ${name} para ti\nPREHEAD: Descubre la nueva propuesta que preparamos para tu bienestar.\n\nEstimado/a cliente,\n\nEn **${name}** tenemos el compromiso de ofrecerte siempre lo mejor. Por ello, hoy te presentamos:\n\n👉 ${topic}\n\n¿Por qué es importante para ti?\nPorque conocemos tus necesidades y creamos soluciones a tu medida.\n\n[ BOTÓN: APROVECHAR PROMOCIÓN EXCLUSIVA ]\n\nUn cordial saludo,\nEl equipo de ${name}`;
   }
   else if (type.includes('Landing')) {
     return `[ ENCABEZADO PRINCIPAL (H1) ]\nLa mejor experiencia artesanal la vives con ${name}.\n\n[ SUBTÍTULO PERSUASIVO ]\n${topic}\n\n[ 3 RAZONES PARA ELEGIRNOS ]\n1. Calidad Certificada: Cuidado minucioso en cada lote y proceso.\n2. Trato Humano y Cercano: Respaldado por personas comprometidas con tu satisfacción.\n3. Garantía y Rapidez: Entregas seguras y atención inmediata a tus requerimientos.\n\n[ LLAMADA A LA ACCIÓN (CTA) ]:\n"Solicitar Información Ahora / Comprar con Envío Gratis"`;
   }
   else {
-    return `En ${name} reafirmamos nuestro compromiso con la innovación en el sector.\n\n${topic}\n\nUna propuesta estructurada para generar impacto medible y valor sostenible. ¿Cómo gestiona tu equipo estas prioridades en la actualidad?\n\n#Innovación #PYMES #LiderazgoEmpresarial #${name.replace(/[^a-zA-Z0-9]/g, '')}`;
+    // Facebook por defecto
+    return `☕✨ ¡Novedades exclusivas en **${name}**! ✨🌿\n\n📌 ¿De qué se trata?\n${topic}\n\nSabemos lo importante que es para ti disfrutar de productos auténticos y apoyar el talento y la producción local. Esta campaña fue pensada especialmente para quienes buscan calidad sin rodeos.\n\n🎁 BENEFICIO PARA NUESTRA COMUNIDAD:\nComenta "QUIERO" o escríbenos directamente por mensaje privado para reclamar tu beneficio antes de agotar existencia.\n\n👇 ¡Haz clic en el enlace o contáctanos hoy mismo!`;
   }
 }

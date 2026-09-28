@@ -82,11 +82,41 @@ export function renderProfileUI() {
   const topbarBrandPill = document.getElementById('topbar-brand-name');
   const genHeaderCompany = document.getElementById('generator-header-company-note');
 
+  // Elementos de la Burbuja Flotante de Usuario (Abajo a la Derecha)
+  const bubbleAvatar = document.getElementById('user-bubble-avatar');
+  const bubbleInitial = document.getElementById('user-bubble-initial');
+  const bubbleName = document.getElementById('user-bubble-name');
+  const bubbleCompany = document.getElementById('user-bubble-company');
+  const bubbleSector = document.getElementById('user-bubble-sector');
+  const bubbleEmail = document.getElementById('user-bubble-email');
+
+  const userEmail = store.getState().user?.email || 'gerencia@pyme.com';
+
+  // Elementos del Dock de Usuario estilo Discord (Esquina Inferior Izquierda)
+  const discordAvatar = document.getElementById('discord-user-avatar');
+  const discordUserName = document.getElementById('discord-user-name');
+  const discordUserEmail = document.getElementById('discord-user-email');
+  const discordCompanyName = document.getElementById('discord-company-name');
+  const discordCompanySector = document.getElementById('discord-company-sector');
+
+  if (discordAvatar) discordAvatar.textContent = initial;
+  if (discordUserName) discordUserName.textContent = profile.name;
+  if (discordUserEmail) discordUserEmail.textContent = userEmail;
+  if (discordCompanyName) discordCompanyName.textContent = profile.name;
+  if (discordCompanySector) discordCompanySector.textContent = profile.sector;
+
   if (avatarEl) avatarEl.textContent = initial;
   if (nameEl) nameEl.textContent = profile.name;
   if (sectorEl) sectorEl.textContent = profile.sector.split('/')[0];
   if (topbarBrandPill) topbarBrandPill.textContent = profile.name;
   if (genHeaderCompany) genHeaderCompany.textContent = `Vinculado a: ${profile.name}`;
+
+  if (bubbleAvatar) bubbleAvatar.textContent = initial;
+  if (bubbleInitial) bubbleInitial.textContent = initial;
+  if (bubbleName) bubbleName.textContent = profile.name;
+  if (bubbleCompany) bubbleCompany.textContent = profile.name;
+  if (bubbleSector) bubbleSector.textContent = profile.sector;
+  if (bubbleEmail) bubbleEmail.textContent = userEmail;
 
   // Landing Hero Card
   const landingHeroName = document.getElementById('landing-hero-company-name');

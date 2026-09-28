@@ -1,282 +1,676 @@
 /**
- * ContentAI - PYMES | Landing Page Styles
+ * ContentAI - PYMES | Clean Slate & Platinum Landing Theme (Blanco / Casi Plomo)
+ * Diseñado con estética SaaS Enterprise limpia, máxima legibilidad y micro-interacciones ágiles.
  */
 
-/* TOP BAR (Regla Contractual: 3 Zonas) */
-.landing-navbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  height: 72px;
-  background-color: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-default);
-  display: flex;
-  align-items: center;
+/* ========================================================================= */
+/* 1. ROOT WRAPPER & CANVAS (CLEAN SLATE)                                    */
+/* ========================================================================= */
+
+.lusion-landing-wrapper {
+  position: relative;
+  background-color: var(--canvas);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Inter', var(--font-body);
+  letter-spacing: -0.015em;
 }
 
-.landing-nav-container {
+/* Background Canvas Layer (Oculto para preservar nitidez pura) */
+#lusion-canvas {
+  display: none !important;
+}
+
+.lusion-noise-overlay {
+  display: none !important;
+}
+
+/* Custom Fluid Cursor (Hidden on touch devices) */
+@media (pointer: fine) {
+  .lusion-cursor-follower {
+    position: fixed;
+    top: -20px;
+    left: -20px;
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid rgba(79, 70, 229, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.12s cubic-bezier(0.1, 1, 0.1, 1), width 0.2s, height 0.2s;
+  }
+
+  .lusion-cursor-dot {
+    position: fixed;
+    top: -3px;
+    left: -3px;
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+  }
+}
+
+@media (pointer: coarse) {
+  .lusion-cursor-follower,
+  .lusion-cursor-dot {
+    display: none !important;
+  }
+}
+
+/* ========================================================================= */
+/* 2. FLOATING DOCK NAVBAR (BLANCO / CASI PLOMO)                             */
+/* ========================================================================= */
+
+.lusion-navbar {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.lusion-nav-pill-container {
+  pointer-events: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  gap: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+  border-radius: 9999px;
+  padding: 8px 12px 8px 20px;
+  max-width: 980px;
+  width: calc(100% - 48px);
+  transition: all 0.25s ease;
 }
 
-/* Zona 1: Brand Wordmark (Single Text Element) */
-.landing-brand {
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  text-decoration: none;
+.lusion-brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
+  color: var(--text-primary);
 }
 
-.brand-icon-box {
-  width: 38px;
-  height: 38px;
-  background: var(--primary-gradient);
-  border-radius: var(--radius-md);
+.lusion-brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-inverse);
-  box-shadow: 0 4px 10px var(--primary-glow);
-}
-
-.brand-tag-text {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--primary);
-  background: var(--primary-light);
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-/* Zona 2: Nav Links */
-.landing-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-
-.landing-nav-link {
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.925rem;
-  font-weight: 500;
-  transition: color var(--trans-fast);
-  cursor: pointer;
-}
-
-.landing-nav-link:hover {
-  color: var(--primary);
-}
-
-/* Zona 3: Acciones */
-.landing-nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* HERO SECTION */
-.hero-section {
-  padding: 80px 0 70px;
-  background: radial-gradient(circle at 50% 0%, #EEF2FF 0%, #F8FAFC 75%);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
   position: relative;
   overflow: hidden;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 56px;
-  align-items: center;
+.lusion-brand-name {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.12rem;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
-.hero-kicker {
-  font-size: 0.85rem;
-  font-weight: 600;
+.lusion-brand-pill {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   color: var(--primary);
-  margin-bottom: 16px;
+  background: var(--primary-light);
+  border: 1px solid var(--primary-subtle);
+  padding: 2px 7px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.lusion-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.lusion-nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.15s ease;
+  padding: 6px 0;
+}
+
+.lusion-nav-link:hover {
+  color: var(--primary);
+}
+
+.lusion-nav-actions {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.hero-title {
-  font-size: 3.1rem;
-  letter-spacing: -0.03em;
-  margin-bottom: 20px;
-  color: var(--text-primary);
-  line-height: 1.18;
+/* ========================================================================= */
+/* 3. MAGNETIC BUTTONS & INTERACTIVE PILLS                                   */
+/* ========================================================================= */
+
+.lusion-magnetic-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--trans-fast);
 }
 
-.hero-title .gradient-text {
-  background: var(--primary-gradient);
+.lusion-btn-glow {
+  background: var(--primary);
+  color: #FFFFFF;
+  border: 1px solid var(--primary-hover);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+.lusion-btn-glow:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.45);
+  transform: translateY(-1px);
+}
+
+.lusion-btn-ghost {
+  background: #FFFFFF;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-xs);
+}
+
+.lusion-btn-ghost:hover {
+  background: var(--surface-muted);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.lusion-btn-accent {
+  background: var(--primary);
+  color: #FFFFFF;
+  border: 1px solid var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+}
+
+.lusion-btn-accent:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-label-magnetic {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ========================================================================= */
+/* 4. HERO SECTION (CLEAN SAAS WHITE / PLATINUM)                             */
+/* ========================================================================= */
+
+.lusion-hero-section {
+  position: relative;
+  z-index: 10;
+  padding: 130px 0 80px;
+  display: flex;
+  align-items: center;
+}
+
+.lusion-hero-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.lusion-hero-kicker-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  margin-bottom: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--primary);
+  font-weight: 700;
+  box-shadow: var(--shadow-xs);
+}
+
+.lusion-sound-visualizer {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5px;
+  height: 14px;
+}
+
+.lusion-eq-bar {
+  width: 2px;
+  height: 60%;
+  background: var(--primary);
+  border-radius: 1px;
+}
+
+.lusion-hero-headline {
+  font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--text-primary);
+  margin-bottom: 22px;
+  max-width: 1000px;
+}
+
+.lusion-text-gradient-shimmer {
+  background: linear-gradient(135deg, #1E1B4B 0%, #4F46E5 50%, #0284C7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.hero-description {
-  font-size: 1.15rem;
+.lusion-text-iridescent {
+  color: var(--primary);
+}
+
+.lusion-hero-subtext {
+  font-size: clamp(1rem, 1.4vw, 1.22rem);
+  line-height: 1.65;
   color: var(--text-secondary);
+  max-width: 680px;
   margin-bottom: 36px;
+  font-weight: 400;
+}
+
+.lusion-hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.lusion-metrics-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-default);
+}
+
+.lusion-metric-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.lusion-metric-value {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.lusion-metric-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* ========================================================================= */
+/* 5. SHOWCASE & CARDS (BLANCO / CASI PLOMO)                                 */
+/* ========================================================================= */
+
+.lusion-showcase-section {
+  position: relative;
+  z-index: 10;
+  padding: 40px 0 100px;
+}
+
+.lusion-showcase-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.lusion-glass-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.lusion-glass-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.lusion-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.lusion-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lusion-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+}
+
+.lusion-tag-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.lusion-registered-company-banner {
+  background: var(--primary-light);
+  border: 1px solid var(--primary-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.lusion-company-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.lusion-company-meta {
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.lusion-preview-copy-box {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  border: 1px solid var(--border-default);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.lusion-side-feature-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lusion-mini-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-xs);
+}
+
+.lusion-mini-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.lusion-feature-num {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.lusion-mini-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.lusion-mini-desc {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ========================================================================= */
+/* 6. BENTO GRID SECTION (BLANCO / CASI PLOMO)                               */
+/* ========================================================================= */
+
+.lusion-bento-section {
+  position: relative;
+  z-index: 10;
+  padding: 80px 0 100px;
+}
+
+.lusion-section-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 48px;
+}
+
+.lusion-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.lusion-section-title {
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.lusion-section-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
-.hero-cta-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-/* Adyacencia de Pruebas (Claim-to-Proof) */
-.hero-proof-strip {
-  margin-top: 48px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border-default);
-  display: flex;
-  align-items: center;
-  gap: 36px;
-}
-
-.proof-item strong {
-  display: block;
-  font-size: 1.4rem;
-  font-family: var(--font-heading);
-  color: var(--text-primary);
-}
-
-.proof-item span {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-/* MOCKUP INTERACTIVO EN EL HERO */
-.hero-mockup-card {
-  background: var(--surface);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-lg);
-  padding: 24px;
-  position: relative;
-  transition: transform var(--trans-normal);
-}
-
-.hero-mockup-card:hover {
-  transform: translateY(-4px);
-}
-
-.mockup-header-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border-subtle);
-  margin-bottom: 16px;
-}
-
-.mockup-status-dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--success);
-  border-radius: 50%;
-  display: inline-block;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-}
-
-.mockup-body-preview {
-  background: var(--canvas);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: var(--text-secondary);
-  border: 1px dashed var(--primary-subtle);
-}
-
-/* SECCIÓN DE CARACTERÍSTICAS */
-.features-section {
-  padding: 90px 0;
-  background-color: var(--surface);
-}
-
-.features-header {
-  text-align: center;
-  max-width: 640px;
-  margin: 0 auto 56px;
-}
-
-.features-grid {
+.lusion-bento-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-}
-
-.feature-box {
-  background-color: var(--canvas);
-  padding: 32px 26px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-default);
-  transition: all var(--trans-normal);
-}
-
-.feature-box:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-subtle);
-}
-
-.feature-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-md);
-  background: var(--primary-light);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 22px;
-}
-
-.feature-title {
-  font-size: 1.25rem;
-  margin-bottom: 10px;
-  color: var(--text-primary);
-}
-
-/* FOOTER */
-.landing-footer {
-  background-color: var(--surface-dark);
-  color: #94A3B8;
-  padding: 44px 0;
-  font-size: 0.85rem;
-  margin-top: auto;
-  border-top: 1px solid var(--border-dark);
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
   gap: 20px;
 }
 
-@media (max-width: 960px) {
-  .hero-grid {
+.lusion-bento-item {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-xs);
+}
+
+.lusion-bento-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.lusion-bento-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--primary-light);
+  border: 1px solid var(--primary-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.lusion-bento-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.lusion-bento-text {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.lusion-interactive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ========================================================================= */
+/* 7. BOTTOM CTA BANNER & FOOTER                                             */
+/* ========================================================================= */
+
+.lusion-cta-banner-section {
+  position: relative;
+  z-index: 10;
+  padding: 40px 0 80px;
+}
+
+.lusion-cta-box {
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 60px 32px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.lusion-cta-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary);
+}
+
+.lusion-cta-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.lusion-cta-sub {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin: 0 auto 30px;
+}
+
+.lusion-footer {
+  position: relative;
+  z-index: 10;
+  background: #FFFFFF;
+  border-top: 1px solid var(--border-default);
+  padding: 32px 0;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+
+.lusion-footer-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media (max-width: 980px) {
+  .lusion-showcase-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
   }
-  .features-grid {
+  .lusion-bento-grid {
     grid-template-columns: 1fr;
   }
-  .landing-nav-links {
+  .lusion-nav-links {
     display: none;
+  }
+  .lusion-metrics-ribbon {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .lusion-hero-section {
+    padding-top: 110px;
   }
 }

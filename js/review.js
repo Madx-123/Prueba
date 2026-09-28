@@ -45,12 +45,66 @@ export function handleTextareaEdit(textarea) {
     }
   });
 
+  // Renderizar la vista previa en vivo inmediatamente para reflejar cambios en tiempo real
+  renderLivePreview();
+
   const statusBadge = document.getElementById('edit-status-badge');
   if (statusBadge) {
-    statusBadge.textContent = '✏️ Modificado manualmente';
+    statusBadge.textContent = '✏️ Modificado en vivo';
     statusBadge.style.color = 'var(--primary)';
-    statusBadge.style.background = 'var(--primary-light)';
   }
+}
+
+// Inserción de formato enriquecido en la posición del cursor (Negrita, Cursiva, Hashtag, Emoji, Lista)
+export function insertFormatting(type) {
+  const textarea = document.getElementById('preview-generated-text');
+  if (!textarea) return;
+
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const original = textarea.value;
+  const selectedText = original.substring(start, end);
+
+  let replacement = '';
+  let cursorOffset = 0;
+
+  switch (type) {
+    case 'bold':
+      replacement = selectedText ? `**${selectedText}**` : `**texto destacado**`;
+      cursorOffset = 2;
+      break;
+    case 'italic':
+      replacement = selectedText ? `_${selectedText}_` : `_texto cursiva_`;
+      cursorOffset = 1;
+      break;
+    case 'hashtag':
+      replacement = selectedText ? `#${selectedText.replace(/\s+/g, '')}` : `#MiNegocio `;
+      cursorOffset = replacement.length;
+      break;
+    case 'bullet':
+      replacement = selectedText ? `\n• ${selectedText}` : `\n• Beneficio clave: `;
+      cursorOffset = replacement.length;
+      break;
+    case 'emoji':
+      replacement = `✨ `;
+      cursorOffset = 3;
+      break;
+    case 'clear':
+      textarea.value = '';
+      handleTextareaEdit(textarea);
+      textarea.focus();
+      return;
+    default:
+      return;
+  }
+
+  textarea.value = original.substring(0, start) + replacement + original.substring(end);
+  const newPos = start + (selectedText ? replacement.length : cursorOffset);
+  textarea.selectionStart = textarea.selectionEnd = newPos;
+  textarea.focus();
+
+  handleTextareaEdit(textarea);
+  showToast(`Formato aplicado: ${type}`, 'info');
 }
 
 export function focusAndEditTextarea() {

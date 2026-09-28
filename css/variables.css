@@ -1,69 +1,74 @@
 /**
- * ContentAI - PYMES | Design System Variables & Tokens
- * Arquitectura modular para migración a Laravel Blade / Tailwind / Vanilla CSS
+ * ContentAI - PYMES | Global Design System Variables & Tokens
+ * Clean Slate & Platinum Professional SaaS Theme (Blanco / Casi Plomo)
+ * Diseñado para máxima legibilidad, contraste técnico y estética corporativa limpia.
  */
 
 :root {
-  /* Paleta Primaria & Acentos (60-30-10 Rule) */
+  /* Brand Primary Spectrum (Indigo Técnico) */
   --primary: #4F46E5;
   --primary-hover: #4338CA;
   --primary-light: #EEF2FF;
-  --primary-subtle: #C7D2FE;
-  --primary-glow: rgba(79, 70, 229, 0.25);
-  --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  --primary-subtle: #E0E7FF;
+  --primary-glow: rgba(79, 70, 229, 0.2);
+  --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
   
-  --secondary: #0EA5E9;
-  --accent: #8B5CF6;
+  --secondary: #0284C7;
+  --accent: #7C3AED;
+  --iridescent: linear-gradient(90deg, #4F46E5 0%, #0284C7 100%);
   
-  /* Estados Semánticos */
-  --success: #10B981;
+  /* Semantic Statuses */
+  --success: #059669;
   --success-light: #ECFDF5;
   --success-border: #A7F3D0;
-  --warning: #F59E0B;
+  --warning: #D97706;
   --warning-light: #FFFBEB;
-  --danger: #EF4444;
+  --danger: #DC2626;
   --danger-light: #FEF2F2;
 
-  /* Superficies y Neutros Sofisticados (Slate & Neutral Canvas) */
-  --canvas: #F8FAFC;
-  --surface: #FFFFFF;
-  --surface-raised: #FFFFFF;
-  --surface-muted: #F1F5F9;
-  --surface-dark: #0F172A;
-  --surface-sidebar: #0B0F19;
+  /* PALETA BLANCO / CASI PLOMO (Clean Platinum & Slate Workspace) */
+  --canvas: #F1F5F9;           /* Casi plomo claro de fondo general (Slate 100) */
+  --surface: #FFFFFF;          /* Blanco puro para tarjetas elevadas */
+  --surface-raised: #FFFFFF;   /* Blanco puro */
+  --surface-muted: #F8FAFC;    /* Blanco humo / Gris plomo muy suave (Slate 50) */
+  --surface-dark: #E2E8F0;     /* Plomo medio suave (Slate 200) */
+  --surface-sidebar: #FFFFFF;  /* Blanco puro */
+  --surface-glass: rgba(255, 255, 255, 0.95);
 
-  --border-subtle: rgba(226, 232, 240, 0.8);
-  --border-default: #E2E8F0;
-  --border-strong: #CBD5E1;
-  --border-dark: rgba(255, 255, 255, 0.08);
+  /* Bordes Limpios y Técnicos en Escala de Grises / Plomo */
+  --border-subtle: #F1F5F9;
+  --border-default: #E2E8F0;   /* Slate 200 */
+  --border-strong: #CBD5E1;    /* Slate 300 */
+  --border-dark: #E2E8F0;
+  --border-glow: rgba(79, 70, 229, 0.25);
 
-  /* Tipografía */
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --text-disabled: #94A3B8;
-  --text-inverse: #FFFFFF;
+  /* Jerarquía de Texto de Alto Contraste */
+  --text-primary: #0F172A;     /* Casi negro / Slate 900 de máxima nitidez */
+  --text-secondary: #475569;   /* Plomo oscuro legible (Slate 600) */
+  --text-muted: #64748B;       /* Plomo medio (Slate 500) */
+  --text-disabled: #94A3B8;    /* Plomo suave */
+  --text-inverse: #FFFFFF;     /* Blanco */
 
-  --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Sombras Modernas (Single Elevation Depth) */
+  /* Sombras Técnicas Nítidas (No sucias, sutiles y elegantes) */
   --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 12px 20px -4px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
-  --shadow-glow: 0 0 25px -4px rgba(79, 70, 229, 0.35);
+  --shadow-sm: 0 2px 8px -1px rgba(15, 23, 42, 0.06), 0 1px 4px -1px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 8px 20px -3px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 16px 32px -4px rgba(15, 23, 42, 0.1), 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+  --shadow-glow: 0 0 20px -3px rgba(79, 70, 229, 0.25);
 
-  /* Curvaturas (Radio anidado: r_inner = r_outer - padding) */
+  /* Geometrías */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
-  --radius-xl: 20px;
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
-  /* Tiempos de Transición */
+  /* Timings */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --trans-fast: 0.15s var(--ease-spring);
-  --trans-normal: 0.25s var(--ease-spring);
+  --trans-fast: 0.15s ease-out;
+  --trans-normal: 0.25s ease-out;
 }

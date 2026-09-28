@@ -10,17 +10,27 @@
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Tipografía Moderna SaaS: Plus Jakarta Sans & Inter -->
+  <!-- Tipografía Moderna SaaS & Lusion: Space Grotesk, Plus Jakarta Sans, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- ========================================================================= -->
   <!-- HOJA DE ESTILOS MODULAR EN CSS3 PURO (Compatible con Live Server y Vite)   -->
   <!-- ========================================================================= -->
-  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+
+  <!-- Fondo Canvas Interactivo de Partículas, Ondas Fluidas y Resplandores Lusion (Persistente en Todo el Sitio) -->
+  <canvas id="lusion-canvas"></canvas>
+  
+  <!-- Textura de Grano Sutil Cinematográfico -->
+  <div class="lusion-noise-overlay"></div>
+
+  <!-- Cursor Fluido Dinámico (Lusion Style) -->
+  <div class="lusion-cursor-follower"></div>
+  <div class="lusion-cursor-dot"></div>
 
   <!-- ========================================================================= -->
   <!-- CONTENEDOR PRINCIPAL SPA                                                  -->
@@ -29,189 +39,300 @@
   <div id="app-root">
 
     <!-- ======================================================================= -->
-    <!-- 1. VISTA: LANDING PAGE (Futuro Blade: resources/views/pages/landing)    -->
+    <!-- 1. VISTA: LANDING PAGE (Diseño, Animaciones y Tipografía estilo Lusion.co) -->
     <!-- ======================================================================= -->
-    <section id="view-landing" class="view-section active">
-      
-      <!-- Top Bar: 3 Zonas Estrictas -->
-      <header class="landing-navbar">
-        <div class="container landing-nav-container">
+    <section id="view-landing" class="view-section active lusion-landing-wrapper">
+
+      <!-- Top Bar: Floating Glass Pill Navbar (Estilo Lusion) -->
+      <header class="lusion-navbar">
+        <div class="lusion-nav-pill-container">
           
-          <!-- Zona 1: Brand Wordmark -->
-          <a href="javascript:void(0)" class="landing-brand" onclick="window.ContentAI.navigateTo('view-landing')">
-            <div class="brand-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Brand Wordmark con Isotipo Brillante -->
+          <a href="javascript:void(0)" class="lusion-brand" onclick="window.ContentAI.navigateTo('view-landing')">
+            <div class="lusion-brand-mark">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
-                <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
               </svg>
             </div>
-            <span>ContentAI</span>
-            <span class="brand-tag-text">PYMES</span>
+            <span class="lusion-brand-name">ContentAI</span>
+            <span class="lusion-brand-pill">PYMES</span>
           </a>
 
-          <!-- Zona 2: Nav Links -->
-          <nav class="landing-nav-links">
-            <a class="landing-nav-link" href="#propuesta">Propuesta</a>
-            <a class="landing-nav-link" href="#beneficios">Beneficios</a>
-            <a class="landing-nav-link" href="#seguridad">Tu Empresa</a>
+          <!-- Nav Links con Línea Cinética al Hover -->
+          <nav class="lusion-nav-links">
+            <a class="lusion-nav-link" href="#propuesta">Experiencia</a>
+            <a class="lusion-nav-link" href="#showcase">Entorno Dedicado</a>
+            <a class="lusion-nav-link" href="#capacidades">Capacidades</a>
+            <a class="lusion-nav-link" href="#seguridad">Seguridad PYME</a>
           </nav>
 
-          <!-- Zona 3: Acciones Primarias -->
-          <div class="landing-nav-actions">
-            <button class="btn btn-secondary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">
-              Iniciar Sesión
+          <!-- Acciones con Botones Magnéticos Redondeados -->
+          <div class="lusion-nav-actions">
+            <button class="lusion-magnetic-btn lusion-btn-ghost" onclick="window.ContentAI.navigateTo('view-auth')">
+              <span class="btn-label-magnetic">Iniciar Sesión</span>
             </button>
-            <button class="btn btn-primary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">
-              Registrar mi Empresa
+            <button class="lusion-magnetic-btn lusion-btn-glow" onclick="window.ContentAI.navigateTo('view-auth')">
+              <span class="btn-label-magnetic">Registrar Empresa</span>
             </button>
           </div>
 
         </div>
       </header>
 
-      <!-- Hero Section -->
-      <main class="hero-section" id="propuesta">
-        <div class="container">
-          <div class="hero-grid">
-            
-            <!-- Columna Izquierda: Copy de Conversión -->
-            <div class="hero-content">
-              <div class="hero-kicker">
-                <span>Plataforma Exclusiva para Pequeñas y Medianas Empresas</span>
-              </div>
-
-              <h1 class="hero-title">
-                Genera contenido comercial adaptado a tu <span class="gradient-text">identidad de marca</span> con IA, sin usar prompts genéricos.
-              </h1>
-
-              <p class="hero-description">
-                Registra tu empresa una sola vez. Nuestro motor aprende tu sector, tus clientes y tu tono para que todo el contenido comercial sea 100% fiel y exclusivo a tu negocio.
-              </p>
-
-              <div class="hero-cta-group">
-                <button class="btn btn-primary btn-lg" onclick="window.ContentAI.navigateTo('view-auth')">
-                  <span>Registrar mi Empresa</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-                  </svg>
-                </button>
-                
-                <button class="btn btn-secondary btn-lg" onclick="window.ContentAI.openAppDemo()">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="5 3 19 12 5 21 5 3"/>
-                  </svg>
-                  <span>Ver Entorno de Trabajo</span>
-                </button>
-              </div>
-
-              <!-- Adyacencia de Pruebas Cuantitativas -->
-              <div class="hero-proof-strip">
-                <div class="proof-item">
-                  <strong class="tabular-nums">1 Empresa</strong>
-                  <span>Dedicada a tu cuenta de usuario</span>
-                </div>
-                <div class="proof-item">
-                  <strong class="tabular-nums">10x</strong>
-                  <span>Más rápido que redacción manual</span>
-                </div>
-                <div class="proof-item">
-                  <strong class="tabular-nums">100%</strong>
-                  <span>Alineado a tu tono comercial</span>
-                </div>
-              </div>
+      <!-- Hero Section Immersivo Lusion -->
+      <main class="lusion-hero-section" id="propuesta">
+        <div class="lusion-hero-container">
+          
+          <!-- Kicker Pill con Ecualizador de Audio / Engine Pulse -->
+          <div class="lusion-hero-kicker-strip">
+            <div class="lusion-sound-visualizer">
+              <span class="lusion-eq-bar"></span>
+              <span class="lusion-eq-bar"></span>
+              <span class="lusion-eq-bar"></span>
+              <span class="lusion-eq-bar"></span>
             </div>
-
-            <!-- Columna Derecha: Mockup Visual -->
-            <div class="hero-mockup-wrapper">
-              <div class="hero-mockup-card">
-                <div class="mockup-header-bar">
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <span class="mockup-status-dot"></span>
-                    <strong style="font-size: 0.85rem; color: var(--text-primary);">Entorno Comercial Dedicado</strong>
-                  </div>
-                  <div class="metadata-line">
-                    <span>Tu Marca</span>
-                    <span class="metadata-separator">·</span>
-                    <span>Canales Activos</span>
-                  </div>
-                </div>
-
-                <!-- Banner Vectorial del Negocio Registrado -->
-                <div style="background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%); border-radius: var(--radius-md); padding: 20px; color: white; margin-bottom: 14px;">
-                  <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85;">Empresa Registrada en la Cuenta</span>
-                  <h4 style="color: white; font-size: 1.25rem; margin: 4px 0 2px;" id="landing-hero-company-name">Tu Empresa Comercial</h4>
-                  <p style="color: #C7D2FE; font-size: 0.82rem;" id="landing-hero-company-sector">Configuración estratégica exclusiva de marca</p>
-                </div>
-
-                <div class="mockup-body-preview">
-                  <p><strong>Campaña Publicitaria Generada a la Medida:</strong></p>
-                  <p style="margin-top: 8px;">
-                    Cada publicación, correo y mensaje generado se nutre únicamente del perfil registrado de tu empresa, garantizando coherencia en todos tus canales sin desviarse de tus objetivos comerciales.
-                  </p>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 0.8rem; color: var(--text-muted);">
-                  <span>Entorno de trabajo seguro y privado</span>
-                  <span style="color: var(--primary); font-weight: 600;">Identidad Protegida</span>
-                </div>
-              </div>
-            </div>
-
+            <span>MOTOR GENERATIVO COMERCIAL DEDICADO · MODELO EXCLUSIVO</span>
           </div>
+
+          <!-- Titular Cinético de Alto Impacto -->
+          <h1 class="lusion-hero-headline">
+            El contenido comercial de tu empresa, <span class="lusion-text-gradient-shimmer">impulsado con IA sensorial</span> y <span class="lusion-text-iridescent">cero prompts genéricos.</span>
+          </h1>
+
+          <p class="lusion-hero-subtext">
+            Diseñado con la precisión y estética de los estudios creativos globales. Registra tu empresa una sola vez y genera campañas hiper-calibradas a tu tono de voz, audiencia y objetivos comerciales.
+          </p>
+
+          <!-- Fila de Botones Magnéticos Interactivos -->
+          <div class="lusion-hero-cta-row">
+            <button class="lusion-magnetic-btn lusion-btn-accent" style="padding: 14px 34px; font-size: 1.05rem;" onclick="window.ContentAI.navigateTo('view-auth')">
+              <span class="btn-label-magnetic">
+                <span>Registrar mi Empresa</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                </svg>
+              </span>
+            </button>
+            
+            <button class="lusion-magnetic-btn lusion-btn-ghost" style="padding: 14px 28px; font-size: 1.05rem;" onclick="window.ContentAI.openAppDemo()">
+              <span class="btn-label-magnetic">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                <span>Explorar Espacio de Trabajo</span>
+              </span>
+            </button>
+          </div>
+
+          <!-- Cinta de Métricas de Precisión (Estilo Minimalista) -->
+          <div class="lusion-metrics-ribbon">
+            <div class="lusion-metric-col">
+              <span class="lusion-metric-value tabular-nums">1:1</span>
+              <span class="lusion-metric-label">Empresa Única por Cuenta</span>
+            </div>
+            <div class="lusion-metric-col">
+              <span class="lusion-metric-value tabular-nums">2.0s</span>
+              <span class="lusion-metric-label">Latencia de Generación</span>
+            </div>
+            <div class="lusion-metric-col">
+              <span class="lusion-metric-value tabular-nums">100%</span>
+              <span class="lusion-metric-label">Alineación de Marca</span>
+            </div>
+            <div class="lusion-metric-col">
+              <span class="lusion-metric-value tabular-nums">4</span>
+              <span class="lusion-metric-label">Formatos Multi-Canal</span>
+            </div>
+          </div>
+
         </div>
       </main>
 
-      <!-- Sección de Beneficios -->
-      <section id="beneficios" class="features-section">
-        <div class="container">
-          <div class="features-header">
-            <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; display: block;">ARQUITECTURA DE CONTENIDO COMERCIAL</span>
-            <h2 style="font-size: 2.1rem; margin-bottom: 12px;">Tu Empresa es el Centro de Todo el Contenido</h2>
-            <p>A diferencia de los chats generales donde debes reescribir quién eres en cada mensaje, ContentAI vincula tu cuenta directamente con la ficha de tu empresa.</p>
+      <!-- 3D Tilt Showcase Section: Tarjeta Interactiva con Iluminación Especular -->
+      <section class="lusion-showcase-section" id="showcase">
+        <div class="lusion-hero-container">
+          
+          <div class="lusion-showcase-grid">
+            
+            <!-- Tarjeta 3D Tilt Principal con Mockup Interactivo -->
+            <div class="lusion-glass-card lusion-hover-tilt">
+              <div class="lusion-card-glare"></div>
+              
+              <div class="lusion-card-header">
+                <div class="lusion-status-indicator">
+                  <span class="lusion-pulse-dot"></span>
+                  <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF;">Ambiente Operativo Protegido</span>
+                </div>
+                <span class="lusion-tag-mono">CONEXIÓN DEDICADA 256-BIT</span>
+              </div>
+
+              <!-- Banner de la Empresa Registrada -->
+              <div class="lusion-registered-company-banner">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                  <span class="lusion-tag-mono" style="color: #A5B4FC;">PERFIL DE NEGOCIO ACTIVO</span>
+                  <span style="font-size: 0.75rem; background: rgba(99, 102, 241, 0.3); border: 1px solid rgba(165, 180, 252, 0.4); color: #E0E7FF; padding: 2px 10px; border-radius: 9999px;">
+                    Exclusivo
+                  </span>
+                </div>
+                <h3 class="lusion-company-title" id="landing-hero-company-name">Café La Cumbre Gourmet</h3>
+                <p class="lusion-company-meta" id="landing-hero-company-sector">Gastronomía y Café de Especialidad · Tono: Cercano y Profesional</p>
+                
+                <div class="lusion-preview-copy-box">
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 0.78rem; font-weight: 600; color: #818CF8;">COPIA PUBLICITARIA CALIBRADA:</span>
+                    <span style="font-size: 0.75rem; color: #64748B;">Instagram & Facebook</span>
+                  </div>
+                  <p style="margin: 0; font-style: italic;">
+                    "En cada grano tostado en frío de Café La Cumbre no solo hay aroma, sino la devoción de quienes valoran las mañanas con carácter. Descubre nuestro nuevo lote de origen colombiano hoy mismo con envío prioritario."
+                  </p>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #64748B; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px;">
+                <span>Regla estricta: Ningún prompt ajeno contamina tu perfil</span>
+                <span style="color: #818CF8; font-weight: 600;">Sincronizado</span>
+              </div>
+            </div>
+
+            <!-- Columna Lateral: Tarjetas de Capacidades Futuristas -->
+            <div class="lusion-side-feature-stack">
+              <div class="lusion-mini-card">
+                <span class="lusion-feature-num">01 / ARQUITECTURA PRIVADA</span>
+                <h4 class="lusion-mini-title">Una Cuenta, Una Empresa</h4>
+                <p class="lusion-mini-desc">
+                  El usuario que ingresa registra únicamente los parámetros de su negocio. El modelo asimila tu identidad sin dispersión de datos.
+                </p>
+              </div>
+
+              <div class="lusion-mini-card">
+                <span class="lusion-feature-num">02 / CANALES COMERCIALES</span>
+                <h4 class="lusion-mini-title">Adaptación Multi-Formato</h4>
+                <p class="lusion-mini-desc">
+                  Genera piezas simultáneas para Facebook, Instagram Feed, WhatsApp Business y Email Marketing respetando las reglas de cada red.
+                </p>
+              </div>
+
+              <div class="lusion-mini-card">
+                <span class="lusion-feature-num">03 / AUDITORÍA & HISTORIAL</span>
+                <h4 class="lusion-mini-title">Revisión y Aprobación</h4>
+                <p class="lusion-mini-desc">
+                  Pestaña dedicada de curación editorial: edita en tiempo real, califica con me gusta y conserva solo el contenido que apruebes.
+                </p>
+              </div>
+            </div>
+
           </div>
 
-          <div class="features-grid">
-            <div class="feature-box">
-              <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+      </section>
+
+      <!-- Bento Grid Immersivo: Capacidades Técnicas Estilo Lusion -->
+      <section class="lusion-bento-section" id="capacidades">
+        <div class="lusion-hero-container">
+          
+          <div class="lusion-section-header">
+            <span class="lusion-eyebrow">TECNOLOGÍA SENSORIAL</span>
+            <h2 class="lusion-section-title">
+              Potencia de Grado Estudio para el Crecimiento de tu PYME
+            </h2>
+            <p class="lusion-section-desc">
+              Cada interacción está diseñada para eliminar la fatiga creativa, acelerando el ciclo comercial de tu empresa con copys persuasivos y profesionales.
+            </p>
+          </div>
+
+          <div class="lusion-bento-grid">
+            
+            <div class="lusion-bento-item">
+              <div>
+                <div class="lusion-bento-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <h3 class="lusion-bento-title">Retorno Inmediato</h3>
+                <p class="lusion-bento-text">
+                  Reducción del 90% en tiempos de producción comercial. Tu equipo dedica minutos en lugar de horas en la planificación de copys.
+                </p>
               </div>
-              <h3 class="feature-title">01. Registro Único de Empresa</h3>
-              <p>Al ingresar defines la identidad de tu negocio: nombre, actividad, público objetivo y tono. Tu cuenta queda vinculada exclusivamente a ella.</p>
+              <div class="lusion-interactive-badge">
+                <span>Rendimiento Óptimo</span>
+                <span>→</span>
+              </div>
             </div>
 
-            <div class="feature-box">
-              <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+            <div class="lusion-bento-item">
+              <div>
+                <div class="lusion-bento-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+                </div>
+                <h3 class="lusion-bento-title">Micro-Variantes A/B</h3>
+                <p class="lusion-bento-text">
+                  Generación de múltiples alternativas por canal para evaluar qué enfoque conecta con mayor fuerza emocional con tus clientes.
+                </p>
               </div>
-              <h3 class="feature-title">02. Redacción Multi-Canal</h3>
-              <p>El motor adapta cada campaña para Facebook, Instagram, Email Marketing y WhatsApp, siempre usando el contexto registrado de tu empresa.</p>
+              <div class="lusion-interactive-badge">
+                <span>Variaciones Dinámicas</span>
+                <span>→</span>
+              </div>
             </div>
 
-            <div class="feature-box">
-              <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+            <div class="lusion-bento-item">
+              <div>
+                <div class="lusion-bento-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+                </div>
+                <h3 class="lusion-bento-title">Aislamiento Total</h3>
+                <p class="lusion-bento-text">
+                  Tus datos comerciales, productos y estrategias permanecen cifrados y vinculados estrictamente a tu identidad empresarial.
+                </p>
               </div>
-              <h3 class="feature-title">03. Historial Aprobado</h3>
-              <p>Todos los borradores que apruebes se guardan en el archivo histórico de tu negocio, listos para copiar, editar o republicar cuando desees.</p>
+              <div class="lusion-interactive-badge">
+                <span>Privacidad Blindada</span>
+                <span>→</span>
+              </div>
             </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Banner de Conversión Final con Iluminación Radial Lusion -->
+      <section class="lusion-cta-banner-section" id="seguridad">
+        <div class="lusion-hero-container">
+          <div class="lusion-cta-box">
+            <h2 class="lusion-cta-title">Comienza a potenciar la voz comercial de tu empresa</h2>
+            <p class="lusion-cta-sub">
+              Configura tu empresa en menos de 2 minutos. Accede al generador inteligente y a la suite completa de revisión multicanal.
+            </p>
+            <button class="lusion-magnetic-btn lusion-btn-glow" style="padding: 16px 40px; font-size: 1.1rem;" onclick="window.ContentAI.navigateTo('view-auth')">
+              <span class="btn-label-magnetic">
+                <span>Registrar mi Empresa Ahora</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </button>
           </div>
         </div>
       </section>
 
-      <!-- Footer -->
-      <footer class="landing-footer">
-        <div class="container footer-content">
-          <div>
-            <strong style="color: var(--text-inverse); font-size: 1rem;">ContentAI - PYMES</strong>
-            <p style="margin-top: 4px; font-size: 0.8rem;">
-              Proyecto Universitario de Ingeniería de Software · Arquitectura HTML, CSS y Vanilla JS Puro
-            </p>
+      <!-- Footer Minimalista Oscuro -->
+      <footer class="lusion-footer">
+        <div class="lusion-footer-container">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div class="lusion-brand-mark" style="width: 24px; height: 24px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+            </div>
+            <strong style="color: #FFFFFF;">ContentAI - PYMES</strong>
+            <span style="color: #334155;">·</span>
+            <span style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">Experiencia Lusion Interactive</span>
           </div>
-          <div>
-            <button class="btn btn-secondary btn-sm" onclick="window.ContentAI.navigateTo('view-auth')">Acceso al Sistema</button>
+
+          <div style="display: flex; align-items: center; gap: 20px;">
+            <span style="font-size: 0.8rem;">HTML5 · CSS3 · Vanilla JS Puro</span>
+            <button class="lusion-magnetic-btn lusion-btn-ghost" style="padding: 6px 16px; font-size: 0.8rem;" onclick="window.ContentAI.navigateTo('view-auth')">
+              <span class="btn-label-magnetic">Acceso al Sistema</span>
+            </button>
           </div>
         </div>
       </footer>
+
     </section>
 
     <!-- ======================================================================= -->
@@ -595,346 +716,501 @@
     </section>
 
     <!-- ======================================================================= -->
-    <!-- 4. VISTA: DASHBOARD COMERCIAL (Futuro Blade: resources/views/dashboard) -->
+    <!-- 4. VISTA: DASHBOARD COMERCIAL (CREACIÓN A LA IZQ + PREVIEWS A LA DER)   -->
     <!-- ======================================================================= -->
     <section id="view-dashboard" class="view-section">
       <div class="dashboard-layout">
         
-        <!-- SIDEBAR LATERAL -->
-        <aside class="dashboard-sidebar">
-          <div class="sidebar-header">
-            <a href="javascript:void(0)" class="landing-brand" style="color: var(--text-inverse);" onclick="window.ContentAI.navigateTo('view-landing')">
-              <div class="brand-icon-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+        <!-- =================================================================== -->
+        <!-- TOPBAR SUPERIOR (BLANCO / CASI PLOMO, NAVEGACIÓN Y ESTADO)          -->
+        <!-- =================================================================== -->
+        <header class="dashboard-topbar">
+          <!-- Izquierda: Marca y Navegación Rápida -->
+          <div class="topbar-left-zone">
+            <a href="javascript:void(0)" class="landing-brand" onclick="window.ContentAI.navigateTo('view-landing')" title="Volver a Inicio" style="color: var(--text-primary);">
+              <div class="brand-icon-box" style="width: 32px; height: 32px; background: var(--primary); color: white; border-radius: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+                </svg>
               </div>
-              <span style="font-size: 1.15rem;">ContentAI</span>
-              <span class="brand-tag-text" style="background: rgba(255,255,255,0.1); color: #818CF8;">PYMES</span>
+              <span style="font-size: 1.15rem; font-weight: 800; color: #0F172A;">ContentAI</span>
+              <span class="brand-tag-text" style="background: var(--primary-light); color: var(--primary); font-weight: 700;">PYMES</span>
             </a>
-          </div>
 
-          <!-- Tarjeta de la Empresa Exclusiva del Usuario -->
-          <div class="sidebar-profile-card">
-            <div class="profile-avatar-circle" id="sidebar-avatar">C</div>
-            <div class="profile-info-block">
-              <div class="profile-company-name" id="sidebar-company-name">Café Artesanal La Cumbre</div>
-              <span class="profile-company-sector" id="sidebar-company-sector">Gastronomía & Alimentos</span>
-            </div>
-          </div>
-
-          <!-- Indicador de Exclusividad -->
-          <div style="margin: 0 16px 12px; padding: 6px 10px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; font-size: 0.7rem; color: #34D399; display: flex; align-items: center; gap: 6px;">
-            <span style="width: 6px; height: 6px; background: #10B981; border-radius: 50%;"></span>
-            <span>Empresa Vinculada a tu Cuenta</span>
-          </div>
-
-          <!-- Menú de Navegación del Dashboard -->
-          <nav class="sidebar-nav-menu">
-            <div class="sidebar-section-label">Módulos de Copys</div>
-
-            <!-- BOTÓN TAB A: MOTOR DE GENERACIÓN IA -->
-            <div class="sidebar-nav-item active" id="menu-tab-generator" onclick="window.ContentAI.switchDashboardTab('tab-generator')">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
-              <span>Generador IA</span>
-              <span class="sidebar-item-pill">Tab A</span>
-            </div>
-
-            <!-- BOTÓN TAB B: REVISIÓN Y APROBACIÓN (HISTORIAL) -->
-            <div class="sidebar-nav-item" id="menu-tab-review" onclick="window.ContentAI.switchDashboardTab('tab-review')">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-              <span>Revisión y Aprobación</span>
-              <span class="sidebar-item-pill">Tab B</span>
-            </div>
-
-            <div class="sidebar-section-label" style="margin-top: 14px;">Administración</div>
-
-            <div class="sidebar-nav-item" onclick="window.ContentAI.navigateTo('view-onboarding')">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-              <span>Ajustar Datos de mi Empresa</span>
-            </div>
-          </nav>
-
-          <div class="sidebar-footer">
-            <div class="sidebar-nav-item" style="color: #F87171;" onclick="window.ContentAI.logout()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              <span>Cerrar Sesión</span>
-            </div>
-          </div>
-        </aside>
-
-        <!-- VIEWPORT PRINCIPAL -->
-        <main class="dashboard-viewport">
-          
-          <!-- Topbar: Breadcrumb + Acciones -->
-          <header class="dashboard-topbar">
-            <div class="breadcrumb-trail">
-              <span class="breadcrumb-root">ContentAI</span>
-              <span style="color: var(--border-strong);">/</span>
-              <span class="breadcrumb-active" id="breadcrumb-active-label">Generador de Copys IA</span>
-            </div>
-
-            <div class="topbar-actions-zone">
-              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-secondary); background: var(--canvas); padding: 6px 14px; border-radius: var(--radius-full); border: 1px solid var(--border-default);">
-                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
-                <span id="topbar-brand-name">Café Artesanal La Cumbre</span>
-              </div>
-
-              <button class="btn btn-primary btn-sm" onclick="window.ContentAI.switchDashboardTab('tab-generator')">
-                <span>+ Nuevo Copy</span>
+            <!-- MENÚ SUPERIOR EN PÍLDORA -->
+            <nav class="topbar-nav-center">
+              <button type="button" class="topbar-menu-item active" id="top-menu-generator" onclick="window.ContentAI.switchDashboardTab('tab-generator')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 9h6"/>
+                </svg>
+                <span>Workspace & Preview</span>
+                <span class="topbar-menu-badge">Activo</span>
               </button>
+
+              <button type="button" class="topbar-menu-item" id="top-menu-review" onclick="window.ContentAI.switchDashboardTab('tab-review')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/>
+                </svg>
+                <span>Historial Aprobado</span>
+              </button>
+
+              <button type="button" class="topbar-menu-item" onclick="window.ContentAI.navigateTo('view-onboarding')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Perfil Empresa</span>
+              </button>
+            </nav>
+          </div>
+
+          <!-- Derecha: Estado de Empresa -->
+          <div class="topbar-right-zone">
+            <div class="topbar-company-pill">
+              <span class="topbar-online-pulse"></span>
+              <span id="topbar-brand-name">Café Artesanal La Cumbre</span>
             </div>
-          </header>
 
-          <!-- Contenedor de Pestañas -->
-          <div class="dashboard-content-box">
-            
-            <!-- ============================================================= -->
-            <!-- TAB A: MOTOR DE GENERACIÓN IA                                 -->
-            <!-- ============================================================= -->
-            <div id="tab-generator" class="dashboard-tab-pane active">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="window.ContentAI.openAppDemo()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              <span>Demo</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- =================================================================== -->
+        <!-- VIEWPORT PRINCIPAL: SPLIT SCREEN (CREACIÓN IZQ // PREVIEW DER)       -->
+        <!-- =================================================================== -->
+        <main class="dashboard-viewport dashboard-viewport-full">
+
+          <!-- ================================================================= -->
+          <!-- TAB A: ESPACIO DE TRABAJO (IZQ: CREADOR / DER: PREVIEWS)          -->
+          <!-- ================================================================= -->
+          <div id="tab-generator" class="dashboard-tab-pane active">
+            <div class="dashboard-split-workspace">
               
-              <div class="generator-card">
+              <!-- ============================================================= -->
+              <!-- COLUMNA IZQUIERDA: CREACIÓN Y GENERADOR IA                    -->
+              <!-- ============================================================= -->
+              <div class="workspace-creation-column">
                 
-                <!-- OVERLAY DE CARGA DE 2 SEGUNDOS -->
-                <div class="loading-overlay" id="generator-loading-overlay">
-                  <div class="radar-loader-wrapper">
-                    <div class="radar-loader-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3 1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
-                    </div>
-                  </div>
-
-                  <h3 style="font-size: 1.3rem; margin-bottom: 6px; color: var(--text-primary);">Generando Contenido para tu Empresa...</h3>
-                  <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 420px;">
-                    El motor está procesando la campaña con el tono exclusivo y clientes ideales de tu empresa.
-                  </p>
-
-                  <div class="loading-steps-track">
-                    <div class="loading-step-item active" id="load-step-1">
-                      <span class="loading-step-dot"></span>
-                      <span>1. Leyendo contexto exclusivo de tu empresa...</span>
-                    </div>
-                    <div class="loading-step-item" id="load-step-2">
-                      <span class="loading-step-dot"></span>
-                      <span>2. Inyectando tono de voz configurado...</span>
-                    </div>
-                    <div class="loading-step-item" id="load-step-3">
-                      <span class="loading-step-dot"></span>
-                      <span>3. Redactando copy optimizado para el canal...</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Cabecera -->
-                <div style="margin-bottom: 24px;">
-                  <div class="metadata-line" style="margin-bottom: 6px;">
-                    <span style="font-weight: 700; color: var(--primary);">Motor de Generación</span>
-                    <span class="metadata-separator">·</span>
-                    <span id="generator-header-company-note">Vinculado a: Café Artesanal La Cumbre</span>
-                  </div>
-                  <h2 style="font-size: 1.55rem;">Crea una Nueva Campaña Comercial</h2>
-                </div>
-
-                <!-- Formulario del Generador -->
-                <form id="generator-form" onsubmit="window.ContentAI.handleGenerateSubmit(event)">
+                <!-- TARJETA 1: PARÁMETROS Y PROMPT DE CAMPAÑA -->
+                <div class="panel-glass-card" style="position: relative;">
                   
-                  <div class="form-grid-2">
-                    <div class="form-group">
-                      <label class="form-label" for="gen-content-type">Tipo de Contenido Comercial <span class="required">*</span></label>
-                      <select id="gen-content-type" class="form-select" required>
-                        <option value="Post de Facebook" selected>Post de Facebook (Copy persuasivo con emojis y llamada a la acción)</option>
-                        <option value="Post de Instagram con Hashtags">Post de Instagram (Hook visual + storytelling + hashtags nicho)</option>
-                        <option value="Email Marketing">Email Marketing (Asunto + cuerpo de valor + botón CTA)</option>
-                        <option value="Mensaje Promocional WhatsApp">Mensaje de WhatsApp Business (Directo, amigable con oferta)</option>
-                        <option value="Landing Page">Landing Page (Título H1 + beneficios + cierre comercial)</option>
-                      </select>
-                      <span class="form-hint">Estructura el mensaje de acuerdo a las reglas del canal.</span>
+                  <!-- Overlay de Carga Rápida de 2 segundos -->
+                  <div class="loading-overlay" id="generator-loading-overlay">
+                    <div class="radar-loader-wrapper">
+                      <div class="radar-loader-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1 1.3-1.3Z"/></svg>
+                      </div>
                     </div>
-
-                    <div class="form-group">
-                      <label class="form-label" for="gen-objective">Objetivo Comercial de la Campaña</label>
-                      <select id="gen-objective" class="form-select">
-                        <option value="Ventas Directas y Conversión" selected>Ventas Directas y Conversión (Oferta / Descuento)</option>
-                        <option value="Lanzamiento de Nuevo Producto">Lanzamiento de Nuevo Producto o Servicio</option>
-                        <option value="Educación y Valor">Educación de Valor y Consejos (Generar Confianza)</option>
-                        <option value="Fidelización">Fidelización de Clientes Actuales</option>
-                      </select>
-                      <span class="form-hint">Orienta la psicología del texto hacia la conversión.</span>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                      <label class="form-label" for="gen-campaign-topic" style="margin-bottom: 0;">
-                        ¿De qué trata esta campaña o publicación? <span class="required">*</span>
-                      </label>
-                      <span style="font-size: 0.78rem; color: var(--text-muted);" id="topic-char-count">0 / 500 caracteres</span>
-                    </div>
-
-                    <textarea 
-                      id="gen-campaign-topic" 
-                      class="form-control" 
-                      rows="4" 
-                      required 
-                      placeholder="Describe tu idea, promoción, producto, descuento especial o tema de la semana..."
-                      oninput="window.ContentAI.updateTopicCharCount(this)"
-                    >Lanzamiento de nuestro nuevo café de origen Nariño con 20% de descuento durante este fin de semana. Tueste medio, notas a panela y frutos rojos. Envío gratis en compras mayores a $50.000.</textarea>
-
-                    <div class="suggestion-chips-container">
-                      <span style="font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center;">Ideas sugeridas:</span>
-                      <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('Promoción especial 2x1 en postres artesanales para parejas este viernes después de las 6:00 PM.')">
-                        Promo 2x1 de Fin de Semana
-                      </button>
-                      <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('Lanzamiento de producto exclusivo con stock limitado a 50 unidades y 15% de descuento preventa.')">
-                        Lanzamiento Edición Limitada
-                      </button>
-                      <button type="button" class="prompt-chip" onclick="window.ContentAI.applySuggestion('3 consejos de valor para nuestros clientes sobre cómo cuidar y aprovechar al máximo nuestro producto.')">
-                        Consejos de Valor para Clientes
-                      </button>
+                    <h3>Redactando Contenido Comercial...</h3>
+                    <p>
+                      Adaptando ganchos visuales y reglas nativas de la red social seleccionada.
+                    </p>
+                    <div class="loading-steps-track" style="margin-top: 14px;">
+                      <div class="loading-step-item active" id="load-step-1">
+                        <span class="loading-step-dot"></span>
+                        <span>1. Analizando público y sector de tu empresa...</span>
+                      </div>
+                      <div class="loading-step-item" id="load-step-2">
+                        <span class="loading-step-dot"></span>
+                        <span>2. Diseñando formato nativo (*negritas*, emojis, llamado a la acción)...</span>
+                      </div>
+                      <div class="loading-step-item" id="load-step-3">
+                        <span class="loading-step-dot"></span>
+                        <span>3. Actualizando vista previa hiperrealista...</span>
+                      </div>
                     </div>
                   </div>
 
-                  <!-- Botón de Generación -->
-                  <div style="margin-top: 32px; display: flex; justify-content: flex-end; align-items: center; gap: 16px;">
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">
-                      Generación contextual en 2 segundos
+                  <!-- Cabecera de la Tarjeta -->
+                  <div class="panel-header-row">
+                    <div class="panel-header-title">
+                      <div class="panel-header-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                      </div>
+                      <div>
+                        <h2 style="font-size: 1.05rem; font-weight: 700; line-height: 1.2;">Creación de Contenido</h2>
+                        <span style="font-size: 0.74rem; color: #64748B;" id="generator-header-company-note">Vinculado a: Café Artesanal La Cumbre</span>
+                      </div>
+                    </div>
+
+                    <span style="font-size: 0.72rem; font-family: var(--font-mono); font-weight: 700; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 4px;">
+                      ● IA CONTEXTUAL
                     </span>
-
-                    <button type="submit" class="btn btn-primary btn-lg animate-pulse-glow" id="btn-generate-ai">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3 1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
-                      <span>Generar con IA</span>
-                    </button>
                   </div>
 
-                </form>
-              </div>
+                  <!-- Formulario de Creación con Selectores Interactivos de Iconos -->
+                  <form id="generator-form" onsubmit="window.ContentAI.handleGenerateSubmit(event)">
+                    
+                    <!-- 1. Canal / Red Social (Pills con Iconos Oficiales) -->
+                    <div class="form-group" style="margin-bottom: 14px;">
+                      <label class="form-label" style="margin-bottom: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        <span>Canal de Publicación:</span>
+                        <span class="required">*</span>
+                      </label>
+                      
+                      <div class="creator-channel-buttons" id="creator-channel-buttons">
+                        <button type="button" class="creator-channel-btn active" data-network="Facebook" onclick="window.ContentAI.selectChannel('Facebook')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                          <span>Facebook</span>
+                        </button>
+                        <button type="button" class="creator-channel-btn" data-network="Instagram" onclick="window.ContentAI.selectChannel('Instagram')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                          <span>Instagram</span>
+                        </button>
+                        <button type="button" class="creator-channel-btn" data-network="TikTok" onclick="window.ContentAI.selectChannel('TikTok')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.67a6.34 6.34 0 0 0 6.33 6.33 6.34 6.34 0 0 0 6.34-6.33V9.21a8.28 8.28 0 0 0 4.92 1.62V7.37a4.88 4.88 0 0 1-1-.68z"/></svg>
+                          <span>TikTok</span>
+                        </button>
+                        <button type="button" class="creator-channel-btn" data-network="WhatsApp" onclick="window.ContentAI.selectChannel('WhatsApp')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                          <span>WhatsApp</span>
+                        </button>
+                        <button type="button" class="creator-channel-btn" data-network="Email" onclick="window.ContentAI.selectChannel('Email')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                          <span>Email</span>
+                        </button>
+                      </div>
+                      <input type="hidden" id="gen-content-type" value="Post de Facebook">
+                    </div>
 
-            </div>
+                    <!-- 2. Objetivo Comercial (Chips Interactivos) -->
+                    <div class="form-group" style="margin-bottom: 14px;">
+                      <label class="form-label" style="margin-bottom: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span>Objetivo Comercial:</span>
+                      </label>
+                      
+                      <div class="creator-objective-chips">
+                        <button type="button" class="objective-chip-btn active" data-objective="Ventas Directas y Conversión" onclick="window.ContentAI.selectObjective('Ventas Directas y Conversión')">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                          <span>Ventas / Promo</span>
+                        </button>
+                        <button type="button" class="objective-chip-btn" data-objective="Lanzamiento de Nuevo Producto" onclick="window.ContentAI.selectObjective('Lanzamiento de Nuevo Producto')">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                          <span>Lanzamiento</span>
+                        </button>
+                        <button type="button" class="objective-chip-btn" data-objective="Educación y Valor" onclick="window.ContentAI.selectObjective('Educación y Valor')">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                          <span>Valor y Confianza</span>
+                        </button>
+                        <button type="button" class="objective-chip-btn" data-objective="Fidelización" onclick="window.ContentAI.selectObjective('Fidelización')">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                          <span>Fidelización</span>
+                        </button>
+                      </div>
+                      <input type="hidden" id="gen-objective" value="Ventas Directas y Conversión">
+                    </div>
 
+                    <!-- 3. Input del Tema de la Campaña -->
+                    <div class="form-group" style="margin-bottom: 14px;">
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <label class="form-label" for="gen-campaign-topic" style="margin-bottom: 0;">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                          <span>¿Qué deseas promocionar hoy?</span>
+                          <span class="required">*</span>
+                        </label>
+                        <span style="font-size: 0.72rem; color: #64748B;" id="topic-char-count">0 / 500 car.</span>
+                      </div>
 
-            <!-- ============================================================= -->
-            <!-- TAB B: REVISIÓN Y APROBACIÓN (HISTORIAL)                     -->
-            <!-- ============================================================= -->
-            <div id="tab-review" class="dashboard-tab-pane">
-              
-              <div class="review-card">
-                
-                <!-- Metadatos de la Generación -->
-                <div class="review-meta-row">
-                  <div class="metadata-line">
-                    <span style="font-weight: 700; color: var(--primary);" id="review-badge-type">Post de Facebook</span>
-                    <span class="metadata-separator">·</span>
-                    <span id="review-badge-tone">Tono: Cercano y Cálido</span>
-                    <span class="metadata-separator">·</span>
-                    <span id="review-badge-company" style="font-weight: 600;">Café Artesanal La Cumbre</span>
-                  </div>
+                      <textarea 
+                        id="gen-campaign-topic" 
+                        class="topic-prompt-editor" 
+                        rows="3" 
+                        required 
+                        placeholder="Describe el producto, oferta, descuento especial o tema de la semana..."
+                        oninput="window.ContentAI.updateTopicCharCount(this)"
+                      >Lanzamiento de nuestro nuevo café de origen Nariño con 20% de descuento durante este fin de semana. Tueste medio, notas a panela y frutos rojos. Envío gratis en compras mayores a $50.000.</textarea>
 
-                  <div class="metadata-line">
-                    <span class="tabular-nums" id="review-word-count">115 palabras</span>
-                    <span class="metadata-separator">·</span>
-                    <span class="tabular-nums" id="review-char-count">740 caracteres</span>
-                  </div>
+                      <div class="prompt-chips-row">
+                        <span style="font-size: 0.74rem; color: #64748B;">Sugerir:</span>
+                        <button type="button" class="prompt-chip-btn" onclick="window.ContentAI.applySuggestion('Promoción especial 2x1 en postres artesanales para parejas este viernes después de las 6:00 PM.')">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                          <span>Promo 2x1</span>
+                        </button>
+                        <button type="button" class="prompt-chip-btn" onclick="window.ContentAI.applySuggestion('Lanzamiento de producto exclusivo con stock limitado a 50 unidades y 15% de descuento preventa.')">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                          <span>Lanzamiento</span>
+                        </button>
+                        <button type="button" class="prompt-chip-btn" onclick="window.ContentAI.applySuggestion('3 consejos de valor para nuestros clientes sobre cómo cuidar y aprovechar al máximo nuestro producto.')">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                          <span>Tips de Valor</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Botón Generar -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-default); padding-top: 12px;">
+                      <span style="font-size: 0.78rem; color: #64748B;">
+                        ⚡ Tiempo estimado: 2 segundos
+                      </span>
+
+                      <button type="submit" class="btn btn-primary btn-md" id="btn-generate-ai">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                        <span>Generar Copy Comercial</span>
+                      </button>
+                    </div>
+
+                  </form>
                 </div>
 
-                <!-- Selector de Modo: Editor vs Vista Previa en Vivo -->
-                <div class="preview-mode-switch">
-                  <div class="segmented-control">
-                    <button type="button" class="segmented-btn active" id="btn-mode-editor" onclick="window.ContentAI.toggleEditorMode('editor')">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
-                      <span>Editor de Texto</span>
-                    </button>
-                    <button type="button" class="segmented-btn" id="btn-mode-preview" onclick="window.ContentAI.toggleEditorMode('preview')">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                      <span>Vista Previa en Vivo del Canal</span>
-                    </button>
+                <!-- TARJETA 2: EDITOR DE TEXTO EN VIVO -->
+                <div class="panel-glass-card">
+                  <div class="panel-header-row">
+                    <div class="panel-header-title">
+                      <div class="panel-header-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                      </div>
+                      <div>
+                        <h3 style="font-size: 1.05rem; font-weight: 700; line-height: 1.2;">Editor y Ajuste de Texto</h3>
+                        <span style="font-size: 0.74rem; color: #64748B;">Modifica el texto antes de aprobar (respeta sintaxis nativa)</span>
+                      </div>
+                    </div>
+
+                    <div class="metadata-line" style="font-size: 0.76rem; color: #64748B;">
+                      <span class="tabular-nums" id="review-word-count">115 palabras</span>
+                      <span class="metadata-separator">·</span>
+                      <span class="tabular-nums" id="review-char-count">740 car.</span>
+                    </div>
                   </div>
 
-                  <span id="edit-status-badge" style="font-size: 0.78rem; color: var(--text-muted); margin-left: auto;">
-                    Modo de edición directa
-                  </span>
-                </div>
+                  <!-- BARRA DE HERRAMIENTAS TÉCNICA (FUENTE, TAMAÑO, NEGRITA, CURSIVA, ETC) -->
+                  <div class="editor-formatting-toolbar">
+                    <div class="toolbar-group">
+                      <span class="toolbar-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+                        <span>Fuente:</span>
+                      </span>
+                      <select class="toolbar-select" onchange="window.ContentAI.setEditorFont(this.value)">
+                        <option value="'Inter', sans-serif" selected>Inter (Limpia)</option>
+                        <option value="'Plus Jakarta Sans', sans-serif">Jakarta (SaaS)</option>
+                        <option value="'Space Grotesk', sans-serif">Space (Moderna)</option>
+                        <option value="'JetBrains Mono', monospace">Mono (Técnica)</option>
+                      </select>
 
-                <!-- ÁREA 1: TEXTAREA EDITABLE -->
-                <textarea 
-                  id="preview-generated-text" 
-                  class="editor-textarea" 
-                  placeholder="El texto generado por la IA aparecerá aquí..."
-                  oninput="window.ContentAI.handleTextareaEdit(this)"
-                >✨ ¿Hueles eso? Es el aroma a café recién tostado llegando directo a tu mesa. ☕🌿
+                      <select class="toolbar-select" style="width: 70px;" onchange="window.ContentAI.setEditorSize(this.value)">
+                        <option value="0.86rem">14px</option>
+                        <option value="0.92rem" selected>15px</option>
+                        <option value="1.05rem">17px</option>
+                      </select>
+                    </div>
 
-En Café Artesanal La Cumbre estamos de fiesta: te presentamos nuestro nuevo origen Nariño, cosechado a mano con notas dulces a panela y frutos rojos que transformarán tus mañanas.
+                    <div class="toolbar-divider"></div>
+
+                    <div class="toolbar-group">
+                      <button type="button" class="toolbar-format-btn" title="Negrita (*negrita* o **negrita**)" onclick="window.ContentAI.insertFormatting('bold')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
+                      </button>
+                      <button type="button" class="toolbar-format-btn" title="Cursiva (_cursiva_)" onclick="window.ContentAI.insertFormatting('italic')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+                      </button>
+                      <button type="button" class="toolbar-format-btn" title="Insertar Hashtag (#)" onclick="window.ContentAI.insertFormatting('hashtag')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+                      </button>
+                      <button type="button" class="toolbar-format-btn" title="Viñeta de Lista (•)" onclick="window.ContentAI.insertFormatting('bullet')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                      </button>
+                      <button type="button" class="toolbar-format-btn" title="Insertar Emoji de Énfasis (✨)" onclick="window.ContentAI.insertFormatting('emoji')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                      </button>
+                      <button type="button" class="toolbar-format-btn danger" title="Limpiar texto" onclick="window.ContentAI.insertFormatting('clear')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Textarea editable sincronizado en tiempo real -->
+                  <textarea 
+                    id="preview-generated-text" 
+                    class="live-editor-textarea" 
+                    placeholder="El texto generado aparecerá aquí y se reflejará al instante en la visualización..."
+                    oninput="window.ContentAI.handleTextareaEdit(this)"
+                  >✨ ¿Hueles eso? Es el aroma a café recién tostado llegando directo a tu mesa. ☕🌿
+
+En **Café Artesanal La Cumbre** estamos de fiesta: te presentamos nuestro nuevo origen Nariño, cosechado a mano con notas dulces a panela y frutos rojos que transformarán tus mañanas.
 
 🎉 PROMO EXCLUSIVA DE FIN DE SEMANA:
 Llévate tu bolsa con un 20% DE DESCUENTO especial. Y si tu pedido supera los $50.000, el envío va 100% por nuestra cuenta hasta tu puerta. 📦✨
 
 👇 Dale clic al botón de abajo o escríbenos a nuestro WhatsApp para pedir el tuyo antes de que se agote el lote de esta semana. ¡Apoya a nuestros caficultores locales!</textarea>
 
-                <!-- ÁREA 2: MAQUETA DE VISTA PREVIA EN VIVO -->
-                <div id="live-channel-preview-container" class="live-channel-preview-container">
-                  <!-- Se renderiza dinámicamente desde src/js/previews.js -->
-                </div>
+                  <!-- Barra de Acciones del Editor -->
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-default); flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; gap: 8px;">
+                      <button type="button" class="btn btn-secondary btn-sm" onclick="window.ContentAI.copyToClipboard()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        <span>Copiar</span>
+                      </button>
+                      <button type="button" class="btn btn-secondary btn-sm" onclick="window.ContentAI.regenerateVariant()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                        <span>Variante</span>
+                      </button>
+                    </div>
 
-                <!-- Barra de Acciones -->
-                <div class="review-action-row">
-                  
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <button type="button" class="btn btn-secondary" onclick="window.ContentAI.focusAndEditTextarea()">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
-                      <span>Editar</span>
-                    </button>
-
-                    <button type="button" class="btn btn-secondary" onclick="window.ContentAI.copyToClipboard()">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                      <span>Copiar Texto</span>
-                    </button>
-
-                    <button type="button" class="btn btn-secondary" onclick="window.ContentAI.regenerateVariant()">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-                      <span>Regenerar Variante</span>
-                    </button>
-                  </div>
-
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <!-- Botón Descartar -->
-                    <button type="button" class="btn btn-danger" onclick="window.ContentAI.discardCurrentContent()">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                      <span>Descartar</span>
-                    </button>
-
-                    <!-- Botón Aprobar (Guardar) -->
-                    <button type="button" class="btn btn-success" onclick="window.ContentAI.approveAndSaveContent()">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
-                      <span>Aprobar (Guardar)</span>
-                    </button>
+                    <div style="display: flex; gap: 8px;">
+                      <button type="button" class="btn btn-danger btn-sm" onclick="window.ContentAI.discardCurrentContent()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7c-1 0-2-1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        <span>Descartar</span>
+                      </button>
+                      <button type="button" class="btn btn-success btn-sm" onclick="window.ContentAI.approveAndSaveContent()">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Aprobar y Guardar</span>
+                      </button>
+                    </div>
                   </div>
 
                 </div>
 
               </div>
 
-              <!-- HISTORIAL DE CONTENIDOS APROBADOS DE LA EMPRESA -->
-              <div class="history-card">
+              <!-- ============================================================= -->
+              <!-- COLUMNA DERECHA: PREVISUALIZACIÓN REAL EN VIVO (FB, IG, TIKTOK, WA) -->
+              <!-- ============================================================= -->
+              <div class="workspace-preview-column">
+                
+                <div class="panel-glass-card" style="padding: 16px 18px;">
+                  <!-- Barra de Redes Sociales con Iconos Oficiales -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid var(--border-default); padding-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <span style="font-size: 0.8rem; font-weight: 700; color: #0F172A; text-transform: uppercase; letter-spacing: 0.04em;">
+                        Visualización Nativa:
+                      </span>
+                    </div>
+
+                    <!-- Tabs de Redes con Iconos -->
+                    <div class="preview-networks-bar">
+                      <button type="button" class="preview-network-pill active" data-network="Facebook" onclick="window.ContentAI.selectChannel('Facebook')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        <span>Facebook</span>
+                      </button>
+                      <button type="button" class="preview-network-pill" data-network="Instagram" onclick="window.ContentAI.selectChannel('Instagram')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <span>Instagram</span>
+                      </button>
+                      <button type="button" class="preview-network-pill" data-network="TikTok" onclick="window.ContentAI.selectChannel('TikTok')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.67a6.34 6.34 0 0 0 6.33 6.33 6.34 6.34 0 0 0 6.34-6.33V9.21a8.28 8.28 0 0 0 4.92 1.62V7.37a4.88 4.88 0 0 1-1-.68z"/></svg>
+                        <span>TikTok</span>
+                      </button>
+                      <button type="button" class="preview-network-pill" data-network="WhatsApp" onclick="window.ContentAI.selectChannel('WhatsApp')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span>WhatsApp</span>
+                      </button>
+                      <button type="button" class="preview-network-pill" data-network="Email" onclick="window.ContentAI.selectChannel('Email')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                        <span>Email</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Lienzo de Maqueta Dinámica -->
+                  <div id="live-channel-preview-container" class="live-channel-preview-container">
+                    <!-- Se inyecta dinámicamente desde src/js/previews.js -->
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ================================================================= -->
+          <!-- TAB B: HISTORIAL Y GESTIÓN DE CONTENIDOS APROBADOS                 -->
+          <!-- ================================================================= -->
+          <div id="tab-review" class="dashboard-tab-pane">
+            <div style="padding: 20px 24px 90px; max-width: 960px; margin: 0 auto;">
+              <div class="history-card" style="margin-top: 0;">
                 <div class="history-header">
                   <div>
-                    <h3 style="font-size: 1.2rem;">Historial de Contenidos Aprobados</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">
-                      Copys guardados exclusivamente para los canales de tu empresa.
+                    <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A;">Historial de Copys Aprobados</h3>
+                    <p style="font-size: 0.82rem; color: #64748B;">
+                      Contenidos listos para usar en las redes sociales de tu empresa.
                     </p>
                   </div>
 
-                  <span style="font-weight: 700; font-size: 0.82rem; color: var(--success);" id="history-counter-badge">1 Aprobado</span>
+                  <span style="font-weight: 700; font-size: 0.8rem; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 10px; border-radius: var(--radius-full);" id="history-counter-badge">1 Aprobado</span>
                 </div>
 
                 <div id="history-items-container">
                   <!-- Se inyecta dinámicamente desde src/js/review.js -->
                 </div>
               </div>
+            </div>
+          </div>
 
+        </main>
+
+        <!-- =================================================================== -->
+        <!-- DOCK DE USUARIO ESTILO DISCORD (ESQUINA INFERIOR IZQUIERDA)         -->
+        <!-- =================================================================== -->
+        <div class="discord-user-dock" id="discord-user-dock">
+          
+          <!-- Menú Popup de Ajustes hacia arriba -->
+          <div class="discord-settings-popup" id="discord-settings-popup">
+            <div class="discord-popup-header">
+              <div class="discord-avatar-img" id="discord-popup-avatar">C</div>
+              <div style="overflow: hidden;">
+                <div style="font-size: 0.92rem; font-weight: 700; color: #0F172A;" id="discord-popup-name">Carlos Mendoza</div>
+                <div style="font-size: 0.72rem; color: #64748B;" id="discord-popup-email">gerencia@lacumbre.com</div>
+              </div>
             </div>
 
+            <div class="discord-badge-pyme">
+              <div style="font-size: 0.65rem; font-family: var(--font-mono); color: var(--primary); text-transform: uppercase; font-weight: 700;">Empresa Vinculada</div>
+              <div style="font-size: 0.86rem; font-weight: 700; color: #0F172A;" id="discord-company-name">Café Artesanal La Cumbre</div>
+              <div style="font-size: 0.72rem; color: #64748B;" id="discord-company-sector">Gastronomía & Alimentos</div>
+            </div>
+
+            <button type="button" class="discord-menu-action" onclick="window.ContentAI.toggleDiscordPopup(false); window.ContentAI.navigateTo('view-onboarding');">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <span>Configurar Datos de Empresa</span>
+            </button>
+
+            <button type="button" class="discord-menu-action" onclick="window.ContentAI.toggleDiscordPopup(false); window.ContentAI.switchDashboardTab('tab-review');">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+              <span>Ver Copys Aprobados</span>
+            </button>
+
+            <button type="button" class="discord-menu-action" onclick="window.ContentAI.toggleDiscordPopup(false); window.ContentAI.navigateTo('view-landing');">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>Página Principal</span>
+            </button>
+
+            <button type="button" class="discord-menu-action danger" onclick="window.ContentAI.logout()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Cerrar Sesión</span>
+            </button>
           </div>
-        </main>
+
+          <!-- Barra de Usuario Inferior Izquierda estilo Discord -->
+          <div class="discord-user-bar" id="discord-user-bar" onclick="window.ContentAI.toggleDiscordPopup()">
+            <div class="discord-avatar-container">
+              <div class="discord-avatar-img" id="discord-user-avatar">C</div>
+              <span class="discord-status-dot" title="En línea"></span>
+            </div>
+
+            <div class="discord-user-info">
+              <div class="discord-user-name" id="discord-user-name">Carlos Mendoza</div>
+              <div class="discord-company-sub" id="discord-user-email">Café Artesanal La Cumbre</div>
+            </div>
+
+            <!-- Controles estilo Discord (Ajustes y Salir) -->
+            <div class="discord-bar-controls" onclick="event.stopPropagation()">
+              <button type="button" class="discord-control-btn settings" title="Ajustes de Empresa" onclick="window.ContentAI.navigateTo('view-onboarding')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </button>
+              <button type="button" class="discord-control-btn logout" title="Cerrar Sesión" onclick="window.ContentAI.logout()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
 
       </div>
     </section>
+
 
   </div>
 
@@ -944,6 +1220,6 @@ Llévate tu bolsa con un 20% DE DESCUENTO especial. Y si tu pedido supera los $5
   <!-- ========================================================================= -->
   <!-- SCRIPT PRINCIPAL MODULAR (ES6 NATIVO - Compatible con Live Server y Vite) -->
   <!-- ========================================================================= -->
-  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="/js/app.js"></script>
 </body>
 </html>

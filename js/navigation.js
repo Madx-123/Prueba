@@ -40,18 +40,24 @@ export function switchDashboardTab(tabId) {
     targetPane.classList.add('active');
   }
 
-  // Sidebar items
+  // Items del menú (tanto en Top Bar como si existen en Sidebar)
   const menuGenerator = document.getElementById('menu-tab-generator');
   const menuReview = document.getElementById('menu-tab-review');
+  const topNavGenerator = document.getElementById('top-menu-generator');
+  const topNavReview = document.getElementById('top-menu-review');
   const breadcrumbActive = document.getElementById('breadcrumb-active-label');
 
   if (tabId === 'tab-generator') {
     if (menuGenerator) menuGenerator.classList.add('active');
     if (menuReview) menuReview.classList.remove('active');
+    if (topNavGenerator) topNavGenerator.classList.add('active');
+    if (topNavReview) topNavReview.classList.remove('active');
     if (breadcrumbActive) breadcrumbActive.textContent = 'Generador de Copys IA';
   } else if (tabId === 'tab-review') {
     if (menuGenerator) menuGenerator.classList.remove('active');
     if (menuReview) menuReview.classList.add('active');
+    if (topNavGenerator) topNavGenerator.classList.remove('active');
+    if (topNavReview) topNavReview.classList.add('active');
     if (breadcrumbActive) breadcrumbActive.textContent = 'Revisión & Previsualización';
   }
 }

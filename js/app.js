@@ -16,9 +16,11 @@ import {
   regenerateVariant, 
   discardCurrentContent, 
   approveAndSaveContent,
-  loadHistoryToEditor 
+  loadHistoryToEditor,
+  insertFormatting
 } from './review.js';
-import { initPreviews, toggleEditorMode, toggleLike } from './previews.js';
+import { initPreviews, toggleEditorMode, toggleLike, setPreviewChannel, setEditorFont, setEditorSize } from './previews.js';
+import { initLusionLanding } from './lusion-engine.js';
 
 // Sistema de Notificaciones Toast
 export function showToast(message, type = 'info') {
@@ -101,17 +103,50 @@ export function openAppDemo() {
   }
 }
 
-// Cierre de Sesión
-export function logout() {
-  store.setState({
-    user: {
-      ...store.getState().user,
-      isLoggedIn: false
-    }
-  });
-  showToast('Has cerrado sesión correctamente.', 'info');
-  navigateTo('view-landing');
+// Control del Menú Flotante de Usuario (Burbuja Abajo a la Derecha)
+export function toggleUserBubbleMenu(forceState = null) {
+  const menu = document.getElementById('user-bubble-dropdown');
+  const trigger = document.getElementById('user-bubble-trigger');
+  if (!menu) return;
+
+  const isOpen = menu.classList.contains('active');
+  const shouldOpen = forceState !== null ? forceState : !isOpen;
+
+  if (shouldOpen) {
+    menu.classList.add('active');
+    if (trigger) trigger.classList.add('active');
+  } else {
+    menu.classList.remove('active');
+    if (trigger) trigger.classList.remove('active');
+  }
 }
+
+// Control del Menú Flotante de Usuario estilo Discord (Esquina Inferior Izquierda)
+export function toggleDiscordPopup(forceState = null) {
+  const popup = document.getElementById('discord-settings-popup');
+  if (!popup) return;
+
+  const isOpen = popup.classList.contains('active');
+  const shouldOpen = forceState !== null ? forceState : !isOpen;
+
+  if (shouldOpen) {
+    popup.classList.add('active');
+  } else {
+    popup.classList.remove('active');
+  }
+}
+
+// Cierra popups flotantes si se hace click fuera
+document.addEventListener('click', (e) => {
+  const discordDock = document.getElementById('discord-user-dock');
+  if (discordDock && !discordDock.contains(e.target)) {
+    toggleDiscordPopup(false);
+  }
+  const bubbleContainer = document.getElementById('user-bubble-dock');
+  if (bubbleContainer && !bubbleContainer.contains(e.target)) {
+    toggleUserBubbleMenu(false);
+  }
+});
 
 export function toggleTileClass(checkbox) {
   const parent = checkbox.closest('.channel-tile');
@@ -127,6 +162,36 @@ export function applySuggestion(text) {
     textarea.focus();
     updateTopicCharCount(textarea);
   }
+}
+
+export function selectChannel(channelName) {
+  let fullType = 'Post de Facebook';
+  if (channelName === 'Instagram') fullType = 'Post de Instagram con Hashtags';
+  else if (channelName === 'TikTok') fullType = 'Video TikTok Promocional';
+  else if (channelName === 'WhatsApp') fullType = 'Mensaje Promocional WhatsApp';
+  else if (channelName === 'Email') fullType = 'Email Marketing';
+
+  const selectOrInput = document.getElementById('gen-content-type');
+  if (selectOrInput) selectOrInput.value = fullType;
+
+  // Actualizar botones de canal en el creador
+  const creatorBtns = document.querySelectorAll('.creator-channel-btn');
+  creatorBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-network') === channelName);
+  });
+
+  // Sincronizar con el previsualizador en vivo
+  setPreviewChannel(channelName);
+}
+
+export function selectObjective(objectiveName) {
+  const input = document.getElementById('gen-objective');
+  if (input) input.value = objectiveName;
+
+  const chips = document.querySelectorAll('.objective-chip-btn');
+  chips.forEach(chip => {
+    chip.classList.toggle('active', chip.getAttribute('data-objective') === objectiveName);
+  });
 }
 
 export function updateTopicCharCount(textarea) {
@@ -152,16 +217,35 @@ window.ContentAI = {
   discardCurrentContent,
   approveAndSaveContent,
   loadHistoryToEditor,
+  insertFormatting,
+  selectChannel,
+  selectObjective,
   copyHistoryText: (text) => {
     navigator.clipboard.writeText(text).then(() => showToast('📋 Copiado al portapapeles.', 'success'));
   },
   toggleEditorMode,
+  setPreviewChannel,
+  setEditorFont,
+  setEditorSize,
   toggleLike,
   toggleTileClass,
   applySuggestion,
   updateTopicCharCount,
   openAppDemo,
-  logout
+  toggleUserBubbleMenu,
+  toggleDiscordPopup,
+  logout: () => {
+    store.setState({
+      user: {
+        ...store.getState().user,
+        isLoggedIn: false
+      }
+    });
+    toggleUserBubbleMenu(false);
+    toggleDiscordPopup(false);
+    showToast('Has cerrado sesión correctamente.', 'info');
+    navigateTo('view-landing');
+  }
 };
 
 // Inicialización de la aplicación: Setup de Controladores para Live Server y Vite
@@ -170,6 +254,7 @@ function initApp() {
   initProfiles();
   initPreviews();
   initReview();
+  initLusionLanding();
 
   // 2. Establecer la vista inicial activa
   navigateTo('view-landing');
