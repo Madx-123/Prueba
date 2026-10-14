@@ -265,3 +265,57 @@ if (document.readyState === 'loading') {
 } else {
   initApp();
 }
+
+
+/* =====================================================
+   AUTH 2.0 - VISIBILIDAD DE CONTRASEÑA
+   ===================================================== */
+
+function initAuthPasswordToggle() {
+    const toggle = document.getElementById(
+        "cai-auth-password-toggle"
+    );
+
+    const password = document.getElementById(
+        "auth-password"
+    );
+
+    if (!toggle || !password) return;
+
+    // Evita registrar el evento más de una vez.
+    if (toggle.dataset.initialized === "true") return;
+
+    toggle.dataset.initialized = "true";
+
+    toggle.addEventListener("click", () => {
+        const isVisible = password.type === "text";
+
+        password.type = isVisible ? "password" : "text";
+
+        toggle.textContent = isVisible
+            ? "Mostrar"
+            : "Ocultar";
+
+        toggle.setAttribute(
+            "aria-label",
+            isVisible
+                ? "Mostrar contraseña"
+                : "Ocultar contraseña"
+        );
+
+        toggle.setAttribute(
+            "aria-pressed",
+            String(!isVisible)
+        );
+    });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener(
+        "DOMContentLoaded",
+        initAuthPasswordToggle,
+        { once: true }
+    );
+} else {
+    initAuthPasswordToggle();
+}

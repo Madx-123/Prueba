@@ -6,8 +6,9 @@
 @import "./variables.css";
 @import "./base.css";
 @import "./animations.css";
-@import "./landing.css";
 @import "./auth.css";
 @import "./onboarding.css";
 @import "./dashboard.css";
+@import "./dashboard-v2.css";
 @import "./previews.css";
+@import url("./landing.css");

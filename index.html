@@ -41,385 +41,436 @@
     <!-- ======================================================================= -->
     <!-- 1. VISTA: LANDING PAGE (Diseño, Animaciones y Tipografía estilo Lusion.co) -->
     <!-- ======================================================================= -->
-    <section id="view-landing" class="view-section active lusion-landing-wrapper">
+    <!-- ContentAI PYMES | Landing 2.0 | Sustituir SOLO view-landing en index.html -->
+    <section id="view-landing" class="view-section active cai-landing">
 
-      <!-- Top Bar: Floating Glass Pill Navbar (Estilo Lusion) -->
-      <header class="lusion-navbar">
-        <div class="lusion-nav-pill-container">
-          
-          <!-- Brand Wordmark con Isotipo Brillante -->
-          <a href="javascript:void(0)" class="lusion-brand" onclick="window.ContentAI.navigateTo('view-landing')">
-            <div class="lusion-brand-mark">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
-              </svg>
-            </div>
-            <span class="lusion-brand-name">ContentAI</span>
-            <span class="lusion-brand-pill">PYMES</span>
+      <!-- Cabecera: navegación de la página de presentación -->
+      <header class="cai-header" id="cai-header">
+        <div class="cai-header__inner">
+          <a class="cai-logo" href="#propuesta" aria-label="ContentAI PYMES, ir al inicio">
+            <span class="cai-logo__symbol" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M16 2 19.7 12.3 30 16l-10.3 3.7L16 30l-3.7-10.3L2 16l10.3-3.7L16 2Z" fill="currentColor"/><path d="m25 3 1.2 2.8L29 7l-2.8 1.2L25 11l-1.2-2.8L21 7l2.8-1.2L25 3Z" fill="currentColor"/></svg>
+            </span>
+            <span class="cai-logo__word">content<span>ai</span></span>
+            <span class="cai-logo__tag">PYMES</span>
           </a>
 
-          <!-- Nav Links con Línea Cinética al Hover -->
-          <nav class="lusion-nav-links">
-            <a class="lusion-nav-link" href="#propuesta">Experiencia</a>
-            <a class="lusion-nav-link" href="#showcase">Entorno Dedicado</a>
-            <a class="lusion-nav-link" href="#capacidades">Capacidades</a>
-            <a class="lusion-nav-link" href="#seguridad">Seguridad PYME</a>
+          <nav class="cai-nav" id="cai-nav" aria-label="Navegación principal">
+            <a href="#propuesta">Inicio</a>
+            <a href="#showcase">Producto</a>
+            <a href="#capacidades">Funcionalidades</a>
+            <a href="#como-funciona">Cómo funciona</a>
           </nav>
 
-          <!-- Acciones con Botones Magnéticos Redondeados -->
-          <div class="lusion-nav-actions">
-            <button class="lusion-magnetic-btn lusion-btn-ghost" onclick="window.ContentAI.navigateTo('view-auth')">
-              <span class="btn-label-magnetic">Iniciar Sesión</span>
-            </button>
-            <button class="lusion-magnetic-btn lusion-btn-glow" onclick="window.ContentAI.navigateTo('view-auth')">
-              <span class="btn-label-magnetic">Registrar Empresa</span>
+          <div class="cai-header__actions">
+            <button class="cai-header__login" type="button" onclick="window.ContentAI.navigateTo('view-auth')">Iniciar sesión</button>
+            <button class="cai-btn cai-btn--small cai-btn--primary" type="button" onclick="window.ContentAI.navigateTo('view-auth')">
+              Probar ContentAI <span aria-hidden="true">↗</span>
             </button>
           </div>
 
+          <button class="cai-menu-toggle" id="cai-menu-toggle" type="button" aria-label="Abrir menú" aria-controls="cai-nav" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </header>
 
-      <!-- Hero Section Immersivo Lusion -->
-      <main class="lusion-hero-section" id="propuesta">
-        <div class="lusion-hero-container">
-          
-          <!-- Kicker Pill con Ecualizador de Audio / Engine Pulse -->
-          <div class="lusion-hero-kicker-strip">
-            <div class="lusion-sound-visualizer">
-              <span class="lusion-eq-bar"></span>
-              <span class="lusion-eq-bar"></span>
-              <span class="lusion-eq-bar"></span>
-              <span class="lusion-eq-bar"></span>
+      <main>
+        <!-- HERO: mensaje, jerarquía visual y producto realista -->
+        <section class="cai-hero" id="propuesta" aria-labelledby="cai-hero-title">
+          <div class="cai-hero__ambient cai-hero__ambient--one" aria-hidden="true"></div>
+          <div class="cai-hero__ambient cai-hero__ambient--two" aria-hidden="true"></div>
+          <div class="cai-grid-pattern" aria-hidden="true"></div>
+
+          <div class="cai-container cai-hero__content">
+            <div class="cai-hero__copy" data-cai-reveal>
+              <div class="cai-eyebrow"><span class="cai-eyebrow__pulse"></span> TU NUEVO ESPACIO CREATIVO</div>
+              <h1 id="cai-hero-title">Tu negocio tiene una historia.<br><span class="cai-gradient-text">Haz que todos la vean.</span></h1>
+              <p class="cai-hero__description">De una idea a una publicación lista para revisar. Crea mensajes comerciales para tus redes, adapta el tono de tu marca y organiza todo en un solo lugar.</p>
+              <div class="cai-hero__actions">
+                <button class="cai-btn cai-btn--primary cai-btn--large" type="button" onclick="window.ContentAI.navigateTo('view-auth')">
+                  Empezar a crear <span class="cai-btn__arrow" aria-hidden="true">↗</span>
+                </button>
+                <a class="cai-btn cai-btn--outline cai-btn--large" href="#showcase">
+                  Explorar el producto <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+              <div class="cai-hero__details"><span class="cai-detail-dot"></span> Diseñado para pequeños negocios <span class="cai-detail-separator"></span> Demostración interactiva</div>
             </div>
-            <span>MOTOR GENERATIVO COMERCIAL DEDICADO · MODELO EXCLUSIVO</span>
+
+            <!-- Escena visual: paneles superpuestos, no una imagen estática -->
+            <div class="cai-product-scene" data-cai-reveal aria-label="Vista previa ilustrativa de ContentAI">
+              <div class="cai-scene__light" aria-hidden="true"></div>
+              <div class="cai-floating-label cai-floating-label--left" aria-hidden="true"><span class="cai-float-icon">✦</span><span>Ideas que conectan<br><strong>con tus clientes</strong></span></div>
+
+              <div class="cai-app-window">
+                <div class="cai-app-window__top">
+                  <div class="cai-window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                  <div class="cai-app-window__address"><span aria-hidden="true">◆</span> ContentAI / Espacio creativo</div>
+                  <div class="cai-app-window__avatar" aria-hidden="true">C</div>
+                </div>
+                <div class="cai-app-window__body">
+                  <aside class="cai-demo-sidebar" aria-label="Secciones de la demostración">
+                    <div class="cai-demo-sidebar__brand"><span>✦</span> contentai</div>
+                    <div class="cai-demo-sidebar__heading">ESPACIO DE TRABAJO</div>
+                    <div class="cai-demo-sidebar__item cai-demo-sidebar__item--active"><span>▦</span> Generador</div>
+                    <div class="cai-demo-sidebar__item"><span>▤</span> Mis contenidos</div>
+                    <div class="cai-demo-sidebar__item"><span>◈</span> Mi empresa</div>
+                    <div class="cai-demo-sidebar__bottom"><span class="cai-demo-sidebar__company-avatar">C</span><span>Mi emprendimiento<small>Cuenta de demostración</small></span></div>
+                  </aside>
+                  <div class="cai-demo-workspace">
+                    <div class="cai-demo-workspace__header"><div><span class="cai-demo-kicker">TU ESPACIO CREATIVO</span><h2>Crea algo increíble <span>✳</span></h2><p>Una publicación que suene como tu marca.</p></div><span class="cai-demo-status">● Vista de ejemplo</span></div>
+                    <div class="cai-demo-form">
+                      <label>¿Qué quieres comunicar?</label>
+                      <div class="cai-demo-field">Lanzamiento de nuestro nuevo café artesanal ☕</div>
+                      <label>¿Dónde lo compartirás?</label>
+                      <div class="cai-channel-pills"><span class="is-selected">◎ Instagram</span><span>f Facebook</span><span>◉ WhatsApp</span></div>
+                      <div class="cai-demo-generate">✦ Generar propuesta <span>↗</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <article class="cai-social-card" aria-label="Ejemplo de publicación de Instagram">
+                <div class="cai-social-card__top"><div class="cai-social-card__brand"><span>CL</span><div><strong id="landing-hero-company-name">Café La Cumbre</strong><small id="landing-hero-company-sector">Cafetería artesanal</small></div></div><span>•••</span></div>
+                <div class="cai-social-card__visual"><span class="cai-social-card__stamp">HECHO CON PASIÓN</span><div class="cai-cup" aria-hidden="true"><span class="cai-cup__steam">〰</span><span class="cai-cup__body">☕</span></div><strong>Pequeños momentos.<br>Grandes sabores.</strong></div>
+                <div class="cai-social-card__bottom"><span aria-hidden="true">♡　▢　↗</span><p><strong>Café La Cumbre</strong> Cada taza tiene una historia. Descubre nuestro nuevo café artesanal. ☕</p></div>
+              </article>
+              <div class="cai-floating-label cai-floating-label--right" aria-hidden="true"><span class="cai-floating-label__spark">✧</span><span><strong>Tu esencia,</strong><br>en cada publicación</span></div>
+            </div>
           </div>
+          <a class="cai-scroll-indicator" href="#showcase"><span class="cai-scroll-indicator__line"></span> DESCUBRE MÁS</a>
+        </section>
 
-          <!-- Titular Cinético de Alto Impacto -->
-          <h1 class="lusion-hero-headline">
-            El contenido comercial de tu empresa, <span class="lusion-text-gradient-shimmer">impulsado con IA sensorial</span> y <span class="lusion-text-iridescent">cero prompts genéricos.</span>
-          </h1>
-
-          <p class="lusion-hero-subtext">
-            Diseñado con la precisión y estética de los estudios creativos globales. Registra tu empresa una sola vez y genera campañas hiper-calibradas a tu tono de voz, audiencia y objetivos comerciales.
-          </p>
-
-          <!-- Fila de Botones Magnéticos Interactivos -->
-          <div class="lusion-hero-cta-row">
-            <button class="lusion-magnetic-btn lusion-btn-accent" style="padding: 14px 34px; font-size: 1.05rem;" onclick="window.ContentAI.navigateTo('view-auth')">
-              <span class="btn-label-magnetic">
-                <span>Registrar mi Empresa</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-                </svg>
-              </span>
-            </button>
-            
-            <button class="lusion-magnetic-btn lusion-btn-ghost" style="padding: 14px 28px; font-size: 1.05rem;" onclick="window.ContentAI.openAppDemo()">
-              <span class="btn-label-magnetic">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
-                </svg>
-                <span>Explorar Espacio de Trabajo</span>
-              </span>
-            </button>
-          </div>
-
-          <!-- Cinta de Métricas de Precisión (Estilo Minimalista) -->
-          <div class="lusion-metrics-ribbon">
-            <div class="lusion-metric-col">
-              <span class="lusion-metric-value tabular-nums">1:1</span>
-              <span class="lusion-metric-label">Empresa Única por Cuenta</span>
-            </div>
-            <div class="lusion-metric-col">
-              <span class="lusion-metric-value tabular-nums">2.0s</span>
-              <span class="lusion-metric-label">Latencia de Generación</span>
-            </div>
-            <div class="lusion-metric-col">
-              <span class="lusion-metric-value tabular-nums">100%</span>
-              <span class="lusion-metric-label">Alineación de Marca</span>
-            </div>
-            <div class="lusion-metric-col">
-              <span class="lusion-metric-value tabular-nums">4</span>
-              <span class="lusion-metric-label">Formatos Multi-Canal</span>
-            </div>
-          </div>
-
+        <!-- Cinta editorial: los canales son posibilidades, no falsas integraciones -->
+        <div class="cai-channel-strip" aria-label="Formatos de contenido disponibles">
+          <div class="cai-container cai-channel-strip__inner"><span>UN MENSAJE, DISTINTAS FORMAS DE CONTARLO</span><div class="cai-channel-strip__names"><span>Instagram</span><span>Facebook</span><span>WhatsApp Business</span><span>Correo</span></div></div>
         </div>
+
+        <!-- Producto: el beneficio se muestra en contexto -->
+        <section class="cai-section cai-product" id="showcase" aria-labelledby="cai-product-title">
+          <div class="cai-container">
+            <div class="cai-section-heading" data-cai-reveal><span class="cai-section-label">01 / EL PRODUCTO</span><h2 id="cai-product-title">Menos tiempo pensando qué publicar.<br><em>Más tiempo haciendo crecer tu negocio.</em></h2><p>Un flujo de trabajo pensado para transformar tus ideas en contenido, revisarlo y mantener tus propuestas ordenadas.</p></div>
+            <div class="cai-product-grid">
+              <article class="cai-feature-panel cai-feature-panel--wide" data-cai-reveal><div class="cai-feature-panel__copy"><span class="cai-feature-number">01 — CREA</span><h3>De la idea al primer borrador.</h3><p>Elige el objetivo, el canal y el estilo. ContentAI prepara una propuesta de muestra que puedes ajustar antes de usar.</p></div><div class="cai-prompt-demo"><div class="cai-prompt-demo__top"><span class="cai-prompt-demo__icon">✦</span><span>Nuevo contenido</span><span class="cai-prompt-demo__dots">•••</span></div><div class="cai-prompt-demo__line">Nueva promoción de fin de semana<span class="cai-prompt-demo__caret"></span></div><div class="cai-prompt-demo__tags"><span>Promoción</span><span>Instagram</span><span>Amigable</span></div><div class="cai-prompt-demo__output"><span>PROPUESTA GENERADA · DEMO</span><p>✨ Este fin de semana tenemos una sorpresa para ti. Ven y descubre lo que preparamos con tanto cariño.</p></div></div></article>
+              <article class="cai-feature-panel cai-feature-panel--violet" data-cai-reveal><div class="cai-feature-panel__copy"><span class="cai-feature-number">02 — ADAPTA</span><h3>Una voz que se parece a tu marca.</h3><p>Define la personalidad de tu negocio y elige cómo quieres hablar con tus clientes.</p></div><div class="cai-tone-visual"><span>Cercano</span><span>Profesional</span><span>Creativo</span><span>Entusiasta</span></div></article>
+              <article class="cai-feature-panel cai-feature-panel--dark" data-cai-reveal><div class="cai-feature-panel__copy"><span class="cai-feature-number">03 — ORGANIZA</span><h3>Tus ideas no se pierden.</h3><p>Edita, revisa y guarda propuestas en tu espacio de trabajo.</p></div><div class="cai-library-demo"><div><span class="cai-library-demo__dot"></span> Lanzamiento de producto <small>Borrador</small></div><div><span class="cai-library-demo__dot cai-library-demo__dot--green"></span> Promoción de temporada <small>Aprobado</small></div><div><span class="cai-library-demo__dot"></span> Mensaje de bienvenida <small>Borrador</small></div></div></article>
+            </div>
+          </div>
+        </section>
+
+        <!-- Proceso: sin cajas redundantes sobre las mismas prestaciones -->
+        <section class="cai-section cai-steps" id="como-funciona" aria-labelledby="cai-steps-title"><div class="cai-container cai-steps__layout"><div class="cai-steps__intro" data-cai-reveal><span class="cai-section-label">02 / CÓMO FUNCIONA</span><h2 id="cai-steps-title">Una buena idea merece salir al mundo.</h2><p>Un recorrido simple para que crear publicaciones deje de sentirse como empezar de cero.</p><button class="cai-btn cai-btn--outline" type="button" onclick="window.ContentAI.navigateTo('view-auth')">Explorar ContentAI <span aria-hidden="true">↗</span></button></div><div class="cai-steps__list"><article data-cai-reveal><span>01</span><div><h3>Cuéntanos sobre tu negocio</h3><p>Indica a qué te dedicas, a quién quieres llegar y cómo quieres comunicarte.</p></div><span aria-hidden="true">↗</span></article><article data-cai-reveal><span>02</span><div><h3>Dale forma a tu mensaje</h3><p>Selecciona una campaña, un canal y un tono para obtener una propuesta de demostración.</p></div><span aria-hidden="true">↗</span></article><article data-cai-reveal><span>03</span><div><h3>Revisa y hazlo tuyo</h3><p>Ajusta las palabras, visualiza el resultado y guarda las ideas que quieras conservar.</p></div><span aria-hidden="true">↗</span></article></div></div></section>
+
+        <!-- Capacidad distintiva: presentación de herramientas, no promesas exageradas -->
+        <section class="cai-section cai-capabilities" id="capacidades" aria-labelledby="cai-capabilities-title"><div class="cai-container"><div class="cai-capabilities__intro" data-cai-reveal><div><span class="cai-section-label">03 / PENSADO PARA TI</span><h2 id="cai-capabilities-title">Creatividad para negocios reales.</h2></div><p>No necesitas ser especialista en marketing para empezar a construir una comunicación más coherente.</p></div><div class="cai-capabilities__row"><article data-cai-reveal><span class="cai-capability-icon">✳</span><h3>Tu identidad primero</h3><p>Personaliza el tono y el contexto de tu empresa.</p></article><article data-cai-reveal><span class="cai-capability-icon">▣</span><h3>Vista previa por canal</h3><p>Visualiza ejemplos de cómo podría verse tu mensaje.</p></article><article data-cai-reveal><span class="cai-capability-icon">↺</span><h3>Libertad para editar</h3><p>Reescribe, corrige y conserva el control creativo.</p></article><article data-cai-reveal><span class="cai-capability-icon">▤</span><h3>Todo organizado</h3><p>Recupera tus propuestas guardadas en este navegador.</p></article></div></div></section>
+
+        <!-- CTA final -->
+        <section class="cai-final" id="empezar" aria-labelledby="cai-final-title"><div class="cai-final__orb" aria-hidden="true"></div><div class="cai-container cai-final__inner" data-cai-reveal><span class="cai-section-label">TU PRÓXIMA IDEA EMPIEZA AQUÍ</span><h2 id="cai-final-title">Tu marca tiene mucho que decir.<br><span>Hagamos que se note.</span></h2><p>Explora el prototipo y descubre una forma diferente de preparar contenido para tu negocio.</p><button class="cai-btn cai-btn--light cai-btn--large" type="button" onclick="window.ContentAI.navigateTo('view-auth')">Comenzar ahora <span aria-hidden="true">↗</span></button><small>Versión de demostración · Sin publicación automática</small></div></section>
       </main>
 
-      <!-- 3D Tilt Showcase Section: Tarjeta Interactiva con Iluminación Especular -->
-      <section class="lusion-showcase-section" id="showcase">
-        <div class="lusion-hero-container">
-          
-          <div class="lusion-showcase-grid">
-            
-            <!-- Tarjeta 3D Tilt Principal con Mockup Interactivo -->
-            <div class="lusion-glass-card lusion-hover-tilt">
-              <div class="lusion-card-glare"></div>
-              
-              <div class="lusion-card-header">
-                <div class="lusion-status-indicator">
-                  <span class="lusion-pulse-dot"></span>
-                  <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF;">Ambiente Operativo Protegido</span>
-                </div>
-                <span class="lusion-tag-mono">CONEXIÓN DEDICADA 256-BIT</span>
-              </div>
-
-              <!-- Banner de la Empresa Registrada -->
-              <div class="lusion-registered-company-banner">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                  <span class="lusion-tag-mono" style="color: #A5B4FC;">PERFIL DE NEGOCIO ACTIVO</span>
-                  <span style="font-size: 0.75rem; background: rgba(99, 102, 241, 0.3); border: 1px solid rgba(165, 180, 252, 0.4); color: #E0E7FF; padding: 2px 10px; border-radius: 9999px;">
-                    Exclusivo
-                  </span>
-                </div>
-                <h3 class="lusion-company-title" id="landing-hero-company-name">Café La Cumbre Gourmet</h3>
-                <p class="lusion-company-meta" id="landing-hero-company-sector">Gastronomía y Café de Especialidad · Tono: Cercano y Profesional</p>
-                
-                <div class="lusion-preview-copy-box">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 0.78rem; font-weight: 600; color: #818CF8;">COPIA PUBLICITARIA CALIBRADA:</span>
-                    <span style="font-size: 0.75rem; color: #64748B;">Instagram & Facebook</span>
-                  </div>
-                  <p style="margin: 0; font-style: italic;">
-                    "En cada grano tostado en frío de Café La Cumbre no solo hay aroma, sino la devoción de quienes valoran las mañanas con carácter. Descubre nuestro nuevo lote de origen colombiano hoy mismo con envío prioritario."
-                  </p>
-                </div>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #64748B; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px;">
-                <span>Regla estricta: Ningún prompt ajeno contamina tu perfil</span>
-                <span style="color: #818CF8; font-weight: 600;">Sincronizado</span>
-              </div>
-            </div>
-
-            <!-- Columna Lateral: Tarjetas de Capacidades Futuristas -->
-            <div class="lusion-side-feature-stack">
-              <div class="lusion-mini-card">
-                <span class="lusion-feature-num">01 / ARQUITECTURA PRIVADA</span>
-                <h4 class="lusion-mini-title">Una Cuenta, Una Empresa</h4>
-                <p class="lusion-mini-desc">
-                  El usuario que ingresa registra únicamente los parámetros de su negocio. El modelo asimila tu identidad sin dispersión de datos.
-                </p>
-              </div>
-
-              <div class="lusion-mini-card">
-                <span class="lusion-feature-num">02 / CANALES COMERCIALES</span>
-                <h4 class="lusion-mini-title">Adaptación Multi-Formato</h4>
-                <p class="lusion-mini-desc">
-                  Genera piezas simultáneas para Facebook, Instagram Feed, WhatsApp Business y Email Marketing respetando las reglas de cada red.
-                </p>
-              </div>
-
-              <div class="lusion-mini-card">
-                <span class="lusion-feature-num">03 / AUDITORÍA & HISTORIAL</span>
-                <h4 class="lusion-mini-title">Revisión y Aprobación</h4>
-                <p class="lusion-mini-desc">
-                  Pestaña dedicada de curación editorial: edita en tiempo real, califica con me gusta y conserva solo el contenido que apruebes.
-                </p>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Bento Grid Immersivo: Capacidades Técnicas Estilo Lusion -->
-      <section class="lusion-bento-section" id="capacidades">
-        <div class="lusion-hero-container">
-          
-          <div class="lusion-section-header">
-            <span class="lusion-eyebrow">TECNOLOGÍA SENSORIAL</span>
-            <h2 class="lusion-section-title">
-              Potencia de Grado Estudio para el Crecimiento de tu PYME
-            </h2>
-            <p class="lusion-section-desc">
-              Cada interacción está diseñada para eliminar la fatiga creativa, acelerando el ciclo comercial de tu empresa con copys persuasivos y profesionales.
-            </p>
-          </div>
-
-          <div class="lusion-bento-grid">
-            
-            <div class="lusion-bento-item">
-              <div>
-                <div class="lusion-bento-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                </div>
-                <h3 class="lusion-bento-title">Retorno Inmediato</h3>
-                <p class="lusion-bento-text">
-                  Reducción del 90% en tiempos de producción comercial. Tu equipo dedica minutos en lugar de horas en la planificación de copys.
-                </p>
-              </div>
-              <div class="lusion-interactive-badge">
-                <span>Rendimiento Óptimo</span>
-                <span>→</span>
-              </div>
-            </div>
-
-            <div class="lusion-bento-item">
-              <div>
-                <div class="lusion-bento-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
-                </div>
-                <h3 class="lusion-bento-title">Micro-Variantes A/B</h3>
-                <p class="lusion-bento-text">
-                  Generación de múltiples alternativas por canal para evaluar qué enfoque conecta con mayor fuerza emocional con tus clientes.
-                </p>
-              </div>
-              <div class="lusion-interactive-badge">
-                <span>Variaciones Dinámicas</span>
-                <span>→</span>
-              </div>
-            </div>
-
-            <div class="lusion-bento-item">
-              <div>
-                <div class="lusion-bento-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
-                </div>
-                <h3 class="lusion-bento-title">Aislamiento Total</h3>
-                <p class="lusion-bento-text">
-                  Tus datos comerciales, productos y estrategias permanecen cifrados y vinculados estrictamente a tu identidad empresarial.
-                </p>
-              </div>
-              <div class="lusion-interactive-badge">
-                <span>Privacidad Blindada</span>
-                <span>→</span>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Banner de Conversión Final con Iluminación Radial Lusion -->
-      <section class="lusion-cta-banner-section" id="seguridad">
-        <div class="lusion-hero-container">
-          <div class="lusion-cta-box">
-            <h2 class="lusion-cta-title">Comienza a potenciar la voz comercial de tu empresa</h2>
-            <p class="lusion-cta-sub">
-              Configura tu empresa en menos de 2 minutos. Accede al generador inteligente y a la suite completa de revisión multicanal.
-            </p>
-            <button class="lusion-magnetic-btn lusion-btn-glow" style="padding: 16px 40px; font-size: 1.1rem;" onclick="window.ContentAI.navigateTo('view-auth')">
-              <span class="btn-label-magnetic">
-                <span>Registrar mi Empresa Ahora</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Footer Minimalista Oscuro -->
-      <footer class="lusion-footer">
-        <div class="lusion-footer-container">
-          <div style="display: flex; align-items: center; gap: 14px;">
-            <div class="lusion-brand-mark" style="width: 24px; height: 24px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
-            </div>
-            <strong style="color: #FFFFFF;">ContentAI - PYMES</strong>
-            <span style="color: #334155;">·</span>
-            <span style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">Experiencia Lusion Interactive</span>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 20px;">
-            <span style="font-size: 0.8rem;">HTML5 · CSS3 · Vanilla JS Puro</span>
-            <button class="lusion-magnetic-btn lusion-btn-ghost" style="padding: 6px 16px; font-size: 0.8rem;" onclick="window.ContentAI.navigateTo('view-auth')">
-              <span class="btn-label-magnetic">Acceso al Sistema</span>
-            </button>
-          </div>
-        </div>
-      </footer>
-
+      <!-- Footer sin enlaces ficticios -->
+      <footer class="cai-footer"><div class="cai-container cai-footer__inner"><a class="cai-logo cai-logo--footer" href="#propuesta"><span class="cai-logo__symbol" aria-hidden="true">✦</span><span class="cai-logo__word">content<span>ai</span></span><span class="cai-logo__tag">PYMES</span></a><p>Ideas que conectan. Contenido que representa a tu negocio.</p><a href="#propuesta" class="cai-footer__top">Volver arriba ↑</a></div><div class="cai-container cai-footer__bottom"><span>© 2026 ContentAI PYMES · Prototipo frontend</span><span>Hecho para impulsar la creatividad de las PYMES</span></div></footer>
     </section>
+
 
     <!-- ======================================================================= -->
     <!-- 2. VISTA: AUTENTICACIÓN (Futuro Blade: resources/views/auth/login)       -->
     <!-- ======================================================================= -->
-    <section id="view-auth" class="view-section">
-      <div class="auth-wrapper">
-        <div class="auth-card">
-          
-          <div class="auth-header">
-            <div class="auth-badge-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
-              </svg>
-            </div>
-            <h2 style="font-size: 1.6rem; margin-bottom: 4px;">Acceso a ContentAI</h2>
-            <p style="font-size: 0.88rem; color: var(--text-secondary);">Cada usuario gestiona de forma exclusiva su propia empresa</p>
-          </div>
+    
+<!-- =====================================================
+     CONTENTAI PYMES - AUTH 2.0
+     Login y registro visual, sin backend
+     ===================================================== -->
+    <section id="view-auth" class="view-section cai-auth">
+      <div class="cai-auth__layout">
+        <!-- PANEL IZQUIERDO: IDENTIDAD VISUAL -->
+        <aside class="cai-auth__showcase">
 
-          <!-- Selector Segmentado de Login / Registro -->
-          <div class="segmented-control" style="margin-bottom: 24px;">
-            <button type="button" class="segmented-btn active" id="tab-btn-login" onclick="window.ContentAI.toggleAuthMode('login')">
-              Iniciar Sesión
-            </button>
-            <button type="button" class="segmented-btn" id="tab-btn-register" onclick="window.ContentAI.toggleAuthMode('register')">
-              Crear Cuenta PYME
-            </button>
-          </div>
+          <div class="cai-auth__glow cai-auth__glow--one"></div>
+          <div class="cai-auth__glow cai-auth__glow--two"></div>
+          <div class="cai-auth__grid"></div>
+          <div class="cai-auth__showcase-inner">
 
-          <!-- Formulario de Autenticación -->
-          <form id="auth-form" onsubmit="window.ContentAI.handleAuthSubmit(event)">
-            
-            <div class="form-group" id="group-register-name" style="display: none;">
-              <div class="field-label-group">
-                <span class="field-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </span>
-                <label class="form-label" for="auth-name" style="margin-bottom: 0;">Nombre del Titular / Administrador <span class="required">*</span></label>
-              </div>
-              <input type="text" id="auth-name" class="form-control" placeholder="Ej. Carlos Mendoza">
-            </div>
+            <a href="javascript:void(0)"
+              class="cai-auth__brand"
+              onclick="window.ContentAI.navigateTo('view-landing')">
 
-            <div class="form-group">
-              <div class="field-label-group">
-                <span class="field-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                </span>
-                <label class="form-label" for="auth-email" style="margin-bottom: 0;">Correo Electrónico Corporativo <span class="required">*</span></label>
-              </div>
-              <input type="email" id="auth-email" class="form-control" required value="gerencia@lacumbre.com">
-            </div>
+              <span class="cai-auth__brand-icon">✦</span>
 
-            <div class="form-group">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <div class="field-label-group" style="margin-bottom: 0;">
-                  <span class="field-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  </span>
-                  <label class="form-label" for="auth-password" style="margin-bottom: 0;">Contraseña <span class="required">*</span></label>
-                </div>
-                <a href="javascript:void(0)" style="font-size: 0.78rem; color: var(--primary); text-decoration: none;">¿Olvidaste tu clave?</a>
-              </div>
-              <input type="password" id="auth-password" class="form-control" required value="pyme2026">
-            </div>
+              <span class="cai-auth__brand-name">
+                content<span>ai</span>
+              </span>
 
-            <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top: 10px;">
-              <span id="auth-btn-text">Ingresar a la Plataforma</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </form>
-
-          <div class="auth-demo-card">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
-              <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
-            </svg>
-            <span><strong>Regla de Negocio:</strong> Al ingresar, registrarás tu empresa. Todo el entorno de trabajo del Dashboard quedará restringido única y exclusivamente a ella.</span>
-          </div>
-
-          <div style="text-align: center; margin-top: 24px;">
-            <a href="javascript:void(0)" onclick="window.ContentAI.navigateTo('view-landing')" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-              <span>Volver a la página de inicio</span>
+              <span class="cai-auth__brand-tag">PYMES</span>
             </a>
+
+            <div class="cai-auth__editorial">
+
+              <span class="cai-auth__eyebrow">
+                <span class="cai-auth__live-dot"></span>
+                TU ESPACIO CREATIVO
+              </span>
+
+              <h1>
+                Las grandes ideas
+                <span>empiezan aquí.</span>
+              </h1>
+
+              <p>
+                Un lugar para darle voz a tu negocio,
+                transformar ideas en publicaciones y
+                construir una identidad que conecte.
+              </p>
+
+              <!-- Composición visual superpuesta -->
+              <div class="cai-auth__art" aria-hidden="true">
+
+                <div class="cai-auth__art-orbit"></div>
+
+                <div class="cai-auth__mockup">
+
+                  <div class="cai-auth__mockup-top">
+                    <span class="cai-auth__mockup-symbol">✳</span>
+                    <span>Tu próximo contenido</span>
+                    <span class="cai-auth__mockup-dots">•••</span>
+                  </div>
+
+                  <div class="cai-auth__mockup-body">
+
+                    <span class="cai-auth__mockup-label">
+                      ESPACIO DE CREACIÓN
+                    </span>
+
+                    <div class="cai-auth__mockup-lines">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+
+                    <div class="cai-auth__mockup-chips">
+                      <span>Instagram</span>
+                      <span>Creativo</span>
+                    </div>
+
+                    <div class="cai-auth__mockup-action">
+                      ✦ Propuesta lista para revisar
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="cai-auth__floating-card">
+
+                  <span class="cai-auth__floating-icon">✦</span>
+
+                  <div>
+                    <strong>Tu marca, tu estilo</strong>
+                    <small>Ideas con personalidad</small>
+                  </div>
+
+                  <span class="cai-auth__floating-check">✓</span>
+
+                </div>
+
+                <div class="cai-auth__small-spark">✧</div>
+
+              </div>
+            </div>
+
+            <div class="cai-auth__showcase-footer">
+              <span>CONTENTAI / EXPERIENCIA CREATIVA</span>
+              <span>© 2026</span>
+            </div>
+
           </div>
+        </aside>
+
+        <!-- PANEL DERECHO: AUTENTICACIÓN -->
+        <div class="cai-auth__form-side">
+
+          <div class="cai-auth__form-top">
+
+            <button type="button"
+                    class="cai-auth__back"
+                    onclick="window.ContentAI.navigateTo('view-landing')">
+              <span aria-hidden="true">←</span>
+              Volver al inicio
+            </button>
+
+            <span class="cai-auth__demo-label">
+              PROTOTIPO FRONTEND
+            </span>
+
+          </div>
+
+          <div class="cai-auth__form-container">
+
+            <div class="cai-auth__form-heading">
+
+              <div class="cai-auth__form-icon">✦</div>
+
+              <span class="cai-auth__form-kicker">
+                BIENVENIDO A CONTENTAI
+              </span>
+
+              <h2>Tu espacio comienza aquí.</h2>
+
+              <p>
+                Accede a tu entorno de trabajo o crea una
+                cuenta de demostración para tu negocio.
+              </p>
+            </div>
+
+            <!-- Selector login / registro -->
+            <div class="cai-auth__tabs"
+                role="group"
+                aria-label="Modo de acceso">
+
+              <button type="button"
+                      id="tab-btn-login"
+                      class="segmented-btn active"
+                      onclick="window.ContentAI.toggleAuthMode('login')">
+                Iniciar sesión
+              </button>
+
+              <button type="button"
+                      id="tab-btn-register"
+                      class="segmented-btn"
+                      onclick="window.ContentAI.toggleAuthMode('register')">
+                Crear cuenta
+              </button>
+
+            </div>
+
+            <form id="auth-form"
+                  class="cai-auth__form"
+                  onsubmit="window.ContentAI.handleAuthSubmit(event)">
+
+              <!-- Nombre: solo registro -->
+              <div class="cai-auth__field"
+                  id="group-register-name"
+                  style="display: none;">
+
+                <label for="auth-name">
+                  Nombre del titular
+                </label>
+
+                <div class="cai-auth__input-wrap">
+                  <span class="cai-auth__input-icon">♙</span>
+
+                  <input
+                    type="text"
+                    id="auth-name"
+                    name="name"
+                    autocomplete="name"
+                    placeholder="Ej. Carlos Mendoza"
+                  >
+                </div>
+              </div>
+
+              <!-- Correo -->
+              <div class="cai-auth__field">
+
+                <label for="auth-email">
+                  Correo electrónico
+                </label>
+
+                <div class="cai-auth__input-wrap">
+                  <span class="cai-auth__input-icon">✉</span>
+
+                  <input
+                    type="email"
+                    id="auth-email"
+                    name="email"
+                    autocomplete="email"
+                    placeholder="nombre@empresa.com"
+                    required
+                  >
+                </div>
+              </div>
+
+              <!-- Contraseña -->
+              <div class="cai-auth__field">
+
+                <div class="cai-auth__label-row">
+                  <label for="auth-password">Contraseña</label>
+                  <span class="cai-auth__field-hint">
+                    Acceso de demostración
+                  </span>
+                </div>
+
+                <div class="cai-auth__input-wrap">
+                  <span class="cai-auth__input-icon">◇</span>
+
+                  <input
+                    type="password"
+                    id="auth-password"
+                    name="password"
+                    autocomplete="current-password"
+                    placeholder="Ingresa tu contraseña"
+                    required
+                  >
+
+                  <button type="button"
+                          id="cai-auth-password-toggle"
+                          class="cai-auth__password-toggle"
+                          aria-label="Mostrar contraseña"
+                          aria-pressed="false">
+                    Mostrar
+                  </button>
+
+                </div>
+              </div>
+
+              <button type="submit"
+                      class="cai-auth__submit">
+
+                <span id="auth-btn-text">
+                  Ingresar a la Plataforma
+                </span>
+
+                <span class="cai-auth__submit-arrow"
+                      aria-hidden="true">↗</span>
+
+              </button>
+
+            </form>
+
+            <div class="cai-auth__divider">
+              <span>ACCESO DE DEMOSTRACIÓN</span>
+            </div>
+
+            <div class="cai-auth__notice">
+
+              <span class="cai-auth__notice-icon">ⓘ</span>
+
+              <p>
+                Esta versión utiliza una sesión simulada.
+                Los datos de acceso no se verifican contra
+                un servidor. Tu empresa y contenidos de prueba
+                se conservan localmente en este navegador.
+              </p>
+
+            </div>
+
+            <p class="cai-auth__bottom-note">
+              Diseñado para pequeñas empresas con grandes ideas.
+            </p>
+
+          </div>
+
+          <div class="cai-auth__form-footer">
+            <span>ContentAI PYMES · 2026</span>
+            <span>Diseña. Crea. Conecta.</span>
+          </div>
+
         </div>
+
       </div>
+
     </section>
+
 
     <!-- ======================================================================= -->
     <!-- 3. VISTA: ONBOARDING / PERFIL (Futuro Blade: resources/views/onboarding)-->
