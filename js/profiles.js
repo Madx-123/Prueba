@@ -1,132 +1,484 @@
+
 /**
- * ContentAI - PYMES | Company Profiles & Onboarding Controller
- * Modelo de Empresa Única: El usuario registra su empresa y trabaja exclusivamente con ella.
+ * ContentAI PYMES | Perfil empresarial
+ * Ruta: js/profiles.js
+ *
+ * Responsabilidades:
+ * - Leer y validar el formulario de empresa.
+ * - Registrar o actualizar mediante services/api.js.
+ * - Mostrar la información empresarial en la interfaz.
+ * - Recuperar los datos guardados al volver al onboarding.
+ *
+ * No realiza peticiones HTTP directamente ni usa localStorage.
+ * La API funciona en modo demo y después podrá conectarse a Laravel.
  */
 
 import { store } from './store.js';
-import { showToast } from './app.js';
+import { api } from './services/api.js';
+import { getDemoCompany } from '../data/demoData.js';
 import { navigateTo } from './navigation.js';
+import { showToast } from './app.js';
+
+const byId = (id) => document.getElementById(id);
+
+const FIELDS = Object.freeze({
+  name: 'company-name',
+  sector: 'company-sector',
+  audience: 'company-audience',
+  tone: 'company-tone'
+});
+
+const LIMITS = Object.freeze({
+  name: 120,
+  sector: 150,
+  audience: 1000,
+  tone: 120
+});
+
+let initialized = false;
+let submitting = false;
+
+/* ==========================================================
+   1. ELEMENTOS Y CANALES DEL FORMULARIO
+   ========================================================== */
+
+function setText(id, value) {
+  const element = byId(id);
+  if (element) element.textContent = String(value ?? '');
+}
+
+function syncChannelTiles(form) {
+  form.querySelectorAll('input[name="channels"]').forEach((checkbox) => {
+    checkbox.closest('.channel-tile')?.classList.toggle(
+      'checked', checkbox.checked
+    );
+  });
+}
+
+function fillCompanyForm(company) {
+  const form = byId('onboarding-form');
+  if (!form || !company) return;
+
+  for (const [property, id] of Object.entries(FIELDS)) {
+    const input = byId(id);
+    if (input && typeof company[property] === 'string') {
+      input.value = company[property];
+    }
+  }
+
+  const selected = new Set(
+    Array.isArray(company.channels) ? company.channels : []
+  );
+
+  form.querySelectorAll('input[name="channels"]').forEach((checkbox) => {
+    checkbox.checked = selected.has(checkbox.value);
+  });
+
+  syncChannelTiles(form);
+}
+
+/* ==========================================================
+   2. TEXTOS DEL ONBOARDING Y PERFIL VISIBLE
+   ========================================================== */
+
+function renderFormMode(isRegistered) {
+  const heading = document.querySelector(
+    '#view-onboarding .onboarding-title'
+  );
+
+  const buttonText = document.querySelector(
+    '#onboarding-form button[type="submit"] span'
+  );
+
+  if (heading) {
+    heading.textContent = isRegistered
+      ? 'Actualiza los datos de tu empresa'
+      : 'Registra tu Empresa en la Plataforma';
+  }
+
+  if (buttonText) {
+    buttonText.textContent = isRegistered
+      ? 'Guardar cambios de empresa'
+      : 'Registrar Empresa y Abrir Dashboard';
+  }
+}
+
+/**
+ * Actualiza los datos empresariales mostrados
+ * en los elementos existentes del index.html.
+ */
+export function renderProfileUI() {
+  const {
+    user,
+    companyProfile,
+    isCompanyRegistered
+  } = store.getState();
+
+  const company = companyProfile || {};
+
+  const name = String(company.name || 'Tu empresa');
+  const sector = String(company.sector || 'Sin sector');
+
+  const userName = String(
+    user?.name || 'Administrador PYME'
+  );
+
+  const email = String(user?.email || '');
+
+  const initial =
+    userName.trim().charAt(0).toUpperCase() || 'U';
+
+  // Landing Page
+  setText('landing-hero-company-name', name);
+  setText('landing-hero-company-sector', sector);
+
+  // Dashboard
+  setText('topbar-brand-name', name);
+
+  setText(
+    'generator-header-company-note',
+    `Vinculado a: ${name}`
+  );
+
+  // Barra inferior del dashboard
+  setText('discord-user-avatar', initial);
+  setText('discord-user-name', userName);
+
+  // Este elemento muestra el nombre comercial
+  // en el diseño original.
+  setText('discord-user-email', name);
+
+  // Ventana de configuración
+  setText('discord-popup-avatar', initial);
+  setText('discord-popup-name', userName);
+  setText('discord-popup-email', email);
+
+  setText('discord-company-name', name);
+  setText('discord-company-sector', sector);
+
+  // Cambiar modo registro / edición
+  renderFormMode(isCompanyRegistered);
+}
+
+/* ==========================================================
+   3. INICIALIZACIÓN Y SINCRONIZACIÓN
+   ========================================================== */
 
 export function initProfiles() {
+  if (initialized) return;
+
+  initialized = true;
+
+  const initial = store.getState();
+
+  let previousProfile = initial.companyProfile;
+  let previousUser = initial.user;
+  let previousRegistered = initial.isCompanyRegistered;
+  let previousView = initial.currentView;
+
   renderProfileUI();
 
-  // Suscribirse a cambios en store
-  store.subscribe(() => {
-    renderProfileUI();
+  // Recuperar empresa si ya estaba registrada
+  if (initial.isCompanyRegistered) {
+    fillCompanyForm(initial.companyProfile);
+  }
+
+  /**
+   * Escuchar cambios del estado central.
+   *
+   * No actualizamos el formulario cuando el usuario
+   * está escribiendo, solo cuando vuelve a abrirlo.
+   */
+  store.subscribe((state) => {
+    const profileChanged =
+      state.companyProfile !== previousProfile;
+
+    const userChanged =
+      state.user !== previousUser;
+
+    const registrationChanged =
+      state.isCompanyRegistered !== previousRegistered;
+
+    const enteredOnboarding =
+      state.currentView === 'view-onboarding' &&
+      previousView !== 'view-onboarding';
+
+    if (
+      profileChanged ||
+      userChanged ||
+      registrationChanged
+    ) {
+      renderProfileUI();
+    }
+
+    if (
+      enteredOnboarding &&
+      state.isCompanyRegistered
+    ) {
+      fillCompanyForm(state.companyProfile);
+    }
+
+    previousProfile = state.companyProfile;
+    previousUser = state.user;
+    previousRegistered = state.isCompanyRegistered;
+    previousView = state.currentView;
   });
 }
 
-// Carga datos de ejemplo en el formulario para evaluación rápida
+/* ==========================================================
+   4. AUTOCOMPLETAR DATOS DE DEMOSTRACIÓN
+   ========================================================== */
+
+/**
+ * Obtiene los datos desde data/demoData.js.
+ *
+ * No registra la empresa automáticamente.
+ * Solo rellena los controles del formulario.
+ */
 export function loadDemoCompanyAutofill() {
-  const nameInput = document.getElementById('company-name');
-  const sectorSelect = document.getElementById('company-sector');
-  const audienceTextarea = document.getElementById('company-audience');
-  const toneSelect = document.getElementById('company-tone');
-  const topicTextarea = document.getElementById('gen-campaign-topic');
+  const form = byId('onboarding-form');
 
-  if (nameInput) nameInput.value = 'Café Artesanal La Cumbre';
-  if (sectorSelect) sectorSelect.value = 'Gastronomía & Alimentos';
-  if (audienceTextarea) audienceTextarea.value = 'Amantes del café de especialidad y profesionales de 25 a 45 años que buscan productos de origen local, apoyan a caficultores y aprecian la trazabilidad del grano.';
-  if (toneSelect) toneSelect.value = 'Cercano, Amigable y Cálido';
-  if (topicTextarea) topicTextarea.value = 'Lanzamiento de nuestro nuevo café de origen Nariño con 20% de descuento durante este fin de semana. Tueste medio, notas a panela y frutos rojos.';
+  if (!form) return;
 
-  showToast('Datos de ejemplo cargados en el formulario de registro.', 'info');
+  form.reset();
+
+  fillCompanyForm(
+    getDemoCompany()
+  );
+
+  showToast(
+    'Datos de prueba cargados. Pulsa Guardar para confirmar los cambios.',
+    'info'
+  );
 }
 
-// Procesa el registro de la única empresa del usuario
-export function handleOnboardingSubmit(event) {
-  event.preventDefault();
+/* ==========================================================
+   5. VALIDAR DATOS EMPRESARIALES
+   ========================================================== */
 
-  const name = document.getElementById('company-name').value.trim();
-  const sector = document.getElementById('company-sector').value;
-  const audience = document.getElementById('company-audience').value.trim();
-  const tone = document.getElementById('company-tone').value;
+/**
+ * Lee los campos originales del formulario.
+ *
+ * Devuelve un objeto preparado para enviarlo
+ * a nuestro servicio api.js.
+ */
+function readCompanyForm(form) {
+  const company = {};
 
-  const channels = [];
-  document.querySelectorAll('input[name="channels"]:checked').forEach(cb => {
-    channels.push(cb.value);
-  });
+  // Validar nombre, sector, audiencia y tono
+  for (const [property, id] of Object.entries(FIELDS)) {
+    const input = byId(id);
 
-  const registeredCompany = {
-    id: 'pyme_' + Date.now(),
-    name: name,
-    sector: sector,
-    audience: audience,
-    tone: tone,
-    channels: channels.length > 0 ? channels : ['Facebook', 'Instagram', 'WhatsApp Business'],
-    registeredAt: new Date().toLocaleDateString('es-ES')
-  };
+    if (!input) {
+      throw new Error(
+        `No se encontró el campo ${id}.`
+      );
+    }
 
-  // Guardar como la única empresa del usuario en la tienda global
-  store.registerUserCompany(registeredCompany);
+    const value = input.value.trim();
 
-  showToast(`¡Empresa "${name}" registrada! Entorno de trabajo comercial activado.`, 'success');
+    if (
+      !value ||
+      !input.checkValidity()
+    ) {
+      input.focus();
 
-  // Redirigir al Dashboard principal (Tab A: Generador IA)
-  setTimeout(() => {
-    navigateTo('view-dashboard', 'tab-generator');
-  }, 400);
+      form.reportValidity?.();
+
+      throw new Error(
+        'Completa los campos obligatorios de la empresa.'
+      );
+    }
+
+    // Validar longitud máxima
+    if (value.length > LIMITS[property]) {
+      input.focus();
+
+      throw new Error(
+        `El campo ${property} supera el límite de ${LIMITS[property]} caracteres.`
+      );
+    }
+
+    company[property] = value;
+  }
+
+  // Obtener canales seleccionados
+  const channels = [
+    ...form.querySelectorAll(
+      'input[name="channels"]:checked'
+    )
+  ]
+    .map((input) => input.value.trim())
+    .filter(Boolean);
+
+  // Debe existir al menos un canal
+  if (channels.length === 0) {
+    form.querySelector(
+      'input[name="channels"]'
+    )?.focus();
+
+    throw new Error(
+      'Selecciona al menos un canal de comunicación.'
+    );
+  }
+
+  // Eliminar canales duplicados
+  company.channels = [
+    ...new Set(channels)
+  ];
+
+  return company;
 }
 
-// Sincroniza la información de la empresa exclusiva en todas las vistas
-export function renderProfileUI() {
-  const profile = store.getState().companyProfile;
-  if (!profile) return;
+/* ==========================================================
+   6. REGISTRAR O ACTUALIZAR MEDIANTE LA API
+   ========================================================== */
 
-  const initial = profile.name ? profile.name.charAt(0).toUpperCase() : 'E';
+/**
+ * Procesa el formulario empresarial.
+ *
+ * Si la empresa no existe:
+ *   api.saveCompany()
+ *
+ * Si la empresa ya existe:
+ *   api.updateCompany()
+ *
+ * Conservamos este nombre porque index.html
+ * utiliza handleOnboardingSubmit(event).
+ */
+export async function handleOnboardingSubmit(event) {
+  event?.preventDefault();
 
-  // Sidebar del Dashboard
-  const avatarEl = document.getElementById('sidebar-avatar');
-  const nameEl = document.getElementById('sidebar-company-name');
-  const sectorEl = document.getElementById('sidebar-company-sector');
-  const topbarBrandPill = document.getElementById('topbar-brand-name');
-  const genHeaderCompany = document.getElementById('generator-header-company-note');
+  const form = byId('onboarding-form');
 
-  // Elementos de la Burbuja Flotante de Usuario (Abajo a la Derecha)
-  const bubbleAvatar = document.getElementById('user-bubble-avatar');
-  const bubbleInitial = document.getElementById('user-bubble-initial');
-  const bubbleName = document.getElementById('user-bubble-name');
-  const bubbleCompany = document.getElementById('user-bubble-company');
-  const bubbleSector = document.getElementById('user-bubble-sector');
-  const bubbleEmail = document.getElementById('user-bubble-email');
+  // No procesar si falta el formulario
+  // o ya existe un envío en curso.
+  if (!form || submitting) {
+    return false;
+  }
 
-  const userEmail = store.getState().user?.email || 'gerencia@pyme.com';
+  // Validar sesión de demostración
+  if (!store.getState().user?.isLoggedIn) {
+    showToast(
+      'Inicia sesión para continuar.',
+      'warning'
+    );
 
-  // Elementos del Dock de Usuario estilo Discord (Esquina Inferior Izquierda)
-  const discordAvatar = document.getElementById('discord-user-avatar');
-  const discordUserName = document.getElementById('discord-user-name');
-  const discordUserEmail = document.getElementById('discord-user-email');
-  const discordCompanyName = document.getElementById('discord-company-name');
-  const discordCompanySector = document.getElementById('discord-company-sector');
+    navigateTo('view-auth');
 
-  if (discordAvatar) discordAvatar.textContent = initial;
-  if (discordUserName) discordUserName.textContent = profile.name;
-  if (discordUserEmail) discordUserEmail.textContent = userEmail;
-  if (discordCompanyName) discordCompanyName.textContent = profile.name;
-  if (discordCompanySector) discordCompanySector.textContent = profile.sector;
+    return false;
+  }
 
-  if (avatarEl) avatarEl.textContent = initial;
-  if (nameEl) nameEl.textContent = profile.name;
-  if (sectorEl) sectorEl.textContent = profile.sector.split('/')[0];
-  if (topbarBrandPill) topbarBrandPill.textContent = profile.name;
-  if (genHeaderCompany) genHeaderCompany.textContent = `Vinculado a: ${profile.name}`;
+  let companyData;
 
-  if (bubbleAvatar) bubbleAvatar.textContent = initial;
-  if (bubbleInitial) bubbleInitial.textContent = initial;
-  if (bubbleName) bubbleName.textContent = profile.name;
-  if (bubbleCompany) bubbleCompany.textContent = profile.name;
-  if (bubbleSector) bubbleSector.textContent = profile.sector;
-  if (bubbleEmail) bubbleEmail.textContent = userEmail;
+  // Leer y validar formulario
+  try {
+    companyData = readCompanyForm(form);
 
-  // Landing Hero Card
-  const landingHeroName = document.getElementById('landing-hero-company-name');
-  const landingHeroSector = document.getElementById('landing-hero-company-sector');
-  if (landingHeroName) landingHeroName.textContent = profile.name;
-  if (landingHeroSector) landingHeroSector.textContent = profile.sector;
+  } catch (error) {
+    showToast(
+      error.message,
+      'warning'
+    );
 
-  // Review & Previews badges
-  const reviewCompanyBadge = document.getElementById('review-badge-company');
-  const reviewToneBadge = document.getElementById('review-badge-tone');
-  if (reviewCompanyBadge) reviewCompanyBadge.textContent = profile.name;
-  if (reviewToneBadge) reviewToneBadge.textContent = `Tono: ${profile.tone.split('(')[0]}`;
+    return false;
+  }
+
+  // Determinar registro o actualización
+  const wasRegistered =
+    store.getState().isCompanyRegistered;
+
+  const button = form.querySelector(
+    'button[type="submit"]'
+  );
+
+  const wasDisabled =
+    button?.disabled ?? false;
+
+  // Bloquear doble envío
+  submitting = true;
+
+  if (button) {
+    button.disabled = true;
+
+    button.setAttribute(
+      'aria-busy',
+      'true'
+    );
+  }
+
+  try {
+    let company;
+
+    /* ======================================================
+       7. CONEXIÓN CON EL SERVICIO
+       ====================================================== */
+
+    if (wasRegistered) {
+      // Actualizar empresa existente
+      company = await api.updateCompany(
+        companyData
+      );
+
+    } else {
+      // Registrar nueva empresa
+      company = await api.saveCompany(
+        companyData
+      );
+    }
+
+    /* ======================================================
+       8. CONFIRMACIÓN DEL RESULTADO
+       ====================================================== */
+
+    showToast(
+      wasRegistered
+        ? 'Los datos de tu empresa se actualizaron correctamente.'
+        : `Empresa "${company.name}" registrada correctamente.`,
+      'success'
+    );
+
+    // Abrir el dashboard
+    navigateTo(
+      'view-dashboard',
+      'tab-generator'
+    );
+
+    return true;
+
+  } catch (error) {
+
+    /* ======================================================
+       9. MANEJO DE ERRORES DEL SERVICIO
+       ====================================================== */
+
+    showToast(
+      error?.message ||
+        'No se pudo guardar la empresa. Inténtalo nuevamente.',
+      'error'
+    );
+
+    // Si la futura API indica sesión inválida
+    if (error?.status === 401) {
+      navigateTo('view-auth');
+    }
+
+    return false;
+
+  } finally {
+
+    /* ======================================================
+       10. RESTABLECER EL BOTÓN
+       ====================================================== */
+
+    submitting = false;
+
+    if (button) {
+      button.disabled = wasDisabled;
+
+      button.removeAttribute(
+        'aria-busy'
+      );
+    }
+  }
 }
