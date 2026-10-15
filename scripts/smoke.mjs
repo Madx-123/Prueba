@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+import { api } from '../js/services/api.js';
+import { CHANNELS } from '../js/data/seed.js';
+import { blankCompany, blankEditor } from '../js/core/state.js';
+import { previewView } from '../js/views/previews.js';
+import { buildCopy } from '../js/features/copyGenerator.js';
+import { landingView, authView } from '../js/views/public.js';
+import { onboardingView } from '../js/views/onboarding.js';
+import { dashboardView } from '../js/views/dashboard.js';
+class MemoryStorage {constructor(){this.values=new Map();}getItem(k){return this.values.has(k)?this.values.get(k):null;}setItem(k,v){this.values.set(k,String(v));}removeItem(k){this.values.delete(k);}clear(){this.values.clear();}}
+globalThis.localStorage=new MemoryStorage();globalThis.sessionStorage=new MemoryStorage();
+let tests=0;
+const check=(condition,msg)=>{assert.ok(condition,msg);tests++;};
+check(landingView().includes('hero-copy'),'landing render');
+check(authView('register').includes('auth-name'),'register render');
+await api.login({email:'demo@contentai.pe',password:'anything'});
+const c=await api.getCompany(); check(c.name==='Café La Cumbre','seed company');
+const seeded=await api.posts();check(seeded.length===3,'seed posts');
+for (const channel of CHANNELS){
+ const text=buildCopy({channel:channel.id,objective:'Presentar un producto',topic:'Lanzamiento de pan artesanal'},c);
+ check(text.includes('pan artesanal'),`template ${channel.id}`);
+ check(previewView(channel.id,text,c).includes('aria-label'),`preview ${channel.id}`);
+}
+check(previewView('Facebook','<script>alert(1)</script>',{name:'<img src=x onerror=alert(1)>',sector:'demo'}).includes('&lt;script&gt;'),'preview escaped');
+check(onboardingView({onboarding:blankCompany(),onboardingStep:0,editingCompany:false}).includes('data-company-field="name"'),'onboarding form');
+check(dashboardView({view:'create',user:{name:'Persona Demo'},company:c,posts:seeded,editor:blankEditor(),previewChannel:'Facebook',sidebarCollapsed:false,mobileSidebarOpen:false,generating:false}).includes('data-action="save-post"'),'create form');
+const registered=await api.register({name:'Nueva Persona',email:'nuevo@correo.com',password:'demo1234'});
+check(registered.email==='nuevo@correo.com','registration');
+check(await api.getCompany()===null,'new account has no inherited company');
+let threw=false;try{await api.login({email:'unknown@correo.com',password:'hello'});}catch{threw=true;};check(threw,'unknown account blocked');
+let company=await api.saveCompany({name:'Tienda Sol',sector:'Comercio y retail',city:'Chimbote',offer:'Accesorios',audience:'Adultos jóvenes',differentiator:'Atención cercana',tone:'Profesional y claro',goal:'Aumentar las ventas',channels:['Facebook','Instagram']});
+check(company.city==='Chimbote','company data stored');
+let post=await api.savePost({channel:'Facebook',status:'draft',topic:'Lanzamiento',text:'Contenido de prueba',objective:'Aumentar las ventas'});
+check((await api.posts()).length===1,'new account posts');
+post=await api.savePost({...post,text:'Contenido editado',status:'approved'});
+check(post.status==='approved'&&(await api.posts()).length===1,'updates do not duplicate');
+await api.deletePost(post.id);check((await api.posts()).length===0,'delete post');
+await api.logout();await api.login({email:'demo@contentai.pe',password:'abc'});
+check((await api.posts()).length===3,'user isolation');
+check((await api.getCompany()).name==='Café La Cumbre','company isolation');
+await api.resetDemo();check(await api.session()===null,'reset clears session');
+check((await api.login({email:'demo@contentai.pe',password:'x'})).id==='user-demo','seed restore');
+console.log(`✓ ${tests} pruebas de módulos y operaciones demo completadas.`);

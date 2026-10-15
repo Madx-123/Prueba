@@ -1,0 +1,12 @@
+/* Única fuente para colores, tipografía, superficies y espaciado. */
+:root {
+  --canvas:#f2f4f8; --surface:#fff; --surface-alt:#f8f9fc; --surface-soft:#f0f2f8;
+  --ink:#20243a; --ink-strong:#161a2e; --ink-subtle:#667085; --ink-faint:#8a91a3;
+  --primary:#6750d8; --primary-dark:#543fc3; --primary-soft:#f0ecff; --primary-ink:#4b35aa;
+  --line:#e5e8f0; --line-strong:#d6dbe6; --success:#15816a; --success-soft:#e9f8f2;
+  --danger:#ba3c51; --danger-soft:#fff0f2; --warning:#a6721d; --warning-soft:#fff6e6;
+  --font:'Inter','Segoe UI',Arial,sans-serif;
+  --radius-sm:9px; --radius:14px; --radius-lg:20px; --radius-xl:27px;
+  --shadow-card:0 5px 20px rgba(26,37,72,.035); --shadow-float:0 22px 60px rgba(31,35,65,.12);
+  --sidebar-width:252px; --sidebar-collapsed:82px; --header-height:73px;
+}

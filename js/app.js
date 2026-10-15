@@ -1,906 +1,213 @@
+/** ContentAI PYMES: único controlador de UI. Todos los eventos se delegan aquí. */
+import { api } from './services/api.js';
+import { ui, blankCompany, blankEditor } from './core/state.js';
+import { notify } from './ui/toast.js';
+import { landingView, authView } from './views/public.js';
+import { onboardingView } from './views/onboarding.js';
+import { dashboardView, libraryResults } from './views/dashboard.js';
+import { previewView } from './views/previews.js';
+import { buildCopy } from './features/copyGenerator.js';
+import { SUGGESTIONS } from './data/seed.js';
+import { words } from './core/utils.js';
 
-/**
- * ==========================================================
- * CONTENTAI PYMES
- * Archivo: js/app.js
- *
- * Orquestador principal del frontend.
- *
- * Responsabilidades:
- * - Inicializar los módulos.
- * - Exponer la API window.ContentAI.
- * - Gestionar el acceso de demostración.
- * - Coordinar controles de interfaz.
- * - Mostrar notificaciones.
- *
- * No realiza autenticación real ni llamadas a un servidor.
- * ==========================================================
- */
+const app = document.getElementById('app');
+const guarded = new Set(['home','create','library','company','settings']);
+let variant = 0;
+const $ = id => document.getElementById(id);
 
-import { store } from './store.js';
+function render() {
+  if (ui.view === 'landing') app.innerHTML = landingView();
+  else if (ui.view === 'login' || ui.view === 'register') app.innerHTML = authView(ui.view);
+  else if (ui.view === 'onboarding') app.innerHTML = onboardingView(ui);
+  else app.innerHTML = dashboardView(ui);
+  if (ui.view === 'create') syncPreview();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+async function hydrate() {
+  ui.user = await api.session();
+  ui.company = ui.user ? await api.getCompany() : null;
+  ui.posts = ui.company ? await api.posts() : [];
+}
+async function navigate(view) {
+  if (guarded.has(view) || view === 'onboarding') {
+    if (!ui.user) { ui.view='login'; render(); return; }
+    if (!ui.company && view !== 'onboarding') {
+      prepareOnboarding(false); ui.view='onboarding'; render(); return;
+    }
+  }
+  if (!['landing','login','register','onboarding', ...guarded].includes(view)) view='landing';
+  ui.view = view;
+  ui.mobileSidebarOpen=false;
+  render();
+}
+function prepareOnboarding(edit) {
+  ui.editingCompany = edit;
+  ui.onboardingStep = 0;
+  ui.onboarding = edit && ui.company ? { ...ui.company, channels:[...ui.company.channels] } : blankCompany();
+}
+function updatePreviewNode() {
+  const node = $('live-preview');
+  if (node) node.innerHTML = previewView(ui.previewChannel,ui.editor.text,ui.company);
+}
+function syncPreview() { updatePreviewNode(); }
+function syncEditorMetrics() {
+  const counter=$('editor-count');
+  if(counter) counter.textContent=`${words(ui.editor.text)} palabras · ${ui.editor.text.length} caracteres`;
+  const count=$('topic-count'); if(count) count.textContent=`${ui.editor.topic.length}/500`;
+}
+function onboardingValid(step) {
+  const fieldMap = {0:[['name','nombre comercial'],['sector','sector'],['offer','productos o servicios']],1:[['audience','público objetivo']],2:[['tone','tono de la marca']]};
+  for(const [field,label] of fieldMap[step] || []) {
+    if (!String(ui.onboarding[field] || '').trim()) {
+      notify(`Completa ${label} para continuar.`, 'error');
+      $(`${field}`)?.focus(); return false;
+    }
+  }
+  if(step===2 && !ui.onboarding.channels.length) {notify('Selecciona al menos una plataforma.','error');return false;}
+  return true;
+}
+async function submitCompany() {
+  for(let step=0;step<3;step++) if(!onboardingValid(step)){ui.onboardingStep=step;render();return;}
+  const button=document.querySelector('[data-action="onboard-next"]');
+  if(button) button.disabled=true;
+  try {
+    ui.company=await api.saveCompany(ui.onboarding);
+    ui.posts=await api.posts();
+    notify(ui.editingCompany?'Los datos de la empresa se actualizaron.':'¡Empresa configurada! Ya puedes crear contenido.','success');
+    await navigate(ui.editingCompany?'company':'home');
+  } catch(e){notify(e.message,'error');if(button)button.disabled=false;}
+}
+async function authSubmit(form) {
+  const data=Object.fromEntries(new FormData(form));
+  const button=form.querySelector('[type="submit"]');
+  if(button) button.disabled=true;
+  try {
+    ui.user = form.dataset.form === 'register' ? await api.register(data) : await api.login(data);
+    ui.company = await api.getCompany();
+    ui.posts = ui.company ? await api.posts() : [];
+    notify(`Hola, ${ui.user.name.split(' ')[0]}. ¡Bienvenido a ContentAI!`,'success');
+    if (!ui.company) {prepareOnboarding(false); await navigate('onboarding');}
+    else await navigate('home');
+  } catch(e){notify(e.message,'error');if(button)button.disabled=false;}
+}
+async function savePost(status) {
+  if(!ui.editor.text.trim()) {notify('Escribe o genera un texto antes de guardarlo.','error');$('editor-text')?.focus();return;}
+  try {
+    const saved = await api.savePost({...ui.editor,status});
+    ui.editor.id=saved.id; ui.editor.status=saved.status;
+    ui.posts=await api.posts();
+    notify(status==='approved'?'Publicación aprobada y guardada.':'Borrador guardado correctamente.','success');
+    await navigate('library');
+  }catch(e){notify(e.message,'error');}
+}
+async function generate() {
+  if(ui.generating) return;
+  if(!ui.editor.topic.trim()) {notify('Describe qué deseas comunicar antes de generar.','error');$('editor-topic')?.focus();return;}
+  ui.generating=true;
+  const button=document.querySelector('[data-action="generate"]');
+  if(button){button.disabled=true;button.innerHTML='✦ Preparando borrador...';}
+  try {
+    await new Promise(resolve=>setTimeout(resolve,650));
+    variant=0;
+    ui.editor.text=buildCopy(ui.editor,ui.company,variant);
+    const field=$('editor-text');if(field)field.value=ui.editor.text;
+    ui.previewChannel=ui.editor.channel;
+    updatePreviewNode();syncEditorMetrics();
+    document.querySelectorAll('.preview-tab').forEach(x=>{x.classList.toggle('active',x.dataset.channel===ui.previewChannel);x.setAttribute('aria-pressed', String(x.dataset.channel===ui.previewChannel));});
+    notify('Propuesta de demostración creada. Puedes editarla libremente.','success');
+  } catch(e){notify(e.message,'error');}
+  finally {ui.generating=false; if(button){button.disabled=false;button.innerHTML='✦ Generar propuesta demo →';}}
+}
+function updateLibrary() {
+  const result=$('library-results'); if(!result)return;
+  const query=ui.libraryQuery.toLowerCase().trim();
+  let list=ui.posts.filter(p=>(ui.libraryFilter==='all'||p.status===ui.libraryFilter)&&`${p.topic} ${p.text} ${p.channel}`.toLowerCase().includes(query));
+  list.sort((a,b)=>ui.librarySort==='oldest'?new Date(a.updatedAt)-new Date(b.updatedAt):new Date(b.updatedAt)-new Date(a.updatedAt));
+  result.innerHTML=libraryResults(list);
+}
+function putAtCursor(s) {
+  const box=$('editor-text');if(!box)return;
+  const a=box.selectionStart,b=box.selectionEnd, selected=box.value.slice(a,b);
+  const replacement=s==='bold'?`**${selected||'texto destacado'}**`:s==='list'?`\n• ${selected||'Elemento de la lista'}`:' ✨';
+  box.setRangeText(replacement,a,b,'end');
+  ui.editor.text=box.value;syncEditorMetrics();updatePreviewNode();box.focus();
+}
+async function copyText() {
+  if(!ui.editor.text.trim()){notify('No hay contenido para copiar.','error');return;}
+  try{await navigator.clipboard.writeText(ui.editor.text);notify('Texto copiado al portapapeles.','success');}
+  catch{const box=$('editor-text');box?.select();notify('Selecciona el texto y pulsa Ctrl+C para copiar.');}
+}
+async function downloadData() {
+  const json=await api.exportDemo();
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const anchor=document.createElement('a');
+  anchor.href=url;anchor.download='contentai-datos-demo.json';document.body.append(anchor);anchor.click();anchor.remove();
+  URL.revokeObjectURL(url);notify('Datos exportados.','success');
+}
+const findPost = id => ui.posts.find(p=>p.id===id);
 
-import {
-  navigateTo,
-  switchDashboardTab
-} from './navigation.js';
-
-import {
-  initProfiles,
-  handleOnboardingSubmit,
-  loadDemoCompanyAutofill
-} from './profiles.js';
-
-import {
-  handleGenerateSubmit
-} from './generator.js';
-
-import {
-  initReview,
-  handleTextareaEdit,
-  focusAndEditTextarea,
-  copyToClipboard,
-  regenerateVariant,
-  discardCurrentContent,
-  approveAndSaveContent,
-  loadHistoryToEditor,
-  insertFormatting
-} from './review.js';
-
-import {
-  initPreviews,
-  toggleEditorMode,
-  toggleLike,
-  setPreviewChannel,
-  setEditorFont,
-  setEditorSize
-} from './previews.js';
-
-
-/* ==========================================================
-   1. CONFIGURACIÓN
-   ========================================================== */
-
-const CHANNEL_TYPES = Object.freeze({
-  Facebook: 'Post de Facebook',
-  Instagram: 'Post de Instagram con Hashtags',
-  TikTok: 'Video TikTok Promocional',
-  WhatsApp: 'Mensaje Promocional WhatsApp',
-  Email: 'Email Marketing'
+app.addEventListener('submit', async event => {
+  const form=event.target.closest('form[data-form]'); if(!form)return;
+  event.preventDefault();
+  if(['login','register'].includes(form.dataset.form)) await authSubmit(form);
 });
 
-let initialized = false;
+app.addEventListener('input', event => {
+  const el=event.target;
+  if(el.dataset.companyField) ui.onboarding[el.dataset.companyField]=el.value;
+  if(el.dataset.editorField){ui.editor[el.dataset.editorField]=el.value;syncEditorMetrics();if(el.dataset.editorField==='text')updatePreviewNode();}
+  if(el.id==='library-search'){ui.libraryQuery=el.value;updateLibrary();}
+});
+app.addEventListener('change', event => {
+  const el=event.target;
+  if(el.dataset.companyField) ui.onboarding[el.dataset.companyField]=el.value;
+  if(el.dataset.companyChannel){const id=el.dataset.companyChannel;ui.onboarding.channels=el.checked?[...new Set([...ui.onboarding.channels,id])]:ui.onboarding.channels.filter(x=>x!==id);el.closest('.channel-choice')?.classList.toggle('checked',el.checked);}
+  if(el.dataset.editorField)ui.editor[el.dataset.editorField]=el.value;
+  if(el.id==='library-sort'){ui.librarySort=el.value;updateLibrary();}
+});
 
-const byId = (id) => document.getElementById(id);
-
-
-/* ==========================================================
-   2. NOTIFICACIONES
-   ========================================================== */
-
-/**
- * Muestra mensajes al usuario.
- * Utiliza textContent para evitar interpretar HTML externo.
- */
-export function showToast(message, type = 'info') {
-  const container = byId('toast-container');
-
-  if (!container) return;
-
-  const allowedTypes = [
-    'success',
-    'info',
-    'warning',
-    'error'
-  ];
-
-  const toastType = allowedTypes.includes(type)
-    ? type
-    : 'info';
-
-  const toast = document.createElement('div');
-  const icon = document.createElement('span');
-  const text = document.createElement('span');
-
-  toast.className =
-    `toast toast-${toastType} animate-slide-up`;
-
-  toast.setAttribute('role', 'status');
-
-  icon.textContent =
-    toastType === 'success'
-      ? '✓'
-      : toastType === 'error'
-        ? '!'
-        : 'ℹ';
-
-  icon.style.cssText = `
-    font-weight: 700;
-    display: grid;
-    place-items: center;
-    min-width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, .15);
-  `;
-
-  text.textContent = String(message);
-
-  toast.append(icon, text);
-  container.appendChild(toast);
-
-  window.setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(8px)';
-    toast.style.transition =
-      'opacity .25s ease, transform .25s ease';
-
-    window.setTimeout(() => {
-      toast.remove();
-    }, 280);
-  }, 3600);
-}
-
-
-/* ==========================================================
-   3. MODO DE AUTENTICACIÓN
-   ========================================================== */
-
-/**
- * Alterna entre iniciar sesión y crear cuenta.
- */
-export function toggleAuthMode(mode) {
-  if (mode !== 'login' && mode !== 'register') {
-    return false;
-  }
-
-  const isRegister = mode === 'register';
-
-  const loginTab = byId('tab-btn-login');
-  const registerTab = byId('tab-btn-register');
-
-  const nameGroup = byId('group-register-name');
-  const nameInput = byId('auth-name');
-
-  const passwordInput = byId('auth-password');
-  const submitText = byId('auth-btn-text');
-
-  // Pestañas visuales
-  loginTab?.classList.toggle('active', !isRegister);
-  registerTab?.classList.toggle('active', isRegister);
-
-  loginTab?.setAttribute(
-    'aria-pressed',
-    String(!isRegister)
-  );
-
-  registerTab?.setAttribute(
-    'aria-pressed',
-    String(isRegister)
-  );
-
-  // Nombre obligatorio solamente en registro
-  if (nameGroup) {
-    nameGroup.style.display = isRegister
-      ? 'block'
-      : 'none';
-  }
-
-  if (nameInput) {
-    nameInput.required = isRegister;
-  }
-
-  // Autocompletado apropiado para cada modo
-  if (passwordInput) {
-    passwordInput.setAttribute(
-      'autocomplete',
-      isRegister
-        ? 'new-password'
-        : 'current-password'
-    );
-  }
-
-  // Texto del botón principal
-  if (submitText) {
-    submitText.textContent = isRegister
-      ? 'Crear cuenta de demostración'
-      : 'Ingresar a la Plataforma';
-  }
-
-  store.setState({
-    authMode: mode
-  });
-
-  return true;
-}
-
-
-/* ==========================================================
-   4. PROCESAMIENTO DEL LOGIN / REGISTRO
-   ========================================================== */
-
-/**
- * Acceso simulado.
- *
- * - Valida campos obligatorios.
- * - No comprueba contraseñas contra una base de datos.
- * - No almacena contraseñas.
- * - Trabaja con una empresa demo por navegador.
- */
-
-export function handleAuthSubmit(event) {
-  event?.preventDefault();
-
-  const form = byId('auth-form');
-  const emailInput = byId('auth-email');
-  const passwordInput = byId('auth-password');
-  const nameInput = byId('auth-name');
-
-  if (!form || !emailInput || !passwordInput) {
-    console.error(
-      'ContentAI: faltan elementos del formulario de acceso.'
-    );
-    return false;
-  }
-
-  const state = store.getState();
-  const isRegister = state.authMode === 'register';
-
-  const email = emailInput.value.trim().toLowerCase();
-  const password = passwordInput.value;
-  const name = nameInput?.value.trim() ?? '';
-
-  // Validar los campos básicos.
-  if (
-    !email ||
-    !emailInput.checkValidity() ||
-    !password.trim()
-  ) {
-    showToast(
-      'Escribe un correo válido y una contraseña.',
-      'warning'
-    );
-
-    form.reportValidity?.();
-    return false;
-  }
-
-  // El nombre solo es necesario al crear cuenta.
-  if (isRegister && !name) {
-    showToast(
-      'Escribe tu nombre para crear una cuenta demo.',
-      'warning'
-    );
-
-    nameInput?.focus();
-    return false;
-  }
-
-  // FRONTEND ESTÁTICO:
-  // El acceso es simulado y no verifica cuentas reales.
-  // Los datos guardados pertenecen a este navegador.
-  const sameEmail =
-    state.user?.email?.toLowerCase() === email;
-
-  const demoName = isRegister
-    ? name
-    : (
-        sameEmail
-          ? state.user.name
-          : email.split('@')[0]
-      );
-
-  // Activar sesión de demostración.
-  store.setState({
-    user: {
-      name: demoName || 'Usuario demo',
-      email,
-      isLoggedIn: true
+app.addEventListener('click', async event => {
+  const el=event.target.closest('[data-action]');if(!el)return;
+  const action=el.dataset.action;
+  if(el.tagName==='A')event.preventDefault();
+  try{
+    switch(action){
+      case 'go': await navigate(el.dataset.view);break;
+      case 'demo-login': ui.user=await api.login({email:'demo@contentai.pe',password:'demo1234'});ui.company=await api.getCompany();ui.posts=await api.posts();await navigate('home');notify('Entraste al espacio de demostración.','success');break;
+      case 'logout': await api.logout();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Sesión demo cerrada.');break;
+      case 'toggle-password': {const input=$('auth-password');if(input){input.type=input.type==='password'?'text':'password';el.setAttribute('aria-label',input.type==='password'?'Mostrar contraseña':'Ocultar contraseña');}break;}
+      case 'toggle-sidebar': ui.sidebarCollapsed=!ui.sidebarCollapsed;app.querySelector('.dashboard-shell')?.classList.toggle('sidebar-is-collapsed',ui.sidebarCollapsed);app.querySelector('.app-sidebar')?.classList.toggle('collapsed',ui.sidebarCollapsed);break;
+      case 'toggle-mobile-sidebar': ui.mobileSidebarOpen=!ui.mobileSidebarOpen;app.querySelector('.app-sidebar')?.classList.toggle('mobile-open',ui.mobileSidebarOpen);app.querySelector('.sidebar-backdrop')?.classList.toggle('show',ui.mobileSidebarOpen);break;
+      case 'close-sidebar': ui.mobileSidebarOpen=false;app.querySelector('.app-sidebar')?.classList.remove('mobile-open');app.querySelector('.sidebar-backdrop')?.classList.remove('show');break;
+      case 'onboard-step': {const dest=Number(el.dataset.step);if(dest<ui.onboardingStep){ui.onboardingStep=dest;render();}else{let valid=true;for(let i=ui.onboardingStep;i<dest;i++)if(!onboardingValid(i)){valid=false;break;}if(valid){ui.onboardingStep=dest;render();}}break;}
+      case 'onboard-back': if(ui.onboardingStep>0){ui.onboardingStep--;render();}break;
+      case 'onboard-next': if(ui.onboardingStep<3){if(onboardingValid(ui.onboardingStep)){ui.onboardingStep++;render();}}else await submitCompany();break;
+      case 'edit-company': prepareOnboarding(true);await navigate('onboarding');break;
+      case 'new-post': ui.editor=blankEditor();ui.previewChannel=ui.editor.channel;variant=0;await navigate('create');break;
+      case 'select-channel': ui.editor.channel=el.dataset.channel;ui.previewChannel=el.dataset.channel;render();break;
+      case 'preview-channel': ui.previewChannel=el.dataset.channel;document.querySelectorAll('.preview-tab').forEach(x=>{x.classList.toggle('active',x===el);x.setAttribute('aria-pressed',String(x===el));});updatePreviewNode();break;
+      case 'use-suggestion': {const suggestion=SUGGESTIONS[Number(el.dataset.index)];if(suggestion){ui.editor.topic=suggestion;$('editor-topic').value=suggestion;syncEditorMetrics();}break;}
+      case 'generate': await generate();break;
+      case 'variant': if(!ui.editor.topic.trim()){notify('Describe primero el tema de tu publicación.','error');break;}variant++;ui.editor.text=buildCopy(ui.editor,ui.company,variant);$('editor-text').value=ui.editor.text;syncEditorMetrics();updatePreviewNode();notify('Variante preparada.','success');break;
+      case 'format-bold': putAtCursor('bold');break;
+      case 'format-list': putAtCursor('list');break;
+      case 'format-emoji': putAtCursor('emoji');break;
+      case 'clear-editor': if(ui.editor.text && !confirm('¿Descartar el texto actual?'))break;ui.editor.text='';if($('editor-text'))$('editor-text').value='';syncEditorMetrics();updatePreviewNode();break;
+      case 'copy-text': await copyText();break;
+      case 'save-post': await savePost(el.dataset.status);break;
+      case 'filter-posts': ui.libraryFilter=el.dataset.filter;document.querySelectorAll('.filter-tabs button').forEach(x=>x.classList.toggle('active',x===el));updateLibrary();break;
+      case 'edit-post': {const p=findPost(el.dataset.id);if(!p)break;ui.editor={id:p.id,channel:p.channel,objective:p.objective,topic:p.topic,text:p.text,status:p.status};ui.previewChannel=p.channel;await navigate('create');break;}
+      case 'duplicate-post': {const p=findPost(el.dataset.id);if(!p)break;ui.editor={id:null,channel:p.channel,objective:p.objective,topic:p.topic,text:p.text,status:'draft'};ui.previewChannel=p.channel;await navigate('create');notify('Se creó una copia editable. Guárdala para conservarla.','success');break;}
+      case 'delete-post': if(!confirm('¿Eliminar esta publicación? Esta acción no se puede deshacer.'))break;await api.deletePost(el.dataset.id);ui.posts=await api.posts();updateLibrary();notify('Publicación eliminada.','success');break;
+      case 'export-data': await downloadData();break;
+      case 'reset-data': if(!confirm('¿Restablecer TODOS los datos de esta demo en este navegador?'))break;await api.resetDemo();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Se restauraron los datos de prueba.','success');break;
+      case 'about': notify('Frontend estático: generación simulada, sin backend ni publicación real.');break;
+      default: break;
     }
-  });
-
-  // Limpiar contraseña.
-  passwordInput.value = '';
-
-  // Decidir a qué pantalla ingresar.
-  const nextView = store.getState().isCompanyRegistered
-    ? 'view-dashboard'
-    : 'view-onboarding';
-
-  const navigated = navigateTo(
-    nextView,
-    'tab-generator'
-  );
-
-  if (!navigated) {
-    showToast(
-      'No se pudo abrir la siguiente pantalla.',
-      'error'
-    );
-    return false;
-  }
-
-  showToast(
-    isRegister
-      ? 'Cuenta demo creada.'
-      : 'Acceso demo correcto.',
-    'success'
-  );
-
-  return true;
-}
-
-
-
-/* ==========================================================
-   5. ABRIR DEMOSTRACIÓN
-   ========================================================== */
-
-/**
- * navigation.js decide si necesita mostrar
- * autenticación, onboarding o dashboard.
- */
-export function openAppDemo() {
-  return navigateTo(
-    'view-dashboard',
-    'tab-generator'
-  );
-}
-
-
-/* ==========================================================
-   6. CERRAR SESIÓN
-   ========================================================== */
-
-export function logout() {
-  const state = store.getState();
-
-  store.setState({
-    user: {
-      ...state.user,
-      isLoggedIn: false
-    }
-  });
-
-  const passwordInput = byId('auth-password');
-
-  if (passwordInput) {
-    passwordInput.value = '';
-  }
-
-  toggleDiscordPopup(false);
-  toggleUserBubbleMenu(false);
-
-  navigateTo('view-landing');
-
-  showToast(
-    'Has cerrado la sesión de demostración.',
-    'info'
-  );
-}
-
-
-/* ==========================================================
-   7. MENÚS FLOTANTES DEL DASHBOARD
-   ========================================================== */
-
-export function toggleDiscordPopup(forceState = null) {
-  const popup = byId('discord-settings-popup');
-
-  if (!popup) return;
-
-  const shouldOpen = typeof forceState === 'boolean'
-    ? forceState
-    : !popup.classList.contains('active');
-
-  popup.classList.toggle(
-    'active',
-    shouldOpen
-  );
-}
-
-
-export function toggleUserBubbleMenu(forceState = null) {
-  const menu = byId('user-bubble-dropdown');
-  const trigger = byId('user-bubble-trigger');
-
-  if (!menu) return;
-
-  const shouldOpen = typeof forceState === 'boolean'
-    ? forceState
-    : !menu.classList.contains('active');
-
-  menu.classList.toggle(
-    'active',
-    shouldOpen
-  );
-
-  trigger?.classList.toggle(
-    'active',
-    shouldOpen
-  );
-}
-
-
-/* ==========================================================
-   8. SELECCIÓN DE CANALES EN ONBOARDING
-   ========================================================== */
-
-export function toggleTileClass(checkbox) {
-  if (!checkbox) return;
-
-  const tile = checkbox.closest('.channel-tile');
-
-  tile?.classList.toggle(
-    'checked',
-    checkbox.checked
-  );
-}
-
-
-/* ==========================================================
-   9. CONTADOR DEL PROMPT
-   ========================================================== */
-
-export function updateTopicCharCount(
-  textarea = byId('gen-campaign-topic')
-) {
-  if (!textarea) return;
-
-  const count = byId('topic-char-count');
-
-  if (count) {
-    count.textContent =
-      `${textarea.value.length} / 500 caracteres`;
-  }
-}
-
-
-/* ==========================================================
-   10. SUGERENCIAS DEL GENERADOR
-   ========================================================== */
-
-export function applySuggestion(text) {
-  const textarea = byId('gen-campaign-topic');
-
-  if (!textarea || typeof text !== 'string') {
-    return;
-  }
-
-  textarea.value = text.slice(0, 500);
-
-  textarea.focus();
-
-  updateTopicCharCount(textarea);
-}
-
-
-/* ==========================================================
-   11. SELECCIÓN DE RED SOCIAL
-   ========================================================== */
-
-export function selectChannel(channelName) {
-  const contentType = CHANNEL_TYPES[channelName];
-
-  if (!contentType) return;
-
-  const field = byId('gen-content-type');
-
-  if (field) {
-    field.value = contentType;
-  }
-
-  // Sincronizar los botones del generador
-  const buttons = document.querySelectorAll(
-    '.creator-channel-btn'
-  );
-
-  buttons.forEach(button => {
-    const selected =
-      button.dataset.network === channelName;
-
-    button.classList.toggle(
-      'active',
-      selected
-    );
-
-    button.setAttribute(
-      'aria-pressed',
-      String(selected)
-    );
-  });
-
-  // Actualizar el previsualizador existente
-  setPreviewChannel(channelName);
-}
-
-
-/* ==========================================================
-   12. OBJETIVO COMERCIAL
-   ========================================================== */
-
-export function selectObjective(objectiveName) {
-  if (
-    typeof objectiveName !== 'string' ||
-    !objectiveName.trim()
-  ) {
-    return;
-  }
-
-  const field = byId('gen-objective');
-
-  if (field) {
-    field.value = objectiveName;
-  }
-
-  const buttons = document.querySelectorAll(
-    '.objective-chip-btn'
-  );
-
-  buttons.forEach(button => {
-    const selected =
-      button.dataset.objective === objectiveName;
-
-    button.classList.toggle(
-      'active',
-      selected
-    );
-
-    button.setAttribute(
-      'aria-pressed',
-      String(selected)
-    );
-  });
-}
-
-
-/* ==========================================================
-   13. COPIAR TEXTO DEL HISTORIAL
-   ========================================================== */
-
-export async function copyHistoryText(text) {
-  const value = String(text ?? '');
-
-  if (!value) return;
-
-  try {
-    if (!navigator.clipboard?.writeText) {
-      throw new Error('Clipboard API no disponible');
-    }
-
-    await navigator.clipboard.writeText(value);
-
-    showToast(
-      'Texto copiado al portapapeles.',
-      'success'
-    );
-
-  } catch {
-    // Alternativa para navegadores sin Clipboard API
-    const temp = document.createElement('textarea');
-
-    temp.value = value;
-    temp.style.position = 'fixed';
-    temp.style.opacity = '0';
-
-    document.body.appendChild(temp);
-
-    temp.select();
-
-    const copied =
-      document.execCommand?.('copy') === true;
-
-    temp.remove();
-
-    showToast(
-      copied
-        ? 'Texto copiado al portapapeles.'
-        : 'No se pudo copiar el texto.',
-      copied ? 'success' : 'warning'
-    );
-  }
-}
-
-
-/* ==========================================================
-   14. MENÚ RESPONSIVE DE LA LANDING
-   ========================================================== */
-
-function initLandingMenu() {
-  const toggle = byId('cai-menu-toggle');
-  const nav = byId('cai-nav');
-
-  if (!toggle || !nav) return;
-
-  function setOpen(open) {
-    nav.classList.toggle('is-open', open);
-
-    toggle.setAttribute(
-      'aria-expanded',
-      String(open)
-    );
-
-    toggle.setAttribute(
-      'aria-label',
-      open ? 'Cerrar menú' : 'Abrir menú'
-    );
-  }
-
-  // Abrir y cerrar el menú
-  toggle.addEventListener('click', () => {
-    const isOpen =
-      toggle.getAttribute('aria-expanded') === 'true';
-
-    setOpen(!isOpen);
-  });
-
-  // Cerrar cuando se selecciona una sección
-  nav.addEventListener('click', event => {
-    if (event.target.closest('a')) {
-      setOpen(false);
-    }
-  });
-
-  // Cerrar al hacer clic fuera
-  document.addEventListener('click', event => {
-    if (
-      !toggle.contains(event.target) &&
-      !nav.contains(event.target)
-    ) {
-      setOpen(false);
-    }
-  });
-
-  // Cerrar con Escape
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      setOpen(false);
-    }
-  });
-}
-
-
-/* ==========================================================
-   15. MOSTRAR / OCULTAR CONTRASEÑA
-   ========================================================== */
-
-function initAuthPasswordToggle() {
-  const button = byId('cai-auth-password-toggle');
-  const input = byId('auth-password');
-
-  if (!button || !input) return;
-
-  button.addEventListener('click', () => {
-    const show = input.type === 'password';
-
-    input.type = show
-      ? 'text'
-      : 'password';
-
-    button.textContent = show
-      ? 'Ocultar'
-      : 'Mostrar';
-
-    button.setAttribute(
-      'aria-pressed',
-      String(show)
-    );
-
-    button.setAttribute(
-      'aria-label',
-      show
-        ? 'Ocultar contraseña'
-        : 'Mostrar contraseña'
-    );
-  });
-}
-
-
-/* ==========================================================
-   16. ANIMACIONES DE ENTRADA
-   ========================================================== */
-
-function initScrollReveals() {
-  const targets = document.querySelectorAll(
-    '[data-cai-reveal]'
-  );
-
-  if (!targets.length) return;
-
-  // Respetar preferencias de accesibilidad
-  const reducedMotion = window.matchMedia?.(
-    '(prefers-reduced-motion: reduce)'
-  )?.matches;
-
-  if (
-    !('IntersectionObserver' in window) ||
-    reducedMotion
-  ) {
-    targets.forEach(element => {
-      element.classList.add('cai-is-visible');
-    });
-
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-
-        entry.target.classList.add(
-          'cai-is-visible'
-        );
-
-        observer.unobserve(entry.target);
-      });
-    },
-    {
-      threshold: 0.12
-    }
-  );
-
-  targets.forEach(element => {
-    observer.observe(element);
-  });
-}
-
-
-/* ==========================================================
-   17. CIERRE DE MENÚS FLOTANTES
-   ========================================================== */
-
-function initFloatingMenus() {
-  document.addEventListener('click', event => {
-    const dock = byId('discord-user-dock');
-
-    if (
-      dock &&
-      !dock.contains(event.target)
-    ) {
-      toggleDiscordPopup(false);
-    }
-
-    const bubble = byId('user-bubble-dock');
-
-    if (
-      bubble &&
-      !bubble.contains(event.target)
-    ) {
-      toggleUserBubbleMenu(false);
-    }
-  });
-
-  document.addEventListener('keydown', event => {
-    if (event.key !== 'Escape') return;
-
-    toggleDiscordPopup(false);
-    toggleUserBubbleMenu(false);
-  });
-}
-
-
-/* ==========================================================
-   18. API PÚBLICA DEL FRONTEND
-   ========================================================== */
-
-/**
- * Las funciones se exponen para conservar la compatibilidad
- * con los atributos onclick del index.html actual.
- *
- * En una etapa posterior podremos migrar estos eventos
- * a addEventListener y separar los controladores.
- */
-
-window.ContentAI = {
-
-  // Navegación
-  navigateTo,
-  switchDashboardTab,
-
-  // Autenticación
-  toggleAuthMode,
-  handleAuthSubmit,
-  logout,
-
-  // Empresa
-  handleOnboardingSubmit,
-  loadDemoCompanyAutofill,
-  toggleTileClass,
-
-  // Generador
-  handleGenerateSubmit,
-  selectChannel,
-  selectObjective,
-  applySuggestion,
-  updateTopicCharCount,
-
-  // Editor y revisión
-  handleTextareaEdit,
-  focusAndEditTextarea,
-  copyToClipboard,
-  regenerateVariant,
-  discardCurrentContent,
-  approveAndSaveContent,
-  insertFormatting,
-
-  // Historial
-  loadHistoryToEditor,
-  copyHistoryText,
-
-  // Previsualizaciones
-  toggleEditorMode,
-  setPreviewChannel,
-  setEditorFont,
-  setEditorSize,
-  toggleLike,
-
-  // Interfaz
-  openAppDemo,
-  toggleUserBubbleMenu,
-  toggleDiscordPopup
-};
-
-
-/* ==========================================================
-   19. INICIALIZACIÓN DE LA APLICACIÓN
-   ========================================================== */
-
-function initApp() {
-
-  // Evitar inicializaciones duplicadas
-  if (initialized) return;
-
-  initialized = true;
-
-  // Inicializar módulos existentes
-  initProfiles();
-  initPreviews();
-  initReview();
-
-  // Inicializar controles visuales
-  initLandingMenu();
-  initAuthPasswordToggle();
-  initFloatingMenus();
-  initScrollReveals();
-
-  // Configurar límite y contador del prompt
-  const topic = byId('gen-campaign-topic');
-
-  if (topic) {
-    topic.maxLength = 500;
-  }
-
-  updateTopicCharCount(topic);
-
-  // Establecer el modo inicial del formulario
-  toggleAuthMode(
-    store.getState().authMode
-  );
-
-  /**
-   * Ya no inicializamos initLusionLanding().
-   * Su motor de partículas pertenece al diseño anterior.
-   */
-
-  // Pantalla inicial
-  navigateTo('view-landing');
-}
-
-
-/* ==========================================================
-   20. ARRANQUE
-   ========================================================== */
-
-if (document.readyState === 'loading') {
-
-  document.addEventListener(
-    'DOMContentLoaded',
-    initApp,
-    { once: true }
-  );
-
-} else {
-
-  initApp();
-
-}
+  }catch(error){console.error('ContentAI UI:',error);notify(error.message||'No se pudo completar la acción.','error');}
+});
+document.addEventListener('keydown', event => {
+  if(event.key==='Escape' && ui.mobileSidebarOpen){ui.mobileSidebarOpen=false;app.querySelector('.app-sidebar')?.classList.remove('mobile-open');app.querySelector('.sidebar-backdrop')?.classList.remove('show');}
+});
+
+(async()=>{try{await hydrate();if(ui.user){ui.view=ui.company?'home':'onboarding';if(!ui.company)prepareOnboarding(false);}render();}catch(error){console.error('Error iniciando ContentAI:',error);app.innerHTML='<main class="fatal-error"><h1>No se pudo iniciar la demostración</h1><p>Revisa la configuración de almacenamiento del navegador.</p></main>';}})();

@@ -1,0 +1,35 @@
+/* Adaptación para portátil, tableta y móvil; sin duplicar estilos base. */
+@media(max-width:1250px){
+  .editor-layout{grid-template-columns:minmax(0,1fr) minmax(305px,.82fr)}
+  .workspace-body{padding:26px}.workspace-header{padding:0 26px}
+  .hero{gap:28px}
+  .hero-mock-side{display:none}.hero-app-body{grid-template-columns:1fr .93fr}
+}
+@media(max-width:1040px){
+  .hero{grid-template-columns:1fr;gap:48px;text-align:center;padding-block:65px}.hero-copy>p{margin-inline:auto}.hero-cta,.hero-proof{justify-content:center}.hero-visual{max-width:680px;margin-inline:auto;width:100%}
+  .onboard-grid{grid-template-columns:210px 1fr}
+  .editor-layout{grid-template-columns:minmax(0,1fr)}.preview-panel{position:static}.live-preview{min-height:440px}.editor-main{max-width:none}
+  .metric-card{padding:17px 14px;gap:10px}
+  .public-header{gap:12px}.public-nav{gap:13px}
+}
+@media(max-width:800px){
+  .container{width:min(100% - 32px,1200px)}.public-nav{display:none}.public-actions{gap:3px}.public-actions .btn{padding-inline:12px}
+  .feature-grid,.steps-grid{grid-template-columns:1fr}.features-section,.steps-section{padding-block:62px}.feature-card{padding:22px}
+  .final-cta{padding:30px;flex-direction:column;text-align:center;align-items:center}.public-footer{flex-wrap:wrap;justify-content:center;text-align:center}
+  .auth-shell{display:block;min-height:100svh}.auth-aside{display:none}.auth-main{min-height:100svh;padding:48px 20px}.auth-mobile-logo{display:flex;gap:8px;align-items:center;position:absolute;left:22px;top:19px}.auth-box{margin-top:35px}.text-back{margin-bottom:24px}
+  .onboard-grid{grid-template-columns:1fr}.onboard-rail{position:static;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:13px}.onboard-rail-title,.rail-progress,.rail-tip{display:none}.rail-step{display:flex;justify-content:center;flex-direction:column;gap:4px;padding:8px 3px;text-align:center;font-size:10px}.rail-number{width:28px;height:28px}
+  .dashboard-shell,.dashboard-shell.sidebar-is-collapsed{--current-sidebar:0px}.app-sidebar,.app-sidebar.collapsed{width:min(282px,86vw);transform:translateX(-110%);box-shadow:none;transition:transform .25s ease}.app-sidebar.mobile-open,.app-sidebar.collapsed.mobile-open{transform:translateX(0);box-shadow:10px 0 44px #15172e28}.sidebar-backdrop.show{display:block;position:fixed;inset:0;background:#0c102459;z-index:45}.sidebar-close,.mobile-menu{display:inline-flex}.app-sidebar.collapsed .sidebar-logo,.app-sidebar.collapsed .sidebar-section-title,.app-sidebar.collapsed .side-link span,.app-sidebar.collapsed .sidebar-create .btn span,.app-sidebar.collapsed .sidebar-profile-copy,.app-sidebar.collapsed .sidebar-logout{display:flex}.app-sidebar.collapsed .side-link{justify-content:flex-start;padding:12px 15px}.app-sidebar.collapsed .sidebar-heading{justify-content:space-between}.app-sidebar.collapsed .sidebar-profile{justify-content:initial}.app-sidebar.collapsed:hover{width:min(282px,86vw)}.sidebar-collapse{display:none}.workspace{margin-left:0}.workspace-header{padding:0 20px}.workspace-body{padding:24px 20px 60px}
+  .metric-grid{grid-template-columns:repeat(3,1fr)}.home-columns,.company-detail-grid{grid-template-columns:1fr}.company-cover{padding:20px}.settings-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .brand-name{font-size:16px}.brand-name small{font-size:8px}.brand-mark{width:34px;height:34px}
+  .public-header{height:73px}.public-actions .btn-ghost{font-size:11px}.public-actions .btn-primary{font-size:11px}.public-actions .btn-primary .icon{display:none}
+  .hero{padding:47px 0 60px}.hero-copy h1{font-size:40px}.hero-copy>p{font-size:13px}.hero-app-body{min-height:280px}.hero-mock-center{padding:19px 12px}.hero-mock-center h3{font-size:14px}.hero-mock-preview{padding:18px 9px}.mock-field{font-size:9px}.mock-platforms{flex-wrap:wrap}.mini-social-image{height:105px}.mini-social-actions{font-size:7px}.floating-note{right:0;bottom:-17px}.hero-proof{font-size:10px}
+  .onboard-main{padding-top:27px}.onboard-intro h1{font-size:28px}.onboard-card-head{padding:24px 20px}.onboard-card-head h2{font-size:22px}.onboard-fields{padding:23px 20px}.onboard-footer{padding:18px 20px}.form-grid,.summary-grid{grid-template-columns:1fr}.channel-grid{grid-template-columns:1fr 1fr}.rail-step>span:last-child{font-size:9px}.footer-step{display:none}
+  .workspace-header{height:65px;padding:0 14px}.header-demo-pill,.header-help{display:none}.header-user>span:nth-child(2),.header-user>.icon{display:none}.workspace-body{padding:19px 13px 48px}.page-title-row{align-items:flex-start;gap:12px}.page-title-row h1{font-size:25px}.page-title-row p{font-size:11px}.page-title-row>.btn{padding-inline:10px;font-size:11px}
+  .page-hero{padding:25px;align-items:flex-start}.page-hero h1{font-size:26px}.hero-illustration{display:none}.metric-grid{grid-template-columns:1fr;gap:10px}.metric-card{padding:15px}.metric-icon{width:44px;height:44px}.metric-text strong{font-size:24px}.home-guidance{align-items:flex-start}.home-guidance>.text-link{display:none}.recent-row{gap:9px}.recent-row .tag{display:none}
+  .card-heading{padding:20px 17px 16px}.form-card>.field-block,.form-card>.form-grid,.form-card>.idea-row,.form-card>.generate-btn{margin-left:17px;margin-right:17px}.form-card>.generate-btn{width:calc(100% - 34px)}.platform-picker{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.platform-button{padding:4px;min-height:60px;font-size:9px}.platform-button .icon{width:16px}.editor-toolbar{margin:0 17px 10px}.editor-word-count{width:100%;text-align:right}.content-textarea{margin:0 17px;width:calc(100% - 34px)}.editor-utility{margin:10px 17px 18px}.editor-footer{padding:16px 17px}.editor-footer>div{width:100%;display:grid;grid-template-columns:1fr 1fr}.editor-footer .btn{padding:9px;font-size:10px}.live-preview{padding:13px;min-height:440px}.preview-tabs{padding:0 17px 14px}
+  .library-toolbar{padding:15px;display:block}.library-tools{margin-top:13px}.search-field{flex:1}.search-field input{width:100%;min-width:50px}.sort-select{max-width:130px}.post-grid{grid-template-columns:1fr;padding:15px}.company-cover-mark{width:57px;height:57px;font-size:22px}.company-cover h2{font-size:17px}.company-cover .tag{display:none}.company-detail,.company-channels,.settings-section{padding:18px}
+}
+@media(max-width:380px){.public-actions .btn-ghost{display:none}.channel-grid{grid-template-columns:1fr}.platform-button span{display:none}.platform-button{min-height:44px}.filter-tabs button{padding-inline:8px}.editor-footer>div{grid-template-columns:1fr}.hero-mock-center h3{font-size:13px}}
+@media(max-width:800px){.mobile-menu{display:inline-flex}}
