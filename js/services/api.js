@@ -1,3 +1,4 @@
+import { safeImage } from '../ui/media.js';
 /** Contrato de datos. Implementación 100% local: sin fetch, sin PHP, sin IA remota. */
 import { repository } from './repository.js';
 import { uid } from '../core/utils.js';
@@ -43,6 +44,11 @@ export const api = {
     repository.setSession(user.id);
     return user;
   },
+  async saveAvatar(value) {
+    const user=requireUser();
+    if(value && (!safeImage(value) || value.length>1500000)) throw new DemoError('La foto no es válida o es demasiado grande.');
+    return repository.update(db=>{const record=db.users.find(u=>u.id===user.id);record.avatar=safeImage(value);return record;});
+  },
   async logout() { repository.setSession(null); },
   async getCompany() {
     const user = requireUser();
@@ -84,6 +90,7 @@ export const api = {
       const content = {
         channel: clean(payload.channel, 40), objective: clean(payload.objective, 160),
         topic: clean(payload.topic, 600), text: clean(payload.text, 20000),
+        ...(Object.hasOwn(payload, 'image') ? {image:safeImage(payload.image)} : {}),
         status: payload.status === 'approved' ? 'approved' : 'draft', updatedAt: now
       };
       if (found) { Object.assign(found, content); return found; }

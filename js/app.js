@@ -1,10 +1,11 @@
+import { readImage, postImage } from './ui/media.js';
 /** ContentAI PYMES: único controlador de UI. Todos los eventos se delegan aquí. */
 import { api } from './services/api.js';
 import { ui, blankCompany, blankEditor } from './core/state.js';
 import { notify } from './ui/toast.js';
 import { landingView, authView } from './views/public.js';
 import { onboardingView } from './views/onboarding.js';
-import { dashboardView, libraryResults } from './views/dashboard.js';
+import { dashboardView, libraryResults, filteredPosts } from './views/dashboard.js';
 import { previewView } from './views/previews.js';
 import { buildCopy } from './features/copyGenerator.js';
 import { SUGGESTIONS } from './data/seed.js';
@@ -47,7 +48,7 @@ function prepareOnboarding(edit) {
 }
 function updatePreviewNode() {
   const node = $('live-preview');
-  if (node) node.innerHTML = previewView(ui.previewChannel,ui.editor.text,ui.company);
+  if (node) node.innerHTML = previewView(ui.previewChannel,ui.editor.text,ui.company,ui.editor.image);
 }
 function syncPreview() { updatePreviewNode(); }
 function syncEditorMetrics() {
@@ -82,6 +83,7 @@ async function authSubmit(form) {
   const button=form.querySelector('[type="submit"]');
   if(button) button.disabled=true;
   try {
+    ui.avatarDraft=undefined;
     ui.user = form.dataset.form === 'register' ? await api.register(data) : await api.login(data);
     ui.company = await api.getCompany();
     ui.posts = ui.company ? await api.posts() : [];
@@ -120,10 +122,9 @@ async function generate() {
 }
 function updateLibrary() {
   const result=$('library-results'); if(!result)return;
-  const query=ui.libraryQuery.toLowerCase().trim();
-  let list=ui.posts.filter(p=>(ui.libraryFilter==='all'||p.status===ui.libraryFilter)&&`${p.topic} ${p.text} ${p.channel}`.toLowerCase().includes(query));
-  list.sort((a,b)=>ui.librarySort==='oldest'?new Date(a.updatedAt)-new Date(b.updatedAt):new Date(b.updatedAt)-new Date(a.updatedAt));
-  result.innerHTML=libraryResults(list);
+  result.innerHTML=libraryResults(filteredPosts(ui),ui.libraryLayout);
+  document.querySelectorAll('[data-count]').forEach(el=>el.textContent=ui.posts.filter(p=>el.dataset.count==='all'||p.status===el.dataset.count).length);
+
 }
 function putAtCursor(s) {
   const box=$('editor-text');if(!box)return;
@@ -158,11 +159,25 @@ app.addEventListener('input', event => {
   if(el.dataset.editorField){ui.editor[el.dataset.editorField]=el.value;syncEditorMetrics();if(el.dataset.editorField==='text')updatePreviewNode();}
   if(el.id==='library-search'){ui.libraryQuery=el.value;updateLibrary();}
 });
-app.addEventListener('change', event => {
+app.addEventListener('change', async event => {
   const el=event.target;
   if(el.dataset.companyField) ui.onboarding[el.dataset.companyField]=el.value;
   if(el.dataset.companyChannel){const id=el.dataset.companyChannel;ui.onboarding.channels=el.checked?[...new Set([...ui.onboarding.channels,id])]:ui.onboarding.channels.filter(x=>x!==id);el.closest('.channel-choice')?.classList.toggle('checked',el.checked);}
   if(el.dataset.editorField)ui.editor[el.dataset.editorField]=el.value;
+  if(el.id==='library-channel'){ui.libraryChannel=el.value;updateLibrary();}
+  if(el.id==='avatar-input'||el.id==='post-image-input') {
+    const file=el.files?.[0]; if(!file)return;
+    const userId=ui.user?.id, view=ui.view, editor=ui.editor;
+    el.disabled=true;
+    try {
+      const value=await readImage(file,el.id==='avatar-input'?400:1200);
+      if(ui.user?.id!==userId || ui.view!==view || !el.isConnected)return;
+      if(el.id==='avatar-input')ui.avatarDraft=value;
+      else if(ui.editor===editor)ui.editor.image=value;
+      const scrollY=window.scrollY;render();window.scrollTo({top:scrollY,behavior:"instant"});
+    } catch(error){notify(error.message,'error');el.value='';}
+    finally{el.disabled=false;}
+  }
   if(el.id==='library-sort'){ui.librarySort=el.value;updateLibrary();}
 });
 
@@ -172,18 +187,24 @@ app.addEventListener('click', async event => {
   if(el.tagName==='A')event.preventDefault();
   try{
     switch(action){
-      case 'go': await navigate(el.dataset.view);break;
-      case 'demo-login': ui.user=await api.login({email:'demo@contentai.pe',password:'demo1234'});ui.company=await api.getCompany();ui.posts=await api.posts();await navigate('home');notify('Entraste al espacio de demostración.','success');break;
-      case 'logout': await api.logout();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Sesión demo cerrada.');break;
+      case 'save-avatar': if(ui.avatarDraft!==undefined){ui.user=await api.saveAvatar(ui.avatarDraft);ui.avatarDraft=undefined;render();notify('Foto de perfil guardada.','success');}break;
+      case 'cancel-avatar': ui.avatarDraft=undefined;render();break;
+      case 'remove-avatar': ui.avatarDraft='';render();break;
+      case 'remove-post-image': {const scrollY=window.scrollY;ui.editor.image='';render();window.scrollTo({top:scrollY,behavior:'instant'});break;}
+      case 'library-layout': ui.libraryLayout=el.dataset.layout;render();break;
+      case 'create-for-channel': ui.editor=blankEditor();ui.editor.channel=el.dataset.channel;ui.previewChannel=el.dataset.channel;variant=0;await navigate('create');break;
+      case 'start-idea': ui.editor=blankEditor();ui.editor.channel=ui.company.channels[0]||'Facebook';ui.editor.topic=SUGGESTIONS[Number(el.dataset.index)];ui.previewChannel=ui.editor.channel;variant=0;await navigate('create');break;
+      case 'go': ui.avatarDraft=undefined; await navigate(el.dataset.view);break;
+      case 'demo-login': ui.avatarDraft=undefined;ui.user=await api.login({email:'demo@contentai.pe',password:'demo1234'});ui.company=await api.getCompany();ui.posts=await api.posts();await navigate('home');notify('Entraste al espacio de demostración.','success');break;
+      case 'logout': ui.avatarDraft=undefined; await api.logout();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Sesión demo cerrada.');break;
       case 'toggle-password': {const input=$('auth-password');if(input){input.type=input.type==='password'?'text':'password';el.setAttribute('aria-label',input.type==='password'?'Mostrar contraseña':'Ocultar contraseña');}break;}
-      case 'toggle-sidebar': ui.sidebarCollapsed=!ui.sidebarCollapsed;app.querySelector('.dashboard-shell')?.classList.toggle('sidebar-is-collapsed',ui.sidebarCollapsed);app.querySelector('.app-sidebar')?.classList.toggle('collapsed',ui.sidebarCollapsed);break;
       case 'toggle-mobile-sidebar': ui.mobileSidebarOpen=!ui.mobileSidebarOpen;app.querySelector('.app-sidebar')?.classList.toggle('mobile-open',ui.mobileSidebarOpen);app.querySelector('.sidebar-backdrop')?.classList.toggle('show',ui.mobileSidebarOpen);break;
       case 'close-sidebar': ui.mobileSidebarOpen=false;app.querySelector('.app-sidebar')?.classList.remove('mobile-open');app.querySelector('.sidebar-backdrop')?.classList.remove('show');break;
       case 'onboard-step': {const dest=Number(el.dataset.step);if(dest<ui.onboardingStep){ui.onboardingStep=dest;render();}else{let valid=true;for(let i=ui.onboardingStep;i<dest;i++)if(!onboardingValid(i)){valid=false;break;}if(valid){ui.onboardingStep=dest;render();}}break;}
       case 'onboard-back': if(ui.onboardingStep>0){ui.onboardingStep--;render();}break;
       case 'onboard-next': if(ui.onboardingStep<3){if(onboardingValid(ui.onboardingStep)){ui.onboardingStep++;render();}}else await submitCompany();break;
       case 'edit-company': prepareOnboarding(true);await navigate('onboarding');break;
-      case 'new-post': ui.editor=blankEditor();ui.previewChannel=ui.editor.channel;variant=0;await navigate('create');break;
+      case 'new-post': ui.editor=blankEditor();ui.editor.channel=ui.company?.channels[0]||'Facebook';ui.previewChannel=ui.editor.channel;variant=0;await navigate('create');break;
       case 'select-channel': ui.editor.channel=el.dataset.channel;ui.previewChannel=el.dataset.channel;render();break;
       case 'preview-channel': ui.previewChannel=el.dataset.channel;document.querySelectorAll('.preview-tab').forEach(x=>{x.classList.toggle('active',x===el);x.setAttribute('aria-pressed',String(x===el));});updatePreviewNode();break;
       case 'use-suggestion': {const suggestion=SUGGESTIONS[Number(el.dataset.index)];if(suggestion){ui.editor.topic=suggestion;$('editor-topic').value=suggestion;syncEditorMetrics();}break;}
@@ -195,12 +216,12 @@ app.addEventListener('click', async event => {
       case 'clear-editor': if(ui.editor.text && !confirm('¿Descartar el texto actual?'))break;ui.editor.text='';if($('editor-text'))$('editor-text').value='';syncEditorMetrics();updatePreviewNode();break;
       case 'copy-text': await copyText();break;
       case 'save-post': await savePost(el.dataset.status);break;
-      case 'filter-posts': ui.libraryFilter=el.dataset.filter;document.querySelectorAll('.filter-tabs button').forEach(x=>x.classList.toggle('active',x===el));updateLibrary();break;
-      case 'edit-post': {const p=findPost(el.dataset.id);if(!p)break;ui.editor={id:p.id,channel:p.channel,objective:p.objective,topic:p.topic,text:p.text,status:p.status};ui.previewChannel=p.channel;await navigate('create');break;}
-      case 'duplicate-post': {const p=findPost(el.dataset.id);if(!p)break;ui.editor={id:null,channel:p.channel,objective:p.objective,topic:p.topic,text:p.text,status:'draft'};ui.previewChannel=p.channel;await navigate('create');notify('Se creó una copia editable. Guárdala para conservarla.','success');break;}
+      case 'filter-posts': ui.libraryFilter=el.dataset.filter;document.querySelectorAll('.filter-tabs button').forEach(x=>{x.classList.toggle('active',x===el);x.setAttribute('aria-pressed',String(x===el));});updateLibrary();break;
+      case 'edit-post': {const p=findPost(el.dataset.id);if(!p)break;ui.editor={id:p.id,channel:p.channel,objective:p.objective,topic:p.topic,text:p.text,image:postImage(p),status:p.status};ui.previewChannel=p.channel;await navigate('create');break;}
+      case 'duplicate-post': {const p=findPost(el.dataset.id);if(!p)break;ui.editor={id:null,channel:p.channel,objective:p.objective,topic:p.topic,text:p.text,image:postImage(p),status:'draft'};ui.previewChannel=p.channel;await navigate('create');notify('Se creó una copia editable. Guárdala para conservarla.','success');break;}
       case 'delete-post': if(!confirm('¿Eliminar esta publicación? Esta acción no se puede deshacer.'))break;await api.deletePost(el.dataset.id);ui.posts=await api.posts();updateLibrary();notify('Publicación eliminada.','success');break;
       case 'export-data': await downloadData();break;
-      case 'reset-data': if(!confirm('¿Restablecer TODOS los datos de esta demo en este navegador?'))break;await api.resetDemo();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Se restauraron los datos de prueba.','success');break;
+      case 'reset-data': if(!confirm('¿Restablecer TODOS los datos de esta demo en este navegador?'))break;await api.resetDemo();ui.avatarDraft=undefined;ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Se restauraron los datos de prueba.','success');break;
       case 'about': notify('Frontend estático: generación simulada, sin backend ni publicación real.');break;
       default: break;
     }

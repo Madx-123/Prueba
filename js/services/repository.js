@@ -22,7 +22,7 @@ export const repository = {
   update(mutator) {
     const db = readDb();
     const result = mutator(db);
-    localStorage.setItem(DB_KEY, JSON.stringify(db));
+    try { localStorage.setItem(DB_KEY, JSON.stringify(db)); } catch { throw new Error('No hay espacio disponible en este navegador. Exporta tus datos y elimina imágenes que ya no necesites.'); }
     return clone(result);
   },
   getSession() { return sessionStorage.getItem(SESSION_KEY); },
