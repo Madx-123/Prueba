@@ -53,7 +53,7 @@ ${registering ? `<label class="field-label" for="auth-name">Nombre completo</lab
       <label class="field-label" for="auth-email">Correo electrónico</label><div class="input-wrap">${icon('mail',18)}<input id="auth-email" type="email" name="correo" autocomplete="email" placeholder="nombre@empresa.com" required></div>
       <label class="field-label" for="auth-password">Contraseña ${registering?'<span class="muted">· mínimo 6 caracteres</span>':''}</label><div class="input-wrap">${icon('shield',18)}<input id="auth-password" type="password" name="password" autocomplete="${registering?'new-password':'current-password'}" placeholder="••••••••" ${registering?'minlength="6"':''} required><button class="reveal-pass" type="button" data-action="toggle-password" aria-label="Mostrar contraseña">${icon('eye',18)}</button></div>
       <button class="btn btn-primary btn-full btn-lg" type="submit">${registering ? 'Crear cuenta y continuar' : 'Entrar a mi espacio'} ${icon('arrow',18)}</button>
-    </form><div class="demo-notice">${icon('info',18)} <div><strong>Modo demostración</strong><p>Sin servidor ni autenticación real. Las cuentas se guardan en este navegador; la contraseña no se almacena ni se verifica.</p></div></div>
+    </form><div class="demo-notice">${icon('info',18)} <div><strong>Modo demostración</strong><p>El registro y el inicio de sesión utilizan PHP y MySQL. La cuenta de prueba funciona por separado en este navegador.</p></div></div>
     ${!registering ? `<button class="demo-access" data-action="demo-login">${icon('zap',17)} Entrar con la cuenta de prueba <span>demo@contentai.pe</span></button>` : '<p class="auth-footnote">Después del registro te guiaremos para configurar tu empresa.</p>'}
   </div></main></div>`;
 }

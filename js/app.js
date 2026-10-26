@@ -10,105 +10,53 @@ import { previewView } from './views/previews.js';
 import { buildCopy } from './features/copyGenerator.js';
 import { SUGGESTIONS } from './data/seed.js';
 import { words } from './core/utils.js';
-import { registrarUsuario, iniciarSesion, guardarEmpresa } from './services/api.js';
-
-// 1. Manejo de formularios de Autenticación (Login / Registro)
-document.addEventListener('submit', async (e) => {
-    if (e.target && e.target.id === 'auth-form') {
-        e.preventDefault();
-
-        const modo = e.target.getAttribute('data-form');
-
-        if (modo === 'register') {
-            console.log("Enviando datos de registro a PHP...");
-            const exito = await registrarUsuario(e.target);
-
-            if (exito) {
-                console.log("¡Cuenta creada! Pasando al onboarding...");
-                ui.view = 'onboarding';
-                render();
-            }
-        } else if (modo === 'login') {
-            console.log("Validando credenciales en PHP...");
-            const exito = await iniciarSesion(e.target);
-            
-            if (exito) {
-                console.log("¡Login correcto! Entrando al sistema...");
-                
-                const nombreUsuario = localStorage.getItem('usuario_nombre') || 'Usuario';
-                
-                ui.user = { name: nombreUsuario };
-                
-                if (!ui.company) {
-                    ui.company = { name: 'Mi Empresa', channels: ['facebook', 'instagram'], tone: 'Profesional' };
-                }
-                if (!ui.posts) {
-                    ui.posts = [];
-                }
-
-                ui.view = 'dashboard';
-                render();
-            }
-        }
-    }
-});
-
-// 2. Manejo de clics (para avanzar en el Onboarding y guardarlo en la BD)
-document.addEventListener('click', async (e) => {
-    const target = e.target.closest('[data-action]');
-    if (!target) return;
-    
-    const action = target.getAttribute('data-action');
-
-    if (action === 'onboard-next') {
-        if (ui.onboardingStep < 3) {
-            ui.onboardingStep++;
-            render();
-        } else {
-            // ¡Llegaste al último paso! Guardamos en MySQL
-            e.preventDefault();
-            console.log("Finalizando onboarding y guardando en MySQL...");
-            
-            const exito = await guardarEmpresa(ui.onboarding);
-            
-            if (exito) {
-                console.log("¡Todo guardado en la base de datos! Entrando al dashboard...");
-                ui.view = 'dashboard';
-                render();
-            } else {
-                alert("Hubo un problema al guardar la empresa en la base de datos.");
-            }
-        }
-    }
-});
-
 const app = document.getElementById('app');
 const guarded = new Set(['home','create','library','company','settings']);
+// Conserva la página del usuario tras recargar, pero la sesión real la verifica PHP.
+const SAVED_VIEW_KEY = 'contentai.v4.lastPage';
+function rememberPage(view) {
+  if (!ui.user || !guarded.has(view)) return;
+  try {
+    sessionStorage.setItem(SAVED_VIEW_KEY, JSON.stringify({ userId: ui.user.id, view }));
+  } catch { /* La sesión PHP no depende de sessionStorage. */ }
+}
+function restorePage() {
+  if (!ui.user || !ui.company) return 'onboarding';
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(SAVED_VIEW_KEY) || 'null');
+    if (saved?.userId === ui.user.id && guarded.has(saved.view)) return saved.view;
+  } catch { /* Página por defecto */ }
+  return 'home';
+}
+function clearRememberedPage() {
+  try { sessionStorage.removeItem(SAVED_VIEW_KEY); } catch { /* Sin almacenamiento */ }
+}
 let variant = 0;
+let guardandoEmpresa = false;
 const $ = id => document.getElementById(id);
 
 function render() {
-  if (ui.view === 'landing') {
-    app.innerHTML = landingView();
-  } else if (ui.view === 'login' || ui.view === 'register') {
-    app.innerHTML = authView(ui.view);
-  } else if (ui.view === 'onboarding') {
-    app.innerHTML = onboardingView(ui);
-  } else if (ui.view === 'dashboard') {
-    app.innerHTML = dashboardView(ui);
-  } else {
-    // Si hay alguna otra vista (como 'create'), por ahora usamos el dashboard
-    app.innerHTML = dashboardView(ui);
-  }
-  
+  if (ui.view === 'landing') app.innerHTML = landingView();
+  else if (ui.view === 'login' || ui.view === 'register') app.innerHTML = authView(ui.view);
+  else if (ui.view === 'onboarding') app.innerHTML = onboardingView(ui);
+  else if (guarded.has(ui.view)) app.innerHTML = dashboardView(ui);
+  else app.innerHTML = landingView();
   if (ui.view === 'create') syncPreview();
-  window.scrollTo({top: 0, behavior: 'instant'});
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 async function hydrate() {
+  // En cada recarga, PHP comprueba su cookie de sesión; NO usamos una sesión falsa local.
   ui.user = await api.session();
   ui.company = ui.user ? await api.getCompany() : null;
   ui.posts = ui.company ? await api.posts() : [];
+  if (ui.user) {
+    ui.view = restorePage();
+    if (!ui.company) prepareOnboarding(false);
+  } else {
+    clearRememberedPage();
+    ui.view = 'landing';
+  }
 }
 async function navigate(view) {
   if (guarded.has(view) || view === 'onboarding') {
@@ -119,6 +67,7 @@ async function navigate(view) {
   }
   if (!['landing','login','register','onboarding', ...guarded].includes(view)) view='landing';
   ui.view = view;
+  rememberPage(view);
   ui.mobileSidebarOpen=false;
   render();
 }
@@ -149,7 +98,9 @@ function onboardingValid(step) {
   return true;
 }
 async function submitCompany() {
+  if (guardandoEmpresa) return;
   for(let step=0;step<3;step++) if(!onboardingValid(step)){ui.onboardingStep=step;render();return;}
+  guardandoEmpresa = true;
   const button=document.querySelector('[data-action="onboard-next"]');
   if(button) button.disabled=true;
   try {
@@ -158,14 +109,21 @@ async function submitCompany() {
     notify(ui.editingCompany?'Los datos de la empresa se actualizaron.':'¡Empresa configurada! Ya puedes crear contenido.','success');
     await navigate(ui.editingCompany?'company':'home');
   } catch(e){notify(e.message,'error');if(button)button.disabled=false;}
+  finally { guardandoEmpresa = false; }
 }
 async function authSubmit(form) {
-  const data=Object.fromEntries(new FormData(form));
+  const fields = Object.fromEntries(new FormData(form));
+  const data = {
+    name: String(fields.nombre || '').trim(),
+    email: String(fields.correo || '').trim(),
+    password: String(fields.password || '')
+  };
   const button=form.querySelector('[type="submit"]');
   if(button) button.disabled=true;
   try {
     ui.avatarDraft=undefined;
     ui.user = form.dataset.form === 'register' ? await api.register(data) : await api.login(data);
+    clearRememberedPage();
     ui.company = await api.getCompany();
     ui.posts = ui.company ? await api.posts() : [];
     notify(`Hola, ${ui.user.name.split(' ')[0]}. ¡Bienvenido a ContentAI!`,'success');
@@ -224,7 +182,7 @@ async function downloadData() {
   const blob=new Blob([json],{type:'application/json'});
   const url=URL.createObjectURL(blob);const anchor=document.createElement('a');
   anchor.href=url;anchor.download='contentai-datos-demo.json';document.body.append(anchor);anchor.click();anchor.remove();
-  URL.revokeObjectURL(url);notify('Datos exportados.','success');
+  URL.revokeObjectURL(url);notify('Datos locales exportados.','success');
 }
 const findPost = id => ui.posts.find(p=>p.id===id);
 
@@ -276,8 +234,8 @@ app.addEventListener('click', async event => {
       case 'create-for-channel': ui.editor=blankEditor();ui.editor.channel=el.dataset.channel;ui.previewChannel=el.dataset.channel;variant=0;await navigate('create');break;
       case 'start-idea': ui.editor=blankEditor();ui.editor.channel=ui.company.channels[0]||'Facebook';ui.editor.topic=SUGGESTIONS[Number(el.dataset.index)];ui.previewChannel=ui.editor.channel;variant=0;await navigate('create');break;
       case 'go': ui.avatarDraft=undefined; await navigate(el.dataset.view);break;
-      case 'demo-login': ui.avatarDraft=undefined;ui.user=await api.login({email:'demo@contentai.pe',password:'demo1234'});ui.company=await api.getCompany();ui.posts=await api.posts();await navigate('home');notify('Entraste al espacio de demostración.','success');break;
-      case 'logout': ui.avatarDraft=undefined; await api.logout();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Sesión demo cerrada.');break;
+      case 'demo-login': ui.avatarDraft=undefined;ui.user=await api.demoLogin();clearRememberedPage();ui.company=await api.getCompany();ui.posts=await api.posts();await navigate('home');notify('Entraste al espacio de demostración.','success');break;
+      case 'logout': ui.avatarDraft=undefined; await api.logout();clearRememberedPage();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Sesión cerrada.');break;
       case 'toggle-password': {const input=$('auth-password');if(input){input.type=input.type==='password'?'text':'password';el.setAttribute('aria-label',input.type==='password'?'Mostrar contraseña':'Ocultar contraseña');}break;}
       case 'toggle-mobile-sidebar': ui.mobileSidebarOpen=!ui.mobileSidebarOpen;app.querySelector('.app-sidebar')?.classList.toggle('mobile-open',ui.mobileSidebarOpen);app.querySelector('.sidebar-backdrop')?.classList.toggle('show',ui.mobileSidebarOpen);break;
       case 'close-sidebar': ui.mobileSidebarOpen=false;app.querySelector('.app-sidebar')?.classList.remove('mobile-open');app.querySelector('.sidebar-backdrop')?.classList.remove('show');break;
@@ -302,8 +260,8 @@ app.addEventListener('click', async event => {
       case 'duplicate-post': {const p=findPost(el.dataset.id);if(!p)break;ui.editor={id:null,channel:p.channel,objective:p.objective,topic:p.topic,text:p.text,image:postImage(p),status:'draft'};ui.previewChannel=p.channel;await navigate('create');notify('Se creó una copia editable. Guárdala para conservarla.','success');break;}
       case 'delete-post': if(!confirm('¿Eliminar esta publicación? Esta acción no se puede deshacer.'))break;await api.deletePost(el.dataset.id);ui.posts=await api.posts();updateLibrary();notify('Publicación eliminada.','success');break;
       case 'export-data': await downloadData();break;
-      case 'reset-data': if(!confirm('¿Restablecer TODOS los datos de esta demo en este navegador?'))break;await api.resetDemo();ui.avatarDraft=undefined;ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Se restauraron los datos de prueba.','success');break;
-      case 'about': notify('Frontend estático: generación simulada, sin backend ni publicación real.');break;
+      case 'reset-data': if(!confirm('¿Restablecer TODOS los datos de esta demo en este navegador?'))break;await api.resetDemo();clearRememberedPage();ui.avatarDraft=undefined;ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Se restauraron los datos de prueba.','success');break;
+      case 'about': notify('Cuentas y empresas en MySQL. Publicaciones e imágenes guardadas localmente; la generación y las redes sociales son simuladas.');break;
       default: break;
     }
   }catch(error){console.error('ContentAI UI:',error);notify(error.message||'No se pudo completar la acción.','error');}
@@ -312,4 +270,18 @@ document.addEventListener('keydown', event => {
   if(event.key==='Escape' && ui.mobileSidebarOpen){ui.mobileSidebarOpen=false;app.querySelector('.app-sidebar')?.classList.remove('mobile-open');app.querySelector('.sidebar-backdrop')?.classList.remove('show');}
 });
 
-(async()=>{try{await hydrate();if(ui.user){ui.view=ui.company?'home':'onboarding';if(!ui.company)prepareOnboarding(false);}render();}catch(error){console.error('Error iniciando ContentAI:',error);app.innerHTML='<main class="fatal-error"><h1>No se pudo iniciar la demostración</h1><p>Revisa la configuración de almacenamiento del navegador.</p></main>';}})();
+(async () => {
+  try {
+    await hydrate();
+    render();
+  } catch (error) {
+    console.error('Error recuperando la sesión:', error);
+    // Un fallo de red no significa que el usuario cerró sesión: no lo mandamos a la demo.
+    app.innerHTML = `<main class="fatal-error" style="padding:40px">
+      <h1>No se pudo recuperar tu sesión</h1>
+      <p>Comprueba que Apache esté activo y que PHP responda en /Prueba/api/login.php.</p>
+      <p>Tu cuenta y tu empresa no se eliminaron. Puedes volver a cargar esta página.</p>
+      <a class="btn btn-primary" href="./">Reintentar</a>
+    </main>`;
+  }
+})();

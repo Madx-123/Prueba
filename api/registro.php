@@ -1,11 +1,14 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 
 // Ajusta estas credenciales si tu XAMPP tiene una configuración distinta
+
 $host = '127.0.0.1';
 $db   = 'contentai_pyme';
-$user = 'root';
-$pass = 'uriel';
+$user = 'contentai_app';
+$pass = 'ADMIN123';
+
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
@@ -29,7 +32,23 @@ try {
     $stmt = $pdo->prepare("INSERT INTO usuarios (nombre, correo, password_hash) VALUES (?, ?, ?)");
     $stmt->execute([$nombre, $correo, $password_hash]);
 
-    echo json_encode(['status' => 'success', 'message' => 'Cuenta creada correctamente.']);
+$id_usuario = (int) $pdo->lastInsertId();
+
+session_regenerate_id(true);
+
+$_SESSION['id_usuario'] = $id_usuario;
+$_SESSION['nombre'] = $nombre;
+$_SESSION['correo'] = $correo;
+
+echo json_encode([
+    'status' => 'success',
+    'message' => 'Cuenta creada correctamente.',
+    'user' => [
+        'id' => 'mysql-' . $id_usuario,
+        'name' => $nombre,
+        'email' => $correo
+    ]
+]);
 
 } catch (PDOException $e) {
     // Código 23000 es el error de duplicado en MySQL (correo ya existe)
