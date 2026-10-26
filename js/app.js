@@ -10,78 +10,7 @@ import { previewView } from './views/previews.js';
 import { buildCopy } from './features/copyGenerator.js';
 import { SUGGESTIONS } from './data/seed.js';
 import { words } from './core/utils.js';
-import { registrarUsuario, iniciarSesion, guardarEmpresa } from './services/api.js';
-
-// 1. Manejo de formularios de Autenticación (Login / Registro)
-document.addEventListener('submit', async (e) => {
-    if (e.target && e.target.id === 'auth-form') {
-        e.preventDefault();
-
-        const modo = e.target.getAttribute('data-form');
-
-        if (modo === 'register') {
-            console.log("Enviando datos de registro a PHP...");
-            const exito = await registrarUsuario(e.target);
-
-            if (exito) {
-                console.log("¡Cuenta creada! Pasando al onboarding...");
-                ui.view = 'onboarding';
-                render();
-            }
-        } else if (modo === 'login') {
-            console.log("Validando credenciales en PHP...");
-            const exito = await iniciarSesion(e.target);
-            
-            if (exito) {
-                console.log("¡Login correcto! Entrando al sistema...");
-                
-                const nombreUsuario = localStorage.getItem('usuario_nombre') || 'Usuario';
-                
-                ui.user = { name: nombreUsuario };
-                
-                if (!ui.company) {
-                    ui.company = { name: 'Mi Empresa', channels: ['facebook', 'instagram'], tone: 'Profesional' };
-                }
-                if (!ui.posts) {
-                    ui.posts = [];
-                }
-
-                ui.view = 'dashboard';
-                render();
-            }
-        }
-    }
-});
-
-// 2. Manejo de clics (para avanzar en el Onboarding y guardarlo en la BD)
-document.addEventListener('click', async (e) => {
-    const target = e.target.closest('[data-action]');
-    if (!target) return;
-    
-    const action = target.getAttribute('data-action');
-
-    if (action === 'onboard-next') {
-        if (ui.onboardingStep < 3) {
-            ui.onboardingStep++;
-            render();
-        } else {
-            // ¡Llegaste al último paso! Guardamos en MySQL
-            e.preventDefault();
-            console.log("Finalizando onboarding y guardando en MySQL...");
-            
-            const exito = await guardarEmpresa(ui.onboarding);
-            
-            if (exito) {
-                console.log("¡Todo guardado en la base de datos! Entrando al dashboard...");
-                ui.view = 'dashboard';
-                render();
-            } else {
-                alert("Hubo un problema al guardar la empresa en la base de datos.");
-            }
-        }
-    }
-});
-
+let savingCompany = false;
 const app = document.getElementById('app');
 const guarded = new Set(['home','create','library','company','settings']);
 let variant = 0;
@@ -149,18 +78,22 @@ function onboardingValid(step) {
   return true;
 }
 async function submitCompany() {
+  if(savingCompany) return;
   for(let step=0;step<3;step++) if(!onboardingValid(step)){ui.onboardingStep=step;render();return;}
   const button=document.querySelector('[data-action="onboard-next"]');
   if(button) button.disabled=true;
+  savingCompany=true;
   try {
     ui.company=await api.saveCompany(ui.onboarding);
     ui.posts=await api.posts();
     notify(ui.editingCompany?'Los datos de la empresa se actualizaron.':'¡Empresa configurada! Ya puedes crear contenido.','success');
     await navigate(ui.editingCompany?'company':'home');
   } catch(e){notify(e.message,'error');if(button)button.disabled=false;}
+  finally {savingCompany=false;}
 }
 async function authSubmit(form) {
-  const data=Object.fromEntries(new FormData(form));
+  const fields=Object.fromEntries(new FormData(form));
+  const data={name:fields.nombre,email:fields.correo,password:fields.password};
   const button=form.querySelector('[type="submit"]');
   if(button) button.disabled=true;
   try {
@@ -223,10 +156,10 @@ async function downloadData() {
   const json=await api.exportDemo();
   const blob=new Blob([json],{type:'application/json'});
   const url=URL.createObjectURL(blob);const anchor=document.createElement('a');
-  anchor.href=url;anchor.download='contentai-datos-demo.json';document.body.append(anchor);anchor.click();anchor.remove();
+  anchor.href=url;anchor.download='contentai-mis-datos.json';document.body.append(anchor);anchor.click();anchor.remove();
   URL.revokeObjectURL(url);notify('Datos exportados.','success');
 }
-const findPost = id => ui.posts.find(p=>p.id===id);
+const findPost = id => ui.posts.find(p=>String(p.id)===String(id));
 
 app.addEventListener('submit', async event => {
   const form=event.target.closest('form[data-form]'); if(!form)return;
@@ -276,8 +209,7 @@ app.addEventListener('click', async event => {
       case 'create-for-channel': ui.editor=blankEditor();ui.editor.channel=el.dataset.channel;ui.previewChannel=el.dataset.channel;variant=0;await navigate('create');break;
       case 'start-idea': ui.editor=blankEditor();ui.editor.channel=ui.company.channels[0]||'Facebook';ui.editor.topic=SUGGESTIONS[Number(el.dataset.index)];ui.previewChannel=ui.editor.channel;variant=0;await navigate('create');break;
       case 'go': ui.avatarDraft=undefined; await navigate(el.dataset.view);break;
-      case 'demo-login': ui.avatarDraft=undefined;ui.user=await api.login({email:'demo@contentai.pe',password:'demo1234'});ui.company=await api.getCompany();ui.posts=await api.posts();await navigate('home');notify('Entraste al espacio de demostración.','success');break;
-      case 'logout': ui.avatarDraft=undefined; await api.logout();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Sesión demo cerrada.');break;
+      case 'logout': ui.avatarDraft=undefined; await api.logout();ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Sesión cerrada.');break;
       case 'toggle-password': {const input=$('auth-password');if(input){input.type=input.type==='password'?'text':'password';el.setAttribute('aria-label',input.type==='password'?'Mostrar contraseña':'Ocultar contraseña');}break;}
       case 'toggle-mobile-sidebar': ui.mobileSidebarOpen=!ui.mobileSidebarOpen;app.querySelector('.app-sidebar')?.classList.toggle('mobile-open',ui.mobileSidebarOpen);app.querySelector('.sidebar-backdrop')?.classList.toggle('show',ui.mobileSidebarOpen);break;
       case 'close-sidebar': ui.mobileSidebarOpen=false;app.querySelector('.app-sidebar')?.classList.remove('mobile-open');app.querySelector('.sidebar-backdrop')?.classList.remove('show');break;
@@ -302,8 +234,7 @@ app.addEventListener('click', async event => {
       case 'duplicate-post': {const p=findPost(el.dataset.id);if(!p)break;ui.editor={id:null,channel:p.channel,objective:p.objective,topic:p.topic,text:p.text,image:postImage(p),status:'draft'};ui.previewChannel=p.channel;await navigate('create');notify('Se creó una copia editable. Guárdala para conservarla.','success');break;}
       case 'delete-post': if(!confirm('¿Eliminar esta publicación? Esta acción no se puede deshacer.'))break;await api.deletePost(el.dataset.id);ui.posts=await api.posts();updateLibrary();notify('Publicación eliminada.','success');break;
       case 'export-data': await downloadData();break;
-      case 'reset-data': if(!confirm('¿Restablecer TODOS los datos de esta demo en este navegador?'))break;await api.resetDemo();ui.avatarDraft=undefined;ui.user=null;ui.company=null;ui.posts=[];ui.editor=blankEditor();await navigate('landing');notify('Se restauraron los datos de prueba.','success');break;
-      case 'about': notify('Frontend estático: generación simulada, sin backend ni publicación real.');break;
+      case 'about': notify('Datos guardados en MySQL. Generación mediante plantillas; no publica en redes sociales.');break;
       default: break;
     }
   }catch(error){console.error('ContentAI UI:',error);notify(error.message||'No se pudo completar la acción.','error');}
@@ -312,4 +243,5 @@ document.addEventListener('keydown', event => {
   if(event.key==='Escape' && ui.mobileSidebarOpen){ui.mobileSidebarOpen=false;app.querySelector('.app-sidebar')?.classList.remove('mobile-open');app.querySelector('.sidebar-backdrop')?.classList.remove('show');}
 });
 
-(async()=>{try{await hydrate();if(ui.user){ui.view=ui.company?'home':'onboarding';if(!ui.company)prepareOnboarding(false);}render();}catch(error){console.error('Error iniciando ContentAI:',error);app.innerHTML='<main class="fatal-error"><h1>No se pudo iniciar la demostración</h1><p>Revisa la configuración de almacenamiento del navegador.</p></main>';}})();
+(async()=>{try{await hydrate();if(ui.user){ui.view=ui.company?'home':'onboarding';if(!ui.company)prepareOnboarding(false);}render();}catch(error){console.error('Error iniciando ContentAI:',error);app.innerHTML='<main class="fatal-error"><h1>No se pudo conectar al servidor</h1><p>Abre el proyecto desde PHP/Apache y revisa api/config.local.php y la base de datos. Recarga para reintentar.</p></main>';}})();
+

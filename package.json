@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "private": true,
   "type": "module",
-  "description": "Frontend estático modular de ContentAI PYMES, listo para Live Server",
+  "description": "ContentAI PYMES con frontend modular y persistencia PHP/MySQL",
   "scripts": {
     "check": "node ./scripts/check.mjs",
     "test": "node ./scripts/smoke.mjs"
