@@ -112,3 +112,91 @@ export const api = {
   async exportDemo() { requireUser(); return repository.exportData(); },
   async resetDemo() { repository.reset(); }
 };
+
+// Prueba/js/services/api.js
+
+export async function registrarUsuario(formularioRegistro) {
+    try {
+        // La URL debe apuntar al servidor local de XAMPP, no al Live Server
+        const respuesta = await fetch('/Prueba/api/registro.php', {
+            method: 'POST',
+            body: new FormData(formularioRegistro) 
+        });
+
+        const resultado = await respuesta.json();
+
+        if (resultado.status === 'success') {
+            console.log("Éxito:", resultado.message);
+            // Aquí puedes lanzar tu notificación (toast) de éxito
+            return true;
+        } else {
+            console.error("Error:", resultado.message);
+            // Aquí lanzas tu notificación de error
+            return false;
+        }
+
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        return false;
+    }
+}
+
+export async function iniciarSesion(formularioLogin) {
+    try {
+        const respuesta = await fetch('/Prueba/api/login.php', {
+            method: 'POST',
+            body: new FormData(formularioLogin)
+        });
+
+        const resultado = await respuesta.json();
+
+        if (resultado.status === 'success') {
+            console.log("Éxito:", resultado.message);
+            // ¡NUEVO! Guardamos el nombre del usuario en el navegador
+            localStorage.setItem('usuario_nombre', resultado.nombre);
+            return true;
+        } else {
+            console.error("Error:", resultado.message);
+            return false;
+        }
+
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        return false;
+    }
+}
+
+export async function guardarEmpresa(datosOnboarding) {
+    try {
+        const formData = new FormData();
+        // Mapeamos los datos del estado de la app a variables POST
+        formData.append('nombre_comercial', datosOnboarding.name || '');
+        formData.append('sector', datosOnboarding.sector || '');
+        formData.append('ciudad', datosOnboarding.city || '');
+        formData.append('productos', datosOnboarding.offer || '');
+        formData.append('clientes', datosOnboarding.audience || '');
+        formData.append('diferencia', datosOnboarding.differentiator || '');
+        formData.append('tono', datosOnboarding.tone || '');
+        formData.append('objetivo', datosOnboarding.goal || '');
+        // Los canales vienen en un array, los convertimos a texto plano separados por coma
+        formData.append('canales', datosOnboarding.channels ? datosOnboarding.channels.join(', ') : '');
+
+        const respuesta = await fetch('/Prueba/api/guardar_empresa.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const resultado = await respuesta.json();
+
+        if (resultado.status === 'success') {
+            console.log("¡Empresa guardada en MySQL!:", resultado.message);
+            return true;
+        } else {
+            console.error("Error al guardar en base de datos:", resultado.message);
+            return false;
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        return false;
+    }
+}

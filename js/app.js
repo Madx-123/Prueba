@@ -10,6 +10,77 @@ import { previewView } from './views/previews.js';
 import { buildCopy } from './features/copyGenerator.js';
 import { SUGGESTIONS } from './data/seed.js';
 import { words } from './core/utils.js';
+import { registrarUsuario, iniciarSesion, guardarEmpresa } from './services/api.js';
+
+// 1. Manejo de formularios de Autenticación (Login / Registro)
+document.addEventListener('submit', async (e) => {
+    if (e.target && e.target.id === 'auth-form') {
+        e.preventDefault();
+
+        const modo = e.target.getAttribute('data-form');
+
+        if (modo === 'register') {
+            console.log("Enviando datos de registro a PHP...");
+            const exito = await registrarUsuario(e.target);
+
+            if (exito) {
+                console.log("¡Cuenta creada! Pasando al onboarding...");
+                ui.view = 'onboarding';
+                render();
+            }
+        } else if (modo === 'login') {
+            console.log("Validando credenciales en PHP...");
+            const exito = await iniciarSesion(e.target);
+            
+            if (exito) {
+                console.log("¡Login correcto! Entrando al sistema...");
+                
+                const nombreUsuario = localStorage.getItem('usuario_nombre') || 'Usuario';
+                
+                ui.user = { name: nombreUsuario };
+                
+                if (!ui.company) {
+                    ui.company = { name: 'Mi Empresa', channels: ['facebook', 'instagram'], tone: 'Profesional' };
+                }
+                if (!ui.posts) {
+                    ui.posts = [];
+                }
+
+                ui.view = 'dashboard';
+                render();
+            }
+        }
+    }
+});
+
+// 2. Manejo de clics (para avanzar en el Onboarding y guardarlo en la BD)
+document.addEventListener('click', async (e) => {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+    
+    const action = target.getAttribute('data-action');
+
+    if (action === 'onboard-next') {
+        if (ui.onboardingStep < 3) {
+            ui.onboardingStep++;
+            render();
+        } else {
+            // ¡Llegaste al último paso! Guardamos en MySQL
+            e.preventDefault();
+            console.log("Finalizando onboarding y guardando en MySQL...");
+            
+            const exito = await guardarEmpresa(ui.onboarding);
+            
+            if (exito) {
+                console.log("¡Todo guardado en la base de datos! Entrando al dashboard...");
+                ui.view = 'dashboard';
+                render();
+            } else {
+                alert("Hubo un problema al guardar la empresa en la base de datos.");
+            }
+        }
+    }
+});
 
 const app = document.getElementById('app');
 const guarded = new Set(['home','create','library','company','settings']);
@@ -17,13 +88,23 @@ let variant = 0;
 const $ = id => document.getElementById(id);
 
 function render() {
-  if (ui.view === 'landing') app.innerHTML = landingView();
-  else if (ui.view === 'login' || ui.view === 'register') app.innerHTML = authView(ui.view);
-  else if (ui.view === 'onboarding') app.innerHTML = onboardingView(ui);
-  else app.innerHTML = dashboardView(ui);
+  if (ui.view === 'landing') {
+    app.innerHTML = landingView();
+  } else if (ui.view === 'login' || ui.view === 'register') {
+    app.innerHTML = authView(ui.view);
+  } else if (ui.view === 'onboarding') {
+    app.innerHTML = onboardingView(ui);
+  } else if (ui.view === 'dashboard') {
+    app.innerHTML = dashboardView(ui);
+  } else {
+    // Si hay alguna otra vista (como 'create'), por ahora usamos el dashboard
+    app.innerHTML = dashboardView(ui);
+  }
+  
   if (ui.view === 'create') syncPreview();
-  window.scrollTo({top:0,behavior:'instant'});
+  window.scrollTo({top: 0, behavior: 'instant'});
 }
+
 async function hydrate() {
   ui.user = await api.session();
   ui.company = ui.user ? await api.getCompany() : null;

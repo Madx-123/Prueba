@@ -49,11 +49,22 @@ export function authView(mode='login') {
     <span class="auth-kicker">${registering ? 'EMPECEMOS' : 'BIENVENIDO DE NUEVO'}</span><h1>${registering ? 'Crea tu espacio.' : 'Qué bueno verte.'}</h1><p class="auth-description">${registering ? 'En unos pasos podrás configurar tu empresa y comenzar a crear.' : 'Accede a tu espacio creativo y continúa donde lo dejaste.'}</p>
     <div class="auth-switch" role="group" aria-label="Acceso"><button class="${registering?'':'selected'}" data-action="go" data-view="login">Iniciar sesión</button><button class="${registering?'selected':''}" data-action="go" data-view="register">Crear cuenta</button></div>
     <form id="auth-form" data-form="${registering?'register':'login'}" novalidate>
-      ${registering ? `<label class="field-label" for="auth-name">Nombre completo</label><div class="input-wrap">${icon('user',18)}<input id="auth-name" name="name" autocomplete="name" placeholder="Tu nombre" maxlength="100" required></div>`:''}
-      <label class="field-label" for="auth-email">Correo electrónico</label><div class="input-wrap">${icon('mail',18)}<input id="auth-email" type="email" name="email" autocomplete="email" placeholder="nombre@empresa.com" required></div>
+${registering ? `<label class="field-label" for="auth-name">Nombre completo</label><div class="input-wrap">${icon('user',18)}<input id="auth-name" name="nombre" autocomplete="name" placeholder="Tu nombre" maxlength="100" required></div>`:''}
+      <label class="field-label" for="auth-email">Correo electrónico</label><div class="input-wrap">${icon('mail',18)}<input id="auth-email" type="email" name="correo" autocomplete="email" placeholder="nombre@empresa.com" required></div>
       <label class="field-label" for="auth-password">Contraseña ${registering?'<span class="muted">· mínimo 6 caracteres</span>':''}</label><div class="input-wrap">${icon('shield',18)}<input id="auth-password" type="password" name="password" autocomplete="${registering?'new-password':'current-password'}" placeholder="••••••••" ${registering?'minlength="6"':''} required><button class="reveal-pass" type="button" data-action="toggle-password" aria-label="Mostrar contraseña">${icon('eye',18)}</button></div>
       <button class="btn btn-primary btn-full btn-lg" type="submit">${registering ? 'Crear cuenta y continuar' : 'Entrar a mi espacio'} ${icon('arrow',18)}</button>
     </form><div class="demo-notice">${icon('info',18)} <div><strong>Modo demostración</strong><p>Sin servidor ni autenticación real. Las cuentas se guardan en este navegador; la contraseña no se almacena ni se verifica.</p></div></div>
     ${!registering ? `<button class="demo-access" data-action="demo-login">${icon('zap',17)} Entrar con la cuenta de prueba <span>demo@contentai.pe</span></button>` : '<p class="auth-footnote">Después del registro te guiaremos para configurar tu empresa.</p>'}
   </div></main></div>`;
+}
+
+export function dashboardView() {
+  return `<div class="dashboard-shell" style="padding: 50px 20px; text-align: center; min-height: 100vh; background: #f8f9fa;">
+    <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <span style="font-size: 40px;">🚀</span>
+      <h1 style="color: #4f46e5; margin: 20px 0;">¡Bienvenido a tu espacio!</h1>
+      <p style="color: #666; font-size: 18px; margin-bottom: 30px;">Tu sesión ha iniciado correctamente. Aquí construiremos el panel de ContentAI.</p>
+      <button class="btn btn-outline" data-action="go" data-view="landing">Cerrar sesión (Volver al inicio)</button>
+    </div>
+  </div>`;
 }
