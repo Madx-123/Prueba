@@ -1,382 +1,169 @@
-
 <div class="auth-page" id="main-content">
 
-  <!-- PANEL IZQUIERDO -->
-  <aside class="auth-visual">
-
-    <a href="#/" class="auth-brand" aria-label="ContentAI PYMES - Inicio">
-
-      <span class="auth-brand-mark">
-        C<span>✦</span>
-      </span>
-
-      <span class="auth-brand-name">
-        content<span>ai</span>
-        <small>PYMES</small>
-      </span>
-
-    </a>
-
-
-    <div class="auth-visual-content">
-
-      <span class="auth-eyebrow">
-        <span class="auth-eyebrow-dot"></span>
-        EMPIEZA HOY MISMO
-      </span>
-
-      <h2>
-        Tu negocio tiene mucho
-        <em>por comunicar.</em>
-      </h2>
-
-      <p class="auth-visual-description">
-        Crea tu cuenta y descubre un espacio donde podrás
-        organizar tus ideas, preparar publicaciones y
-        construir la identidad digital de tu negocio.
-      </p>
-
-    </div>
-
-
-    <div class="auth-decoration" aria-hidden="true"></div>
-
-
-    <div class="auth-visual-note">
-
-      <span class="auth-note-icon">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round"
-             aria-hidden="true">
-
-          <path d="M12 3v18"/>
-          <path d="M3 12h18"/>
-          <path d="m5 5 14 14"/>
-          <path d="M19 5 5 19"/>
-
-        </svg>
-
-      </span>
-
-      <span>Una idea puede ser el comienzo de algo grande.</span>
-
-    </div>
-
-  </aside>
-
-
-  <!-- PANEL DERECHO -->
-  <main class="auth-content">
-
-    <section class="auth-form-container">
-
-      <!-- Logo para móviles -->
-      <a href="#/" class="auth-brand auth-mobile-brand"
-         aria-label="ContentAI PYMES - Inicio">
-
-        <span class="auth-brand-mark">
-          C<span>✦</span>
-        </span>
-
-        <span class="auth-brand-name">
-          content<span>ai</span>
-          <small>PYMES</small>
-        </span>
-
-      </a>
-
-
-      <!-- Volver al Landing -->
-      <button
-        type="button"
-        id="btn-back-home"
-        class="auth-back">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round"
-             aria-hidden="true">
-
-          <path d="m15 18-6-6 6-6"/>
-          <path d="M9 12h12"/>
-
-        </svg>
-
-        Volver al inicio
-
+  <!-- COLUMNA IZQUIERDA: FORMULARIO MINIMALISTA ESTILO CAFFEINE -->
+  <main class="auth-left">
+    <header class="auth-top-bar">
+      <button type="button" id="btn-back-home" class="auth-back-minimal">
+        ← Inicio
       </button>
+      <a href="#/" class="auth-logo-link" aria-label="Volver al inicio de ContentAI PYMES">
+        content<span>ai</span>
+      </a>
+    </header>
 
+    <section class="auth-center-box">
+      <h1>Crea tu cuenta</h1>
+      <p class="auth-subtitle">Organiza y redacta el contenido de tu negocio</p>
 
-      <span class="auth-form-kicker">
-        NUEVA CUENTA
-      </span>
-
-      <h1>Crea tu espacio.</h1>
-
-      <p class="auth-form-description">
-        Regístrate y comienza a organizar la comunicación de tu negocio.
-      </p>
-
-
-      <!-- Selector Login / Registro -->
-      <div class="auth-switch"
-           role="group"
-           aria-label="Opciones de acceso">
-
-        <button
-          type="button"
-          id="btn-go-login">
-
-          Iniciar sesión
-
-        </button>
-
-        <button
-          type="button"
-          class="selected"
-          aria-current="page">
-
-          Crear cuenta
-
-        </button>
-
+      <!-- Selector tipo píldora sutil -->
+      <div class="auth-switch" role="group" aria-label="Opciones de acceso">
+        <button type="button" id="btn-go-login">Iniciar sesión</button>
+        <button type="button" class="selected" aria-current="page">Crear cuenta</button>
       </div>
 
-
-      <!-- Formulario de registro -->
-      <form id="register-form"
-            class="auth-form"
-            novalidate>
-
-
-        <!-- Nombre -->
-        <div class="auth-field">
-
-          <label class="auth-field-label"
-                 for="reg-name">
-
-            Nombre completo
-
-          </label>
-
-          <div class="auth-input-wrap">
-
-            <svg class="auth-input-icon"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 aria-hidden="true">
-
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
-
-            </svg>
-
-            <input
-              id="reg-name"
-              type="text"
-              name="nombre"
-              placeholder="Ej. María Gómez"
-              autocomplete="name"
-              minlength="2"
-              maxlength="120"
-              required
-            >
-
-          </div>
-
-        </div>
-
-
-        <!-- Correo -->
-        <div class="auth-field">
-
-          <label class="auth-field-label"
-                 for="reg-email">
-
-            Correo electrónico
-
-          </label>
-
-          <div class="auth-input-wrap">
-
-            <svg class="auth-input-icon"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 aria-hidden="true">
-
+      <!-- Formulario de Registro (Correo, Nombre, Contraseña) -->
+      <form id="register-form" class="auth-form" novalidate>
+        <!-- 1. Correo -->
+        <div class="auth-pill-field">
+          <input
+            id="reg-email"
+            type="email"
+            name="correo"
+            placeholder="Correo electrónico"
+            autocomplete="email"
+            aria-label="Correo electrónico"
+            required
+          >
+          <span class="auth-pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="5" width="18" height="14" rx="3"/>
               <path d="m3 7 9 6 9-6"/>
-
             </svg>
-
-            <input
-              id="reg-email"
-              type="email"
-              name="correo"
-              placeholder="nombre@empresa.com"
-              autocomplete="email"
-              required
-            >
-
-          </div>
-
-        </div>
-
-
-        <!-- Contraseña -->
-        <div class="auth-field">
-
-          <label class="auth-field-label"
-                 for="reg-password">
-
-            Contraseña
-
-            <span>Mínimo 6 caracteres</span>
-
-          </label>
-
-          <div class="auth-input-wrap">
-
-            <svg class="auth-input-icon"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 aria-hidden="true">
-
-              <rect x="4" y="10" width="16" height="11" rx="2"/>
-              <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
-              <path d="M12 14v3"/>
-
-            </svg>
-
-            <input
-              id="reg-password"
-              type="password"
-              name="password"
-              placeholder="Crea una contraseña"
-              autocomplete="new-password"
-              minlength="6"
-              required
-            >
-
-            <button
-              type="button"
-              class="auth-password-toggle"
-              data-password-toggle="reg-password"
-              aria-label="Mostrar contraseña"
-              aria-pressed="false">
-
-              <svg viewBox="0 0 24 24"
-                   fill="none"
-                   stroke="currentColor"
-                   stroke-width="1.8"
-                   stroke-linecap="round"
-                   stroke-linejoin="round"
-                   aria-hidden="true">
-
-                <path d="M2 12s3.7-7 10-7 10 7 10 7-3.7 7-10 7S2 12 2 12Z"/>
-                <circle cx="12" cy="12" r="3"/>
-
-              </svg>
-
-            </button>
-
-          </div>
-
-          <p class="auth-field-hint">
-            Utiliza al menos 6 caracteres para proteger tu cuenta.
-          </p>
-
-        </div>
-
-
-        <!-- Botón de registro -->
-        <button
-          id="btn-submit-reg"
-          class="auth-submit"
-          type="submit">
-
-          <span class="auth-submit-label">
-            Crear mi cuenta
           </span>
+        </div>
 
-          <svg viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-               stroke-width="2"
-               stroke-linecap="round"
-               stroke-linejoin="round"
-               aria-hidden="true">
+        <!-- 2. Nombre -->
+        <div class="auth-pill-field">
+          <input
+            id="reg-name"
+            type="text"
+            name="nombre"
+            placeholder="Nombre completo"
+            autocomplete="name"
+            aria-label="Nombre completo"
+            minlength="2"
+            maxlength="120"
+            required
+          >
+          <span class="auth-pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+            </svg>
+          </span>
+        </div>
 
+        <!-- 3. Contraseña -->
+        <div class="auth-pill-field">
+          <input
+            id="reg-password"
+            type="password"
+            name="password"
+            placeholder="Contraseña (mín. 6 caracteres)"
+            autocomplete="new-password"
+            aria-label="Contraseña"
+            minlength="6"
+            required
+          >
+          <button
+            type="button"
+            class="auth-password-toggle"
+            data-password-toggle="reg-password"
+            aria-label="Mostrar contraseña"
+            aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12s3.7-7 10-7 10 7 10 7-3.7 7-10 7S2 12 2 12Z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+
+        <button id="btn-submit-reg" class="auth-submit" type="submit">
+          <span class="auth-submit-label">Crear mi cuenta</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14"/>
             <path d="m13 6 6 6-6 6"/>
-
           </svg>
-
         </button>
-
       </form>
 
-
-      <!-- Seguridad -->
-      <div class="auth-divider">
-        TU NUEVO ESPACIO
-      </div>
-
-      <div class="auth-security">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round"
-             aria-hidden="true">
-
-          <path d="M12 3 20 7v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/>
-          <path d="m8.5 12 2.3 2.3 4.8-4.8"/>
-
-        </svg>
-
-        <div>
-
-          <strong>Registro seguro</strong>
-
-          <p>
-            Tus credenciales se gestionan mediante el sistema
-            de autenticación de ContentAI PYMES.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <p class="auth-legal">
-        Al crear tu cuenta podrás configurar el perfil de tu negocio.
+      <p class="auth-terms">
+        Al continuar aceptas nuestros <strong>Términos de uso</strong>
       </p>
-
     </section>
 
+    <footer class="auth-bottom-bar">
+      <span class="auth-tech-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.74-8z"/>
+        </svg>
+        CON TECNOLOGÍA DE CONTENTAI
+      </span>
+      <div class="auth-bottom-links">
+        <a href="#/">Política de privacidad</a>
+        <a href="#/">Términos de uso</a>
+      </div>
+    </footer>
   </main>
+
+  <!-- COLUMNA DERECHA: ESCENA DE ÍCONOS FLOTANTES -->
+  <aside class="auth-right" aria-hidden="true">
+    <div class="auth-orbit-scene">
+      <div class="auth-float-card card-blur-left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="7"/>
+          <path d="M12 9v3l2 2"/>
+        </svg>
+      </div>
+
+      <div class="auth-float-card card-lime">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M21 3 3 10.53v.98l6.84 2.65L12.48 21h.98L21 3Z"/>
+        </svg>
+      </div>
+
+      <div class="auth-float-card card-pink-chat">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM8 11a1.25 1.25 0 1 1 0-2.5A1.25 1.25 0 0 1 8 11Zm4 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Zm4 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z"/>
+        </svg>
+      </div>
+
+      <div class="auth-float-card card-pink-shop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="20" r="1.6" fill="currentColor"/>
+          <circle cx="18" cy="20" r="1.6" fill="currentColor"/>
+          <path d="M2.5 3h2.8l2.4 11.5a2 2 0 0 0 2 1.5h8.8a2 2 0 0 0 1.9-1.4L22 7H6.2"/>
+        </svg>
+      </div>
+
+      <div class="auth-float-card card-sky">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3.6 9h16.8M3.6 15h16.8M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/>
+        </svg>
+      </div>
+
+      <div class="auth-float-card card-blur-right">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21s-7.5-4.35-9.5-9.1C1.1 8.4 3.5 4.5 7.4 4.5c2.1 0 3.7 1.1 4.6 2.6.9-1.5 2.5-2.6 4.6-2.6 3.9 0 6.3 3.9 4.9 7.4-2 4.75-9.5 9.1-9.5 9.1Z"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="auth-right-copy">
+      <h2>Tu negocio.<br>Tus herramientas.</h2>
+      <p>Creadas en minutos.</p>
+    </div>
+  </aside>
 
 </div>

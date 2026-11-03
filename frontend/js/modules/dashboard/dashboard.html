@@ -1,52 +1,87 @@
-<div class="page-content" id="main-content">
-  <div class="page-title-row">
-    <div>
-      <span class="eyebrow">TU ESPACIO CREATIVO</span>
-      <!-- El nombre se inyectará dinámicamente desde el Controlador -->
-      <h1>Hola, <span id="user-name">...</span> 👋</h1>
-      <p>Una buena idea puede convertirse en tu próxima publicación.</p>
-    </div>
-    <button id="btn-new-post" class="btn btn-primary">✨ Crear contenido</button>
-  </div>
+<div class="page-content ws-dashboard" id="main-content">
 
+  <!-- BANNER PRINCIPAL ESTILO AI STUDIO (BLANCO / NEGRO + PÍLDORAS DE CANALES) -->
+  <section class="ws-ai-command">
+    <div class="ws-ai-command-main">
+      <span class="ws-kicker"><i></i> CONTENTAI ENGINE · ACTIVO</span>
+      <h1>Hola, <span id="user-name">...</span>. <em>¿Qué vamos a crear hoy?</em></h1>
+      <p>Genera copys comerciales, guiones para video y mensajes adaptados al tono de tu negocio en segundos.</p>
+
+      <div class="ws-command-actions">
+        <button id="btn-new-post" class="ws-btn-black" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3 1.9 5.8L20 10.7l-6.1 1.9L12 18.4l-1.9-5.8L4 10.7l6.1-1.9Z"/>
+          </svg>
+          <span>Abrir generador IA</span>
+          <b aria-hidden="true">→</b>
+        </button>
+
+        <div class="ws-channel-pills" aria-label="Canales disponibles">
+          <a href="#/crear" class="ws-channel-pill"><i class="dot-ig"></i> Instagram</a>
+          <a href="#/crear" class="ws-channel-pill"><i class="dot-fb"></i> Facebook</a>
+          <a href="#/crear" class="ws-channel-pill"><i class="dot-tk"></i> TikTok</a>
+          <a href="#/crear" class="ws-channel-pill"><i class="dot-wa"></i> WhatsApp</a>
+          <a href="#/crear" class="ws-channel-pill"><i class="dot-em"></i> Email</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjetas flotantes decorativas estilo Login/Landing -->
+    <div class="ws-ai-orbit" aria-hidden="true">
+      <div class="ws-orbit-card orb-1">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"/></svg>
+      </div>
+      <div class="ws-orbit-card orb-2">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 3 3 10.53v.98l6.84 2.65L12.48 21h.98L21 3Z"/></svg>
+      </div>
+      <div class="ws-orbit-card orb-3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÉTRICAS TÉCNICAS (ESTÉTICA BLANCO/NEGRO MINIMALISTA) -->
   <div class="metric-grid">
     <article class="metric-card">
-      <div class="metric-icon lavender">📚</div>
-      <div class="metric-text">
-        <span>Publicaciones</span>
-        <strong id="metric-posts">0</strong>
-        <small>Guardadas en tu biblioteca</small>
+      <div class="metric-top">
+        <span>PUBLICACIONES GENERADAS</span>
+        <i class="metric-badge">TOTAL</i>
       </div>
+      <strong id="metric-posts">0</strong>
+      <small>Guardadas en tu biblioteca de contenidos</small>
     </article>
-    
+
     <article class="metric-card">
-      <div class="metric-icon mint">✅</div>
-      <div class="metric-text">
-        <span>Contenido aprobado</span>
-        <strong id="metric-approved">0</strong>
-        <small>Listo para compartir</small>
+      <div class="metric-top">
+        <span>CONTENIDO APROBADO</span>
+        <i class="metric-badge badge-live">LISTO</i>
       </div>
+      <strong id="metric-approved">0</strong>
+      <small>Textos validados para tus redes sociales</small>
     </article>
-    
+
     <article class="metric-card">
-      <div class="metric-icon amber">✍️</div>
-      <div class="metric-text">
-        <span>Borradores</span>
-        <strong id="metric-drafts">0</strong>
-        <small>Ideas por perfeccionar</small>
+      <div class="metric-top">
+        <span>BORRADORES EN EDICIÓN</span>
+        <i class="metric-badge">DRAFT</i>
       </div>
+      <strong id="metric-drafts">0</strong>
+      <small>Propuestas listas para seguir iterando</small>
     </article>
   </div>
 
+  <!-- HISTORIAL RECIENTE -->
   <section class="card home-recent">
     <div class="card-heading">
       <div>
-        <h2>Continúa donde lo dejaste</h2>
-        <p>Tus últimas publicaciones, a un clic.</p>
+        <h2>Actividad reciente del generador</h2>
+        <p>Tus últimas piezas redactadas y almacenadas en la base de datos.</p>
       </div>
-      <button id="btn-go-library" class="text-link">Ver biblioteca ➔</button>
+      <button id="btn-go-library" class="ws-pill-action" type="button">
+        Explorar biblioteca <span>→</span>
+      </button>
     </div>
-    <!-- Contenedor donde inyectaremos la lista de posts recientes -->
+
     <div id="recent-posts-container" class="recent-list">
       <div class="empty-state">
         <h3>Cargando tu contenido...</h3>

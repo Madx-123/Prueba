@@ -1,28 +1,43 @@
-<div class="page-content" id="main-content">
+<div class="page-content ws-profile-page" id="main-content">
   
-  <!-- SECCIÓN: MI EMPRESA -->
+  <!-- SECCIÓN: IDENTIDAD DE MARCA -->
   <div class="page-title-row">
     <div>
-      <span class="eyebrow">🏪 IDENTIDAD DE MARCA</span>
+      <span class="eyebrow"><i class="ws-eyebrow-dot"></i> IDENTIDAD DE MARCA</span>
       <h1>Mi empresa</h1>
-      <p>Consulta la información de tu negocio, sus servicios y clientes.</p>
+      <p>Consulta y actualiza la información de tu negocio, sus servicios y tu imagen corporativa.</p>
     </div>
-    <!-- Este botón redirigirá al Onboarding para re-escribir los datos -->
-    <button id="btn-edit-company" class="btn btn-primary">✏️ Editar información</button>
+    <button id="btn-edit-company" class="btn btn-primary ws-cta-pill" type="button">
+      <span>Editar información</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+        <path d="m4 20 4-.8L20 7a2 2 0 0 0-3-3L5 16z"/>
+      </svg>
+    </button>
   </div>
 
-  <div class="company-cover">
-    <div class="company-cover-mark" id="cover-initial">C</div>
-    <div>
+  <!-- TARJETA DE PORTADA DE LA EMPRESA -->
+  <div class="company-cover ws-brand-banner">
+    <div class="company-cover-mark" id="cover-initial-wrap">
+      <span id="cover-initial">C</span>
+    </div>
+    <div class="company-cover-info">
       <h2 id="profile-company-name">Cargando...</h2>
       <p id="profile-company-sector">...</p>
     </div>
-    <span class="tag tag--active">✅ Perfil activo</span>
+    <span class="tag tag--active ws-status-tag">Perfil activo</span>
   </div>
 
+  <!-- DETALLES DE LA EMPRESA -->
   <div class="company-detail-grid">
     <section class="card company-detail">
-      <div class="detail-title">🏪<h3>Acerca de la empresa</h3></div>
+      <div class="detail-title">
+        <span class="ws-sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M3 10h18l-2-6H5zM5 10v11h14V10M9 21v-7h6v7"/>
+          </svg>
+        </span>
+        <h3>Acerca de la empresa</h3>
+      </div>
       <dl>
         <dt>Productos y servicios</dt>
         <dd id="profile-offer">...</dd>
@@ -34,7 +49,14 @@
     </section>
 
     <section class="card company-detail">
-      <div class="detail-title">👥<h3>Comunicación y clientes</h3></div>
+      <div class="detail-title">
+        <span class="ws-sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </span>
+        <h3>Comunicación y clientes</h3>
+      </div>
       <dl>
         <dt>Público objetivo</dt>
         <dd id="profile-audience">...</dd>
@@ -46,31 +68,73 @@
     </section>
   </div>
 
-  <!-- SECCIÓN: PREFERENCIAS Y CUENTA -->
-  <div class="page-title-row" style="margin-top: 40px;">
+  <!-- SECCIÓN: PREFERENCIAS Y CONFIGURACIÓN DE IMAGEN -->
+  <div class="page-title-row" style="margin-top: 48px;">
     <div>
-      <span class="eyebrow">⚙️ PREFERENCIAS</span>
-      <h1>Configuración</h1>
-      <p>Gestiona tu cuenta y tus datos guardados.</p>
+      <span class="eyebrow"><i class="ws-eyebrow-dot"></i> PREFERENCIAS</span>
+      <h1>Configuración de cuenta y marca</h1>
+      <p>Personaliza tu foto de perfil y el logotipo corporativo que utilizará el motor de IA.</p>
     </div>
   </div>
 
   <div class="settings-grid">
+    <!-- GESTIÓN DE FOTO DE USUARIO -->
     <section class="card settings-section">
-      <div class="detail-title">👤<h3>Tu cuenta</h3></div>
-      <div class="settings-user">
-        <div class="profile-avatar">👤</div>
-        <div>
+      <div class="detail-title">
+        <span class="ws-sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+          </svg>
+        </span>
+        <h3>Tu cuenta de usuario</h3>
+      </div>
+      <div class="settings-user-row">
+        <div class="large-avatar" id="user-avatar-preview">👤</div>
+        <div class="settings-user-meta">
           <strong id="profile-user-name">...</strong>
           <small id="profile-user-email">...</small>
         </div>
       </div>
+      <div class="file-upload-box">
+        <label class="field-label" for="input-user-avatar">Actualizar foto de perfil</label>
+        <input type="file" id="input-user-avatar" class="form-input" accept="image/*">
+      </div>
     </section>
 
+    <!-- GESTIÓN DE LOGOTIPO DE LA MARCA -->
     <section class="card settings-section">
-      <div class="detail-title">📥<h3>Exportar Datos</h3></div>
-      <p>Exporta tu contenido a un archivo JSON para conservar una copia local.</p>
-      <button id="btn-export-data" class="btn btn-outline">📥 Exportar JSON</button>
+      <div class="detail-title">
+        <span class="ws-sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>
+          </svg>
+        </span>
+        <h3>Logotipo de la empresa</h3>
+      </div>
+      <p>Sube el isotipo o logotipo de tu PYME para personalizar tus vistas previas corporativas.</p>
+      <div class="file-upload-box">
+        <label class="field-label" for="input-company-logo">Actualizar logotipo</label>
+        <input type="file" id="input-company-logo" class="form-input" accept="image/*">
+      </div>
     </section>
   </div>
+
+  <!-- EXPORTAR DATOS -->
+  <div style="margin-top: 24px;">
+    <section class="card settings-section" style="max-width: 100%;">
+      <div class="detail-title">
+        <span class="ws-sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/>
+          </svg>
+        </span>
+        <h3>Exportar información local</h3>
+      </div>
+      <p style="margin-bottom: 16px;">Descarga todas tus publicaciones y la configuración de tu empresa en un archivo JSON.</p>
+      <button id="btn-export-data" class="btn btn-outline" type="button">
+        Exportar respaldo JSON
+      </button>
+    </section>
+  </div>
+
 </div>

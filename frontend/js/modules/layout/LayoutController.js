@@ -6,6 +6,15 @@ export default class LayoutController {
     this.container = container;
     this.bindEvents();
     this.loadUserData();
+    this.highlightActiveLink();
+    window.addEventListener('hashchange', () => this.highlightActiveLink());
+  }
+
+  highlightActiveLink() {
+    const currentHash = window.location.hash || '#/dashboard';
+    this.container.querySelectorAll('.side-link').forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === currentHash);
+    });
   }
 
   async loadUserData() {
