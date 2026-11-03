@@ -1,0 +1,37 @@
+<div class="auth-shell" id="main-content">
+  <div class="auth-aside">
+    <div class="auth-aside-content">
+      <span class="eyebrow light">✨ TU ESPACIO PARA CREAR</span>
+      <h2>Las buenas ideas merecen <em>ser compartidas.</em></h2>
+      <p>Accede a tu espacio creativo y continúa donde lo dejaste.</p>
+    </div>
+  </div>
+  
+  <main class="auth-main">
+    <div class="auth-box entrance">
+      <span class="auth-kicker">BIENVENIDO DE NUEVO</span>
+      <h1>Qué bueno verte.</h1>
+      
+      <div class="auth-switch" role="group">
+        <button class="selected">Iniciar sesión</button>
+        <button id="btn-go-register">Crear cuenta</button>
+      </div>
+      
+      <form id="login-form" novalidate>
+        <label class="field-label" for="auth-email">Correo electrónico</label>
+        <div class="input-wrap">
+          <input id="auth-email" type="email" name="correo" placeholder="nombre@empresa.com" required>
+        </div>
+        
+        <label class="field-label" for="auth-password">Contraseña</label>
+        <div class="input-wrap">
+          <input id="auth-password" type="password" name="password" placeholder="••••••••" required>
+        </div>
+        
+        <button id="btn-submit" class="btn btn-primary btn-full btn-lg" type="submit">
+          Entrar a mi espacio ➔
+        </button>
+      </form>
+    </div>
+  </main>
+</div>

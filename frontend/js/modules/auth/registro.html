@@ -1,0 +1,43 @@
+<div class="auth-shell" id="main-content">
+  <div class="auth-aside">
+    <div class="auth-aside-content">
+      <span class="eyebrow light">✨ EMPIEZA HOY MISMO</span>
+      <h2>Impulsa la comunicación <em>de tu negocio.</em></h2>
+      <p>Crea tu cuenta gratuita en segundos y configura el espacio creativo de tu PYME.</p>
+    </div>
+  </div>
+  
+  <main class="auth-main">
+    <div class="auth-box entrance">
+      <button type="button" id="btn-back-home" class="text-back">← Volver al inicio</button>
+      <span class="auth-kicker">NUEVA CUENTA</span>
+      <h1>Crea tu espacio.</h1>
+      
+      <div class="auth-switch" role="group">
+        <button type="button" id="btn-go-login">Iniciar sesión</button>
+        <button type="button" class="selected">Crear cuenta</button>
+      </div>
+      
+      <form id="register-form" novalidate>
+        <label class="field-label" for="reg-name">Nombre completo</label>
+        <div class="input-wrap">
+          <input id="reg-name" type="text" name="nombre" placeholder="Ej. María Gómez" required minlength="2">
+        </div>
+
+        <label class="field-label" for="reg-email">Correo electrónico</label>
+        <div class="input-wrap">
+          <input id="reg-email" type="email" name="correo" placeholder="nombre@empresa.com" required>
+        </div>
+        
+        <label class="field-label" for="reg-password">Contraseña</label>
+        <div class="input-wrap">
+          <input id="reg-password" type="password" name="password" placeholder="Mínimo 6 caracteres" required minlength="6">
+        </div>
+        
+        <button id="btn-submit-reg" class="btn btn-primary btn-full btn-lg" type="submit">
+          Crear mi cuenta ➔
+        </button>
+      </form>
+    </div>
+  </main>
+</div>

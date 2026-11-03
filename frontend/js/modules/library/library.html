@@ -1,0 +1,32 @@
+<div class="page-content" id="main-content">
+  <div class="page-title-row library-banner">
+    <div>
+      <span class="eyebrow">TU COLECCIÓN CREATIVA</span>
+      <h1>Tus publicaciones</h1>
+      <p>De la primera idea al contenido aprobado. Todo en un solo lugar.</p>
+    </div>
+    <button id="btn-new-post" class="btn btn-primary">✨ Nueva publicación</button>
+  </div>
+
+  <section class="card library-card">
+    <div class="library-toolbar">
+      <!-- Filtros -->
+      <div class="filter-tabs" id="library-filters" role="group">
+        <button class="active" data-filter="all">Todas</button>
+        <button data-filter="draft">Borradores</button>
+        <button data-filter="approved">Aprobadas</button>
+      </div>
+      <!-- Búsqueda -->
+      <div class="library-tools">
+        <div class="search-field">
+          🔍 <input id="library-search" type="search" placeholder="Buscar título o contenido...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Aquí se inyectarán las tarjetas (Post Cards) -->
+    <div id="library-results" class="post-grid">
+       <div class="empty-state"><h3>Cargando biblioteca...</h3></div>
+    </div>
+  </section>
+</div>

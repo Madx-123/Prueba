@@ -1,0 +1,51 @@
+<div class="dashboard-shell">
+  <!-- BARRA LATERAL (SIDEBAR) -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  <aside id="app-sidebar" class="app-sidebar collapsed">
+    <div class="sidebar-heading">
+      <button class="logo-button sidebar-logo">✨ contentai</button>
+      <button class="icon-button sidebar-close" id="btn-close-sidebar">❌</button>
+    </div>
+    
+    <div class="sidebar-section-title">ESPACIO DE TRABAJO</div>
+    <nav class="side-nav">
+      <!-- Enlaces de navegación -->
+      <a href="#/dashboard" class="side-link">🏠<span>Inicio</span></a>
+      <a href="#/crear" class="side-link">✨<span>Crear contenido</span></a>
+      <a href="#/biblioteca" class="side-link">📚<span>Biblioteca</span></a>
+      <a href="#/perfil" class="side-link">🏪<span>Mi empresa</span></a>
+    </nav>
+    
+    <div class="sidebar-spacer"></div>
+    
+    <!-- Perfil y Logout en la parte inferior -->
+    <div class="sidebar-profile">
+      <div class="profile-avatar">👤</div>
+      <span class="sidebar-profile-copy">
+        <strong id="layout-user-name">Usuario</strong>
+      </span>
+      <button class="icon-button sidebar-logout" id="btn-logout" title="Cerrar sesión">🚪</button>
+    </div>
+  </aside>
+
+  <!-- ESPACIO DE TRABAJO DERECHO -->
+  <div class="workspace">
+    <header class="workspace-header">
+      <div class="workspace-header-left">
+        <button class="icon-button mobile-menu" id="btn-mobile-menu">☰</button>
+        <div class="breadcrumb">Espacio de trabajo</div>
+      </div>
+      <div class="workspace-header-right">
+        <button class="header-user" id="btn-header-profile">
+          <div class="header-avatar">👤</div>
+          <span id="layout-company-name">Mi Empresa</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- EL CONTENIDO MÓVIL SE INYECTARÁ AQUÍ -->
+    <main class="workspace-body" id="module-content">
+      <!-- Aquí entrará creador.html, dashboard.html, etc. -->
+    </main>
+  </div>
+</div>

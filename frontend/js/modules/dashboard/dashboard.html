@@ -1,0 +1,56 @@
+<div class="page-content" id="main-content">
+  <div class="page-title-row">
+    <div>
+      <span class="eyebrow">TU ESPACIO CREATIVO</span>
+      <!-- El nombre se inyectará dinámicamente desde el Controlador -->
+      <h1>Hola, <span id="user-name">...</span> 👋</h1>
+      <p>Una buena idea puede convertirse en tu próxima publicación.</p>
+    </div>
+    <button id="btn-new-post" class="btn btn-primary">✨ Crear contenido</button>
+  </div>
+
+  <div class="metric-grid">
+    <article class="metric-card">
+      <div class="metric-icon lavender">📚</div>
+      <div class="metric-text">
+        <span>Publicaciones</span>
+        <strong id="metric-posts">0</strong>
+        <small>Guardadas en tu biblioteca</small>
+      </div>
+    </article>
+    
+    <article class="metric-card">
+      <div class="metric-icon mint">✅</div>
+      <div class="metric-text">
+        <span>Contenido aprobado</span>
+        <strong id="metric-approved">0</strong>
+        <small>Listo para compartir</small>
+      </div>
+    </article>
+    
+    <article class="metric-card">
+      <div class="metric-icon amber">✍️</div>
+      <div class="metric-text">
+        <span>Borradores</span>
+        <strong id="metric-drafts">0</strong>
+        <small>Ideas por perfeccionar</small>
+      </div>
+    </article>
+  </div>
+
+  <section class="card home-recent">
+    <div class="card-heading">
+      <div>
+        <h2>Continúa donde lo dejaste</h2>
+        <p>Tus últimas publicaciones, a un clic.</p>
+      </div>
+      <button id="btn-go-library" class="text-link">Ver biblioteca ➔</button>
+    </div>
+    <!-- Contenedor donde inyectaremos la lista de posts recientes -->
+    <div id="recent-posts-container" class="recent-list">
+      <div class="empty-state">
+        <h3>Cargando tu contenido...</h3>
+      </div>
+    </div>
+  </section>
+</div>

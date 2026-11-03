@@ -1,0 +1,76 @@
+<div class="page-content" id="main-content">
+  
+  <!-- SECCIÓN: MI EMPRESA -->
+  <div class="page-title-row">
+    <div>
+      <span class="eyebrow">🏪 IDENTIDAD DE MARCA</span>
+      <h1>Mi empresa</h1>
+      <p>Consulta la información de tu negocio, sus servicios y clientes.</p>
+    </div>
+    <!-- Este botón redirigirá al Onboarding para re-escribir los datos -->
+    <button id="btn-edit-company" class="btn btn-primary">✏️ Editar información</button>
+  </div>
+
+  <div class="company-cover">
+    <div class="company-cover-mark" id="cover-initial">C</div>
+    <div>
+      <h2 id="profile-company-name">Cargando...</h2>
+      <p id="profile-company-sector">...</p>
+    </div>
+    <span class="tag tag--active">✅ Perfil activo</span>
+  </div>
+
+  <div class="company-detail-grid">
+    <section class="card company-detail">
+      <div class="detail-title">🏪<h3>Acerca de la empresa</h3></div>
+      <dl>
+        <dt>Productos y servicios</dt>
+        <dd id="profile-offer">...</dd>
+        <dt>Ubicación</dt>
+        <dd id="profile-city">...</dd>
+        <dt>Propuesta de valor</dt>
+        <dd id="profile-diff">...</dd>
+      </dl>
+    </section>
+
+    <section class="card company-detail">
+      <div class="detail-title">👥<h3>Comunicación y clientes</h3></div>
+      <dl>
+        <dt>Público objetivo</dt>
+        <dd id="profile-audience">...</dd>
+        <dt>Tono de comunicación</dt>
+        <dd id="profile-tone">...</dd>
+        <dt>Canales activos</dt>
+        <dd id="profile-channels" class="channel-pill-row">...</dd>
+      </dl>
+    </section>
+  </div>
+
+  <!-- SECCIÓN: PREFERENCIAS Y CUENTA -->
+  <div class="page-title-row" style="margin-top: 40px;">
+    <div>
+      <span class="eyebrow">⚙️ PREFERENCIAS</span>
+      <h1>Configuración</h1>
+      <p>Gestiona tu cuenta y tus datos guardados.</p>
+    </div>
+  </div>
+
+  <div class="settings-grid">
+    <section class="card settings-section">
+      <div class="detail-title">👤<h3>Tu cuenta</h3></div>
+      <div class="settings-user">
+        <div class="profile-avatar">👤</div>
+        <div>
+          <strong id="profile-user-name">...</strong>
+          <small id="profile-user-email">...</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="card settings-section">
+      <div class="detail-title">📥<h3>Exportar Datos</h3></div>
+      <p>Exporta tu contenido a un archivo JSON para conservar una copia local.</p>
+      <button id="btn-export-data" class="btn btn-outline">📥 Exportar JSON</button>
+    </section>
+  </div>
+</div>

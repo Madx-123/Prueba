@@ -1,0 +1,107 @@
+<div class="onboard-shell" id="main-content">
+  <div class="onboard-top container">
+    <button class="logo-button">
+      <span class="brand-mark">✨</span>
+      <span class="brand-name">content<span>ai</span><small>PYMES</small></span>
+    </button>
+  </div>
+
+  <main class="onboard-main container">
+    <div class="onboard-intro entrance">
+      <span class="eyebrow">✨ PERFIL EMPRESARIAL - PASO <span id="ui-step-number">1</span> DE 4</span>
+      <h1>Hagamos que ContentAI conozca tu negocio.</h1>
+      <p>Lo que nos cuentes servirá para personalizar los textos de demostración.</p>
+    </div>
+
+    <div class="onboard-grid">
+      <!-- Barra lateral de progreso -->
+      <aside class="onboard-rail">
+        <div class="onboard-rail-title">TU CONFIGURACIÓN</div>
+        <div id="rail-steps">
+          <button class="rail-step active" data-nav="0"><span class="rail-number">01</span><span>Tu empresa</span></button>
+          <button class="rail-step" data-nav="1"><span class="rail-number">02</span><span>Tus clientes</span></button>
+          <button class="rail-step" data-nav="2"><span class="rail-number">03</span><span>Tu comunicación</span></button>
+          <button class="rail-step" data-nav="3"><span class="rail-number">04</span><span>Revisar y guardar</span></button>
+        </div>
+      </aside>
+
+      <!-- Tarjeta del Formulario -->
+      <section class="card onboard-card entrance">
+        <form id="onboarding-form">
+          <div class="onboard-fields">
+            
+            <!-- PASO 1: TU EMPRESA -->
+            <div class="onboard-step" data-step="0">
+              <h2>Tu empresa</h2>
+              <div class="form-grid">
+                <div>
+                  <label class="field-label">Nombre comercial *</label>
+                  <input class="form-input" name="nombre" placeholder="Ej. Panadería Dulce Hogar" required>
+                </div>
+                <div>
+                  <label class="field-label">Sector empresarial *</label>
+                  <select class="form-input" name="sector" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Alimentos y bebidas">Alimentos y bebidas</option>
+                    <option value="Comercio y retail">Comercio y retail</option>
+                    <option value="Servicios profesionales">Servicios profesionales</option>
+                    <option value="Otro sector">Otro sector</option>
+                  </select>
+                </div>
+              </div>
+              <label class="field-label">¿Qué vendes o qué servicios ofreces? *</label>
+              <textarea class="form-input" name="productos" rows="3" required></textarea>
+            </div>
+
+            <!-- PASO 2: TUS CLIENTES -->
+            <div class="onboard-step" data-step="1" style="display: none;">
+              <h2>Tus clientes</h2>
+              <label class="field-label">¿Quién es tu cliente ideal? *</label>
+              <textarea class="form-input" name="clientes" rows="3" required></textarea>
+              
+              <label class="field-label">¿Qué diferencia a tu negocio?</label>
+              <textarea class="form-input" name="diferencia" rows="2" placeholder="Atención cercana, entregas rápidas..."></textarea>
+            </div>
+
+            <!-- PASO 3: TU COMUNICACIÓN -->
+            <div class="onboard-step" data-step="2" style="display: none;">
+              <h2>Tu comunicación</h2>
+              <div class="form-grid">
+                <div>
+                  <label class="field-label">Tono de tu marca *</label>
+                  <select class="form-input" name="tono" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Cercano y amigable">Cercano y amigable</option>
+                    <option value="Profesional y claro">Profesional y claro</option>
+                  </select>
+                </div>
+              </div>
+              <fieldset class="channel-fieldset">
+                <legend>¿En qué canales deseas publicar? *</legend>
+                <div class="channel-grid">
+                  <label class="channel-choice"><input type="checkbox" name="canales[]" value="Facebook"><span>Facebook</span></label>
+                  <label class="channel-choice"><input type="checkbox" name="canales[]" value="Instagram"><span>Instagram</span></label>
+                  <label class="channel-choice"><input type="checkbox" name="canales[]" value="WhatsApp"><span>WhatsApp</span></label>
+                </div>
+              </fieldset>
+            </div>
+
+            <!-- PASO 4: REVISAR -->
+            <div class="onboard-step" data-step="3" style="display: none;">
+              <h2>Revisar y guardar</h2>
+              <div class="review-banner">✨ Todo listo. Revisa que tus datos sean correctos antes de guardar.</div>
+            </div>
+
+          </div>
+
+          <!-- Controles de navegación -->
+          <div class="onboard-footer">
+            <button type="button" id="btn-prev" class="btn btn-outline" style="display: none;">Anterior</button>
+            <button type="button" id="btn-next" class="btn btn-primary" style="margin-left: auto;">Continuar ➔</button>
+            <button type="submit" id="btn-submit" class="btn btn-primary" style="display: none; margin-left: auto;">Finalizar configuración ✅</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+</div>

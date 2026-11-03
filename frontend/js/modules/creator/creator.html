@@ -1,0 +1,103 @@
+<div class="page-content create-page" id="main-content">
+  <div class="page-title-row">
+    <div>
+      <span class="eyebrow">✨ ESTUDIO CREATIVO</span>
+      <h1>Crear contenido</h1>
+      <p>Prepara el mensaje, perfecciónalo y mira cómo se vería en cada plataforma.</p>
+    </div>
+  </div>
+
+  <div class="editor-layout">
+    <div class="editor-main">
+      
+      <!-- SECCIÓN 1: CONFIGURACIÓN DE LA CAMPAÑA -->
+      <section class="card form-card">
+        <div class="card-heading compact">
+          <div>
+            <h2><span class="section-icon">📑</span> Tu campaña</h2>
+            <p>Selecciona dónde y cómo quieres comunicar tu idea.</p>
+          </div>
+          <span class="step-small">01 / 02</span>
+        </div>
+
+        <div class="field-block">
+          <label class="field-label">Canal de publicación</label>
+          <div class="platform-picker" id="channel-picker" role="group">
+            <!-- Los botones mantienen las clases de components.css -->
+            <button class="platform-button active" data-channel="Facebook"><span>Facebook</span></button>
+            <button class="platform-button" data-channel="Instagram"><span>Instagram</span></button>
+            <button class="platform-button" data-channel="TikTok"><span>TikTok</span></button>
+            <button class="platform-button" data-channel="WhatsApp"><span>WhatsApp</span></button>
+            <button class="platform-button" data-channel="Email"><span>Email</span></button>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-block">
+            <label class="field-label" for="input-objective">Objetivo de la publicación</label>
+            <select class="form-input" id="input-objective">
+              <option value="Aumentar las ventas">Aumentar las ventas</option>
+              <option value="Presentar un producto">Presentar un producto</option>
+              <option value="Informar y educar">Informar y educar</option>
+              <option value="Fidelizar clientes">Fidelizar clientes</option>
+            </select>
+          </div>
+          <div class="field-block">
+            <label class="field-label">Tono de tu marca</label>
+            <div class="readonly-field">✨ <span id="display-tone">Cargando...</span></div>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <label class="field-label" for="input-topic">¿Qué deseas comunicar?</label>
+          <textarea class="form-input" id="input-topic" rows="4" maxlength="500" placeholder="Ej. Presenta el nuevo servicio de delivery..."></textarea>
+        </div>
+
+        <button id="btn-generate" class="btn btn-primary btn-full generate-btn">
+          ✨ Generar propuesta demo ➔
+        </button>
+      </section>
+
+      <!-- SECCIÓN 2: EDITOR -->
+      <section class="card form-card">
+        <div class="card-heading compact">
+          <div>
+            <h2><span class="section-icon">✍️</span> Editor de publicación</h2>
+            <p>Puedes mejorar el borrador antes de guardarlo.</p>
+          </div>
+          <span class="step-small">02 / 02</span>
+        </div>
+
+        <textarea id="input-text" class="content-textarea" placeholder="Tu texto comercial aparecerá aquí..." spellcheck="true"></textarea>
+        
+        <div class="editor-utility">
+          <button id="btn-variant" class="text-button">🔄 Otra variante</button>
+          <button id="btn-copy" class="text-button">📋 Copiar texto</button>
+          <button id="btn-clear" class="text-button danger">🗑️ Limpiar</button>
+        </div>
+
+        <div class="editor-footer">
+          <span>ℹ️ Los cambios no se guardan hasta que pulses un botón.</span>
+          <div>
+            <button id="btn-save-draft" class="btn btn-outline">Guardar borrador</button>
+            <button id="btn-save-approved" class="btn btn-primary">✅ Aprobar y guardar</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PANEL DE VISTA PREVIA -->
+    <aside class="preview-panel">
+      <div class="card preview-card">
+        <div class="card-heading compact">
+          <div>
+            <h2>📱 Vista previa</h2>
+            <p>Así podría verse en la plataforma.</p>
+          </div>
+        </div>
+        <!-- El HTML del mockup se inyectará aquí -->
+        <div id="live-preview" class="live-preview"></div>
+      </div>
+    </aside>
+  </div>
+</div>
