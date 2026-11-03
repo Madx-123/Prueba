@@ -1,62 +1,41 @@
 <?php
-$route = $_GET['route'] ?? '/';
-$method = $_SERVER['REQUEST_METHOD'];
-
-// Cargar controladores globalmente
 require_once __DIR__ . '/../controllers/AuthController.php';
 require_once __DIR__ . '/../controllers/EmpresaController.php';
 require_once __DIR__ . '/../controllers/PostController.php';
 
-// Diccionario único de rutas
-switch ($route) {
-    case '/login':
-        if ($method === 'POST') {
-            $controller = new AuthController();
-            $controller->login();
-        }
-        break;
+$route = $_GET['route'] ?? '/';
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
-    case '/registro':
-        if ($method === 'POST') {
-            $controller = new AuthController();
-            $controller->registro();
-        }
-        break;
+$routes = [
+    '/login' => ['POST', AuthController::class, 'login'],
+    '/registro' => ['POST', AuthController::class, 'registro'],
+    '/session' => ['GET', AuthController::class, 'checkSession'],
+    '/logout' => ['POST', AuthController::class, 'logout'],
+    '/empresa' => ['GET' => [EmpresaController::class, 'obtenerEmpresa'], 'POST' => [EmpresaController::class, 'guardarEmpresa']],
+    '/posts' => ['GET' => [PostController::class, 'obtenerPosts'], 'POST' => [PostController::class, 'guardarPost']]
+];
 
-    case '/session':
-        if ($method === 'GET') {
-            $controller = new AuthController();
-            $controller->checkSession();
-        }
-        break;
-
-    case '/empresa':
-        $controller = new EmpresaController();
-        if ($method === 'GET') {
-            $controller->obtenerEmpresa();
-        } elseif ($method === 'POST') {
-            $controller->guardarEmpresa();
-        }
-        break;
-
-    case '/posts':
-        $controller = new PostController();
-        if ($method === 'GET') {
-            $controller->obtenerPosts();
-        } elseif ($method === 'POST') {
-            $controller->guardarPost();
-        }
-        break;
-
-    case '/logout':
-        if ($method === 'POST') {
-            $controller = new AuthController();
-            $controller->logout();
-        }
-        break;
-        
-    default:
-        http_response_code(404);
-        echo json_encode(['status' => 'error', 'message' => 'Ruta no encontrada']);
-        break;
+if (!isset($routes[$route])) {
+    http_response_code(404);
+    echo json_encode(['status' => 'error', 'message' => 'Ruta no encontrada']);
+    return;
 }
+
+$definition = $routes[$route];
+if (isset($definition[0])) {
+    $allowedMethods = [$definition[0]];
+    $action = $method === $definition[0] ? [$definition[1], $definition[2]] : null;
+} else {
+    $allowedMethods = array_keys($definition);
+    $action = $definition[$method] ?? null;
+}
+
+if (!$action) {
+    http_response_code(405);
+    header('Allow: ' . implode(', ', $allowedMethods));
+    echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+    return;
+}
+
+[$className, $methodName] = $action;
+(new $className())->$methodName();

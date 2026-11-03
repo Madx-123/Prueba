@@ -1,5 +1,6 @@
 import { appRouter } from '../../app.js';
 import { ApiClient } from '../../core/ApiClient.js';
+import { escapeHtml as h } from '../../core/utils.js';
 
 export default class DashboardController {
   constructor(container) {
@@ -67,10 +68,10 @@ export default class DashboardController {
     const html = posts.slice(0, 4).map(post => `
       <button class="recent-row" data-id="${post.id}">
         <span class="recent-title">
-          <strong>${post.topic || 'Sin título'}</strong>
-          <small>${post.channel}</small>
+          <strong>${h(post.topic || 'Sin título')}</strong>
+          <small>${h(post.channel)}</small>
         </span>
-        <span class="tag tag--${post.status}">
+        <span class="tag tag--${post.status === 'approved' ? 'approved' : 'draft'}">
           ${post.status === 'approved' ? 'Aprobado' : 'Borrador'}
         </span>
       </button>

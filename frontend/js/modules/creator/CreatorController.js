@@ -19,7 +19,7 @@ export default class CreatorController {
       const response = await ApiClient.request('/empresa', 'GET');
       if (!response.company) {
         alert("Primero debes configurar tu empresa.");
-        appRouter.navigate('/perfil');
+        appRouter.navigate('/onboarding');
         return;
       }
       this.companyData = response.company;
@@ -66,7 +66,19 @@ export default class CreatorController {
       this.updatePreview();
     });
 
-    // 6. Guardar Post (Enviaremos al backend en el próximo paso)
+    this.container.querySelector('#btn-copy').addEventListener('click', async () => {
+      const value = inputText.value;
+      if (!value.trim()) { alert('No hay texto para copiar.'); return; }
+      try {
+        await navigator.clipboard.writeText(value);
+        alert('Texto copiado.');
+      } catch {
+        inputText.select();
+        alert('Seleccionamos el texto; pulsa Ctrl+C para copiarlo.');
+      }
+    });
+
+    // 6. Guardar publicación
     this.container.querySelector('#btn-save-draft').addEventListener('click', () => this.savePost('draft'));
     this.container.querySelector('#btn-save-approved').addEventListener('click', () => this.savePost('approved'));
   }

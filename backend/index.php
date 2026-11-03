@@ -1,16 +1,23 @@
 <?php
-// Configuración básica de cabeceras para API REST
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+// Una única sesión para toda la API; peticiones desde el mismo origen (Apache/XAMPP).
+ini_set('display_errors', '0');
+header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store');
+header('X-Content-Type-Options: nosniff');
 
-// Manejar los errores de PHP para que devuelvan JSON en lugar de romper la app
-set_exception_handler(function($e) {
-    echo json_encode([
-        'status' => 'error', 
-        'message' => 'Error interno del servidor: ' . $e->getMessage()
+if (session_status() === PHP_SESSION_NONE) {
+    session_start([
+        'use_strict_mode' => true,
+        'cookie_httponly' => true,
+        'cookie_secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+        'cookie_samesite' => 'Lax'
     ]);
+}
+
+set_exception_handler(function (Throwable $e): void {
+    error_log((string) $e);
+    http_response_code(500);
+    echo json_encode(['status' => 'error', 'message' => 'Error interno del servidor. Consulta el registro de Apache/PHP.']);
 });
 
-// Cargar el archivo de rutas
 require_once __DIR__ . '/routes/api.php';

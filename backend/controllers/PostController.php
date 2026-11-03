@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . '/../config/database.php';
 
 class PostController {
@@ -55,6 +54,9 @@ class PostController {
         $promptImagen = trim($_POST['imagePrompt'] ?? '');
         $estado = trim($_POST['status'] ?? 'draft');
         
+        if (!in_array($estado, ['draft', 'approved'], true)) {
+            $this->responderError('Estado de publicación inválido.', 422);
+        }
         if (empty($texto) || empty($canal)) {
             $this->responderError('El texto y el canal son obligatorios.', 422);
         }

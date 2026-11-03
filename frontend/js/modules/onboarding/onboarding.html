@@ -27,7 +27,7 @@
 
       <!-- Tarjeta del Formulario -->
       <section class="card onboard-card entrance">
-        <form id="onboarding-form">
+        <form id="onboarding-form" novalidate>
           <div class="onboard-fields">
             
             <!-- PASO 1: TU EMPRESA -->
@@ -49,6 +49,8 @@
                   </select>
                 </div>
               </div>
+              <label class="field-label">Ciudad (opcional)</label>
+              <input class="form-input" name="ciudad" placeholder="Ej. Nuevo Chimbote">
               <label class="field-label">¿Qué vendes o qué servicios ofreces? *</label>
               <textarea class="form-input" name="productos" rows="3" required></textarea>
             </div>

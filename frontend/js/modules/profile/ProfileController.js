@@ -1,5 +1,6 @@
 import { appRouter } from '../../app.js';
 import { ApiClient } from '../../core/ApiClient.js';
+import { escapeHtml } from '../../core/utils.js';
 
 export default class ProfileController {
   constructor(container) {

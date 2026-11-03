@@ -1,5 +1,6 @@
 import { appRouter } from '../../app.js';
 import { ApiClient } from '../../core/ApiClient.js';
+import { escapeHtml as h } from '../../core/utils.js';
 
 export default class LibraryController {
   constructor(container) {
@@ -54,7 +55,7 @@ export default class LibraryController {
     const query = searchQuery.toLowerCase().trim();
     const filteredPosts = this.posts.filter(p => {
       const matchFilter = (this.currentFilter === 'all') || (p.status === this.currentFilter);
-      const matchSearch = p.topic.toLowerCase().includes(query) || p.text.toLowerCase().includes(query);
+      const matchSearch = String(p.topic || '').toLowerCase().includes(query) || String(p.text || '').toLowerCase().includes(query);
       return matchFilter && matchSearch;
     });
 
@@ -71,13 +72,13 @@ export default class LibraryController {
     container.innerHTML = filteredPosts.map(p => `
       <article class="post-card">
         <div class="post-card-top">
-          <span class="channel-badge">${p.channel}</span>
-          <span class="tag tag--${p.status}">${p.status === 'approved' ? '✅ Aprobado' : '✍️ Borrador'}</span>
+          <span class="channel-badge">${h(p.channel)}</span>
+          <span class="tag tag--${p.status === 'approved' ? 'approved' : 'draft'}">${p.status === 'approved' ? '✅ Aprobado' : '✍️ Borrador'}</span>
         </div>
-        <h3>${p.topic || 'Publicación sin título'}</h3>
-        <p>${p.text.substring(0, 110)}${p.text.length > 110 ? '...' : ''}</p>
+        <h3>${h(p.topic || 'Publicación sin título')}</h3>
+        <p>${h(String(p.text || '').substring(0, 110))}${String(p.text || '').length > 110 ? '...' : ''}</p>
         <div class="post-card-foot">
-          <span>📅 ${new Date(p.updatedAt).toLocaleDateString()}</span>
+          <span>📅 ${h(p.updatedAt ? new Date(p.updatedAt).toLocaleDateString() : '')}</span>
         </div>
       </article>
     `).join('');

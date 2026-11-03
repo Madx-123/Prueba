@@ -1,41 +1,201 @@
-<div class="public-shell" id="main-content">
-  <header class="public-header container">
-    <button class="logo-button" aria-label="ContentAI inicio">
-      <span class="brand-mark">✨</span>
-      <span class="brand-name">content<span>ai</span><small>PYMES</small></span>
-    </button>
-    <nav class="public-nav" aria-label="Secciones">
-      <a href="#funciones">Funcionalidades</a>
-      <a href="#canales">Canales</a>
-      <a href="#proceso">Cómo funciona</a>
-      <a href="#vista">Vista previa</a>
-    </nav>
-    <div class="public-actions">
-      <button id="btn-login" class="btn btn-ghost">Iniciar sesión</button>
-      <button id="btn-register" class="btn btn-primary">Comenzar gratis ➔</button>
-    </div>
-  </header>
+<div class="landing-page lpv" id="lpv-root">
+  <svg class="lpv-svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="lpv-ig" viewBox="0 0 24 24">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="12" cy="12" r="4.25" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="17.7" cy="6.5" r="1.25" fill="currentColor"/>
+    </symbol>
+    <symbol id="lpv-fb" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M13.9 22V13h3.04l.46-3.51H13.9V7.25c0-1.02.29-1.71 1.76-1.71h1.88V2.4a25 25 0 0 0-2.74-.14c-2.71 0-4.56 1.65-4.56 4.69v2.54H7.2V13h3.04v9h3.66Z"/>
+    </symbol>
+    <symbol id="lpv-tk" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M16 2h-3.5v13.8a3.15 3.15 0 1 1-2.55-3.09V9.1a6.75 6.75 0 1 0 6.05 6.7V8.8c1.44 1.02 3.15 1.57 4.95 1.61V6.87C18.16 6.74 16.39 4.88 16 2Z"/>
+    </symbol>
+    <symbol id="lpv-wa" viewBox="0 0 24 24">
+      <path d="M20.2 11.85a8.15 8.15 0 0 1-11.98 7.2L3.2 20.5l1.46-4.88A8.15 8.15 0 1 1 20.2 11.85Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M8.6 8.3c.22-.43.53-.4.75-.4h.54c.15 0 .37.06.55.44l.68 1.64c.08.18.07.35-.03.51l-.51.64c-.16.18-.14.35-.04.49.62.97 1.35 1.62 2.4 2.18.2.11.36.12.53-.08l.7-.83c.2-.23.38-.29.63-.18l1.52.69c.27.12.43.21.45.39.04.43-.22 1.06-.62 1.38-.43.34-.9.51-1.46.42-2.47-.38-5.27-3.12-5.89-5.39-.21-.76-.03-1.32.19-1.9Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="lpv-mail" viewBox="0 0 24 24">
+      <rect x="2.5" y="5" width="19" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="m3.7 6.7 8.3 6.1 8.3-6.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="lpv-edit" viewBox="0 0 24 24">
+      <path d="m4 17-.5 3.5L7 20l11.7-11.7-3-3L4 17ZM14.8 6.2l3 3M4 20h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="lpv-eye" viewBox="0 0 24 24">
+      <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    </symbol>
+    <symbol id="lpv-folder" viewBox="0 0 24 24">
+      <path d="M2.5 6a2 2 0 0 1 2-2h5l2 2.4h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-15a2 2 0 0 1-2-2V6Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="lpv-shop" viewBox="0 0 24 24">
+      <path d="M4.5 9h15v11h-15V9Zm-2-4h19l-1.6 4.2c-.65 1.8-3.2 2-4.1.1-1 1.7-3.7 1.8-4.5 0-1 1.8-3.7 1.7-4.5 0-.9 1.9-3.45 1.7-4.3-.1L2.5 5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="lpv-arrow" viewBox="0 0 24 24">
+      <path d="M4.5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="lpv-heart" viewBox="0 0 24 24">
+      <path d="M12 20s-8.5-4.8-8.5-10.4C3.5 5 9 3.8 12 7.4 15 3.8 20.5 5 20.5 9.6 20.5 15.2 12 20 12 20Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
 
-  <main>
-    <section class="hero container">
-      <div class="hero-copy entrance">
-        <span class="eyebrow">✨ CREATIVIDAD PARA NEGOCIOS REALES</span>
-        <h1>Tu próxima gran publicación <em>empieza aquí.</em></h1>
-        <p>Planifica, redacta y visualiza contenido comercial para tu PYME desde un espacio de trabajo simple, organizado y agradable.</p>
-        <div class="hero-cta">
-          <button id="btn-hero-register" class="btn btn-primary btn-xl">Crear mi espacio ➔</button>
-          <button id="btn-demo" class="btn btn-outline btn-xl">Explorar la demo 👁️</button>
+  <div class="lpv-header-wrap">
+    <header class="lpv-header" id="lpv-header">
+      <a class="lpv-brand" href="#inicio" data-lpv-scroll="inicio" aria-label="ContentAI PYMES, ir al inicio">
+        <span class="lpv-brand-sign">c<span>✳</span></span>
+        <span class="lpv-brand-word">content<span>ai</span><small>pymes</small></span>
+      </a>
+      <nav class="lpv-nav" aria-label="Secciones de ContentAI">
+        <a href="#inicio" data-lpv-scroll="inicio" class="is-current">Inicio</a>
+        <a href="#muestras" data-lpv-scroll="muestras">Contenido</a>
+        <a href="#aplicacion" data-lpv-scroll="aplicacion">La aplicación</a>
+        <a href="#nosotros" data-lpv-scroll="nosotros">Nosotros</a>
+      </nav>
+      <div class="lpv-nav-actions">
+        <button class="lpv-login" id="btn-login" type="button">Ingresar</button>
+        <button class="lpv-join" id="btn-register" type="button">Únete <span aria-hidden="true">↗</span></button>
+      </div>
+    </header>
+  </div>
+
+  <main class="lpv-main">
+    <section class="lpv-hero lpv-container" id="inicio" aria-labelledby="lpv-hero-title">
+      <div class="lpv-hero-main" data-lpv-reveal>
+        <span class="lpv-eyebrow"><span class="lpv-spark"></span> PARA IDEAS QUE MERECEN SER COMPARTIDAS</span>
+        <h1 id="lpv-hero-title">Cada idea merece<br><em>un gran mensaje.</em></h1>
+        <p>Prepara mensajes para Facebook, Instagram, TikTok, WhatsApp y correo desde un solo espacio. Dale forma a tus ideas, revisa las propuestas y guarda tus publicaciones.</p>
+        <div class="lpv-hero-actions">
+          <button class="lpv-btn lpv-btn-dark" type="button" id="btn-hero-register">Crear mi espacio <svg aria-hidden="true"><use href="#lpv-arrow"/></svg></button>
+          <button class="lpv-btn lpv-btn-light" type="button" id="btn-demo">Ver ejemplos <span aria-hidden="true">↘</span></button>
         </div>
       </div>
-      <!-- Aquí va el resto de tu HTML (hero-visual, features-section, etc.) -->
-      <div class="hero-visual entrance delay-1">
-         <!-- ... tu maquetación de mockup ... -->
+      <div class="lpv-socials" aria-label="Canales con vista previa en ContentAI" data-lpv-reveal>
+        <span class="lpv-social-label">UNA IDEA, CINCO FORMAS DE CONTARLA</span>
+        <div class="lpv-social-list">
+          <div class="lpv-social-item lpv-social-instagram" style="--delay:0s"><span class="lpv-social-emblem"><svg aria-hidden="true"><use href="#lpv-ig"/></svg></span><span>Instagram</span></div>
+          <div class="lpv-social-item lpv-social-facebook" style="--delay:.14s"><span class="lpv-social-emblem"><svg aria-hidden="true"><use href="#lpv-fb"/></svg></span><span>Facebook</span></div>
+          <div class="lpv-social-item lpv-social-tiktok" style="--delay:.28s"><span class="lpv-social-emblem"><svg aria-hidden="true"><use href="#lpv-tk"/></svg></span><span>TikTok</span></div>
+          <div class="lpv-social-item lpv-social-whatsapp" style="--delay:.42s"><span class="lpv-social-emblem"><svg aria-hidden="true"><use href="#lpv-wa"/></svg></span><span>WhatsApp</span></div>
+          <div class="lpv-social-item lpv-social-email" style="--delay:.56s"><span class="lpv-social-emblem"><svg aria-hidden="true"><use href="#lpv-mail"/></svg></span><span>Correo</span></div>
+        </div>
+      </div>
+      <div class="lpv-hero-scroll" aria-hidden="true"><span></span> DESLIZA PARA EXPLORAR</div>
+    </section>
+
+    <section class="lpv-showcase lpv-section" id="muestras" aria-labelledby="lpv-showcase-heading">
+      <div class="lpv-container">
+        <div class="lpv-section-intro" data-lpv-reveal>
+          <span class="lpv-eyebrow lpv-eyebrow-dark">CONTENIDO PARA DIFERENTES CANALES</span>
+          <h2 id="lpv-showcase-heading">Una idea puede tomar<br><em>muchas formas.</em></h2>
+          <p>Del mensaje de una promoción a un guion breve. Estas son muestras ilustrativas de los formatos que puedes preparar y revisar.</p>
+        </div>
+
+        <div class="lpv-stage" id="lpv-stage" aria-label="Ejemplos de contenido para redes sociales">
+          <div class="lpv-stage-center" data-lpv-reveal>
+            <div class="lpv-mini-logos" aria-hidden="true">
+              <span class="lpv-mini-logo lpv-mini-ig"><svg><use href="#lpv-ig"/></svg></span>
+              <span class="lpv-mini-logo lpv-mini-fb"><svg><use href="#lpv-fb"/></svg></span>
+              <span class="lpv-mini-logo lpv-mini-tk"><svg><use href="#lpv-tk"/></svg></span>
+              <span class="lpv-mini-logo lpv-mini-wa"><svg><use href="#lpv-wa"/></svg></span>
+            </div>
+            <h3>¿Cómo contarías<br><span id="lpv-rotator">tu próximo lanzamiento?</span></h3>
+            <p>Tu idea, un tono propio y un mensaje adaptado a cada canal.</p>
+            <span class="lpv-center-small">CONTENTAI PYMES / VISTAS DE EJEMPLO</span>
+          </div>
+
+          <div class="lpv-fly lpv-pos-ig" data-enter-x="-460" data-enter-y="-170">
+            <article class="lpv-sample lpv-sample-ig" aria-label="Ejemplo de una publicación en Instagram">
+              <div class="lpv-sample-head"><span class="lpv-channel-mark lpv-mark-instagram"><svg><use href="#lpv-ig"/></svg></span><span><strong>Instagram</strong><small>Publicación de ejemplo</small></span><b class="lpv-dots">•••</b></div>
+              <div class="lpv-photo lpv-photo-ig"><img src="./assets/images/cafe-editorial.jpg" alt="Ejemplo visual de una publicación para una cafetería" loading="lazy"><span class="lpv-photo-sticker">UNA PAUSA<br>CON SABOR ☕</span></div>
+              <div class="lpv-sample-copy"><span class="lpv-like-icons">♡　◯　↗</span><p>Un café y una buena conversación. ☕<br><strong>#Cafetería #Momentos</strong></p></div>
+            </article>
+          </div>
+
+          <div class="lpv-fly lpv-pos-fb" data-enter-x="470" data-enter-y="-180">
+            <article class="lpv-sample lpv-sample-fb" aria-label="Ejemplo de una publicación en Facebook">
+              <div class="lpv-sample-head"><span class="lpv-channel-mark lpv-mark-facebook"><svg><use href="#lpv-fb"/></svg></span><span><strong>Facebook</strong><small>Promoción de ejemplo</small></span><b class="lpv-dots">•••</b></div>
+              <div class="lpv-facebook-art"><span class="lpv-facebook-caption">LA NOVEDAD<br>DE LA SEMANA</span><span class="lpv-facebook-pill">Conoce nuestro producto</span><span class="lpv-facebook-deco" aria-hidden="true">✺</span></div>
+              <div class="lpv-sample-copy"><p><strong>¡Tenemos algo nuevo para ti!</strong><br>Descubre nuestra propuesta y escríbenos para más detalles.</p></div>
+            </article>
+          </div>
+
+          <div class="lpv-fly lpv-pos-tk" data-enter-x="-510" data-enter-y="10">
+            <article class="lpv-sample lpv-sample-tk" aria-label="Ejemplo de un guion breve para TikTok">
+              <div class="lpv-tiktok-visual"><img src="./assets/images/cafe-editorial.jpg" alt="Imagen ilustrativa para un video corto de una cafetería" loading="lazy"><span class="lpv-tiktok-label"><svg><use href="#lpv-tk"/></svg> Guion TikTok</span><span class="lpv-play" aria-hidden="true">▶</span><strong>3 segundos<br>para captar la atención.</strong><small>Idea de video · Ejemplo</small></div>
+              <div class="lpv-sample-copy"><p><strong>00:00</strong> Muestra el producto<br><strong>00:04</strong> Presenta su beneficio<br><strong>00:13</strong> Invita a escribir</p></div>
+            </article>
+          </div>
+
+          <div class="lpv-fly lpv-pos-wa" data-enter-x="510" data-enter-y="30">
+            <article class="lpv-sample lpv-sample-wa" aria-label="Ejemplo de un mensaje de WhatsApp">
+              <div class="lpv-sample-head"><span class="lpv-channel-mark lpv-mark-whatsapp"><svg><use href="#lpv-wa"/></svg></span><span><strong>WhatsApp</strong><small>Mensaje de ejemplo</small></span><b class="lpv-dots">•••</b></div>
+              <div class="lpv-chat"><div class="lpv-chat-in">Hola, ¿tienen novedades esta semana?</div><div class="lpv-chat-out">¡Hola! 👋 Tenemos una propuesta especial para ti. ¿Te contamos más? <small>10:24 ✓✓</small></div><div class="lpv-chat-input">Escribe un mensaje… <span>➤</span></div></div>
+            </article>
+          </div>
+
+          <div class="lpv-fly lpv-pos-mail" data-enter-x="-360" data-enter-y="350">
+            <article class="lpv-sample lpv-sample-mail" aria-label="Ejemplo de correo comercial">
+              <div class="lpv-sample-head"><span class="lpv-channel-mark lpv-mark-mail"><svg><use href="#lpv-mail"/></svg></span><span><strong>Correo</strong><small>Texto comercial de ejemplo</small></span></div>
+              <div class="lpv-email-field"><small>Asunto</small><strong>Algo nuevo para ti ✨</strong></div>
+              <div class="lpv-email-message">Hola,<br><br>Tenemos una novedad que queremos compartir contigo.<br><br><span>Conoce todos los detalles →</span></div>
+            </article>
+          </div>
+
+          <div class="lpv-fly lpv-pos-lib" data-enter-x="350" data-enter-y="370">
+            <article class="lpv-sample lpv-sample-lib" aria-label="Ejemplo de una publicación guardada">
+              <div class="lpv-sample-head"><span class="lpv-channel-mark lpv-mark-library"><svg><use href="#lpv-folder"/></svg></span><span><strong>Mi biblioteca</strong><small>Ejemplo de organización</small></span></div>
+              <div class="lpv-library-row"><span class="lpv-file-thumb lpv-thumb-a">Aa</span><span><strong>Presentación de producto</strong><small>Instagram · Borrador</small></span><i>↗</i></div>
+              <div class="lpv-library-row"><span class="lpv-file-thumb lpv-thumb-b">✦</span><span><strong>Mensaje promocional</strong><small>Facebook · Aprobado</small></span><i>↗</i></div>
+            </article>
+          </div>
+        </div>
+        <p class="lpv-demo-disclaimer">Muestras ilustrativas del contenido y de las vistas previas; no son publicaciones reales ni métricas de clientes.</p>
       </div>
     </section>
+
+    <section class="lpv-features lpv-section" id="aplicacion" aria-labelledby="lpv-features-heading">
+      <div class="lpv-container">
+        <div class="lpv-section-intro" data-lpv-reveal>
+          <span class="lpv-eyebrow lpv-eyebrow-dark">HECHO PARA SIMPLIFICAR TU TRABAJO</span>
+          <h2 id="lpv-features-heading">De la idea al borrador.<br><em>Todo en un mismo lugar.</em></h2>
+          <p>ContentAI PYMES reúne el perfil de tu negocio, un creador de textos, vistas previas y una biblioteca de publicaciones.</p>
+        </div>
+        <div class="lpv-feature-grid">
+          <article class="lpv-feature" data-lpv-reveal><span class="lpv-feature-number">01 / PERFIL</span><div class="lpv-feature-icon lpv-fi-lime"><svg><use href="#lpv-shop"/></svg></div><h3>Configura tu negocio</h3><p>Registra los datos de tu empresa y define el tono con el que deseas comunicarte.</p><span class="lpv-feature-detail">Nombre · Rubro · Tono</span></article>
+          <article class="lpv-feature" data-lpv-reveal><span class="lpv-feature-number">02 / REDACCIÓN</span><div class="lpv-feature-icon lpv-fi-peach"><svg><use href="#lpv-edit"/></svg></div><h3>Prepara propuestas de texto</h3><p>Elige un canal y un objetivo, describe tu idea y edita el texto producido por el generador de plantillas.</p><span class="lpv-feature-detail">Ideas · Variantes · Edición</span></article>
+          <article class="lpv-feature" data-lpv-reveal><span class="lpv-feature-number">03 / VISTA PREVIA</span><div class="lpv-feature-icon lpv-fi-blue"><svg><use href="#lpv-eye"/></svg></div><h3>Revísalo por canal</h3><p>Comprueba cómo podría verse tu mensaje para Facebook, Instagram, TikTok, WhatsApp o correo.</p><span class="lpv-feature-detail">5 canales disponibles</span></article>
+          <article class="lpv-feature" data-lpv-reveal><span class="lpv-feature-number">04 / BIBLIOTECA</span><div class="lpv-feature-icon lpv-fi-violet"><svg><use href="#lpv-folder"/></svg></div><h3>Guarda y encuentra tus textos</h3><p>Conserva tus publicaciones como borradores o aprobadas y encuéntralas mediante búsqueda y filtros.</p><span class="lpv-feature-detail">Borradores · Aprobadas</span></article>
+        </div>
+        <p class="lpv-feature-footnote">La generación actual es una demostración basada en plantillas de texto; no utiliza todavía una IA externa ni publica automáticamente en redes.</p>
+      </div>
+    </section>
+
+    <section class="lpv-team lpv-section" id="nosotros" aria-labelledby="lpv-team-heading">
+      <div class="lpv-team-container lpv-container">
+        <div class="lpv-section-intro" data-lpv-reveal>
+          <span class="lpv-eyebrow lpv-eyebrow-dark">LAS PERSONAS DETRÁS DEL PROYECTO</span>
+          <h2 id="lpv-team-heading">Cinco estudiantes.<br><em>Una idea compartida.</em></h2>
+          <p>ContentAI PYMES es un proyecto desarrollado por un equipo de cinco estudiantes con el propósito de facilitar la creación y organización de contenido para pequeños negocios.</p>
+        </div>
+        <div class="lpv-team-scene" aria-label="Integrantes del equipo ContentAI PYMES" data-lpv-reveal>
+          <div class="lpv-team-ring lpv-team-ring-a" aria-hidden="true"></div>
+          <div class="lpv-team-ring lpv-team-ring-b" aria-hidden="true"></div>
+          <span class="lpv-team-satellite lpv-satellite-a" aria-hidden="true"></span>
+          <span class="lpv-team-satellite lpv-satellite-b" aria-hidden="true"></span>
+          <span class="lpv-team-satellite lpv-satellite-c" aria-hidden="true"></span>
+          <div class="lpv-person lpv-person-1"><span class="lpv-person-bubble" style="--person-a:#697cff;--person-b:#2d49da">M</span><strong>Maddox</strong></div>
+          <div class="lpv-person lpv-person-2"><span class="lpv-person-bubble" style="--person-a:#54c7cb;--person-b:#3678c4">B</span><strong>Brayam</strong></div>
+          <div class="lpv-person lpv-person-3"><span class="lpv-person-bubble" style="--person-a:#e5ee81;--person-b:#92ba45">U</span><strong>Uriel</strong></div>
+          <div class="lpv-person lpv-person-4"><span class="lpv-person-bubble" style="--person-a:#ffb47e;--person-b:#ec7b72">S</span><strong>Samuel</strong></div>
+          <div class="lpv-person lpv-person-5"><span class="lpv-person-bubble" style="--person-a:#a38dff;--person-b:#7157db">J</span><strong>Justyn</strong></div>
+          <p class="lpv-team-note">Personas reales. Ideas compartidas. Un proyecto en construcción.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lpv-last-cta lpv-section" aria-labelledby="lpv-last-title"><div class="lpv-container lpv-last-inner" data-lpv-reveal><span class="lpv-eyebrow">TU PRÓXIMA PUBLICACIÓN EMPIEZA AQUÍ</span><h2 id="lpv-last-title">Una buena idea<br><em>merece salir al mundo.</em></h2><button class="lpv-btn lpv-btn-dark" type="button" id="btn-last-register">Crear mi espacio <svg aria-hidden="true"><use href="#lpv-arrow"/></svg></button></div></section>
   </main>
-  
-  <footer class="public-footer container">
-    <span class="brand-name">content<span>ai</span> <small>PYMES</small></span>
-    <span>Prototipo MVC - 2026</span>
-  </footer>
+
+  <footer class="lpv-footer"><div class="lpv-container lpv-footer-inner"><span class="lpv-footer-brand">content<span>ai</span><small>pymes</small></span><span>Proyecto académico · 2026</span><button class="lpv-footer-top" type="button" data-lpv-scroll="inicio">Volver arriba ↑</button></div></footer>
 </div>

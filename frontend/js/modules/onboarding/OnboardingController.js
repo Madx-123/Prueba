@@ -6,31 +6,88 @@ export default class OnboardingController {
     this.container = container;
     this.currentStep = 0;
     this.totalSteps = 4;
-    this.form = this.container.querySelector('#onboarding-form');
-    
-    this.btnPrev = this.container.querySelector('#btn-prev');
-    this.btnNext = this.container.querySelector('#btn-next');
-    this.btnSubmit = this.container.querySelector('#btn-submit');
-    this.stepSteps = this.container.querySelectorAll('.onboard-step');
-    this.railSteps = this.container.querySelectorAll('.rail-step');
-
+    this.isEditing = false;
+    this.form = container.querySelector('#onboarding-form');
+    this.btnPrev = container.querySelector('#btn-prev');
+    this.btnNext = container.querySelector('#btn-next');
+    this.btnSubmit = container.querySelector('#btn-submit');
+    this.stepSteps = container.querySelectorAll('.onboard-step');
+    this.railSteps = container.querySelectorAll('.rail-step');
     this.bindEvents();
+    this.loadExistingCompany();
+  }
+
+  async loadExistingCompany() {
+    try {
+      const response = await ApiClient.getCompany();
+      if (!response.company) return;
+      this.isEditing = true;
+      const company = response.company;
+      const mapping = {
+        nombre: company.name, sector: company.sector, ciudad: company.city,
+        productos: company.offer, clientes: company.audience,
+        diferencia: company.differentiator, tono: company.tone
+      };
+      for (const [name, value] of Object.entries(mapping)) {
+        const input = this.form.elements.namedItem(name);
+        if (input) input.value = value || '';
+      }
+      const channels = new Set(company.channels || []);
+      this.form.querySelectorAll('input[name="canales[]"]').forEach(input => {
+        input.checked = channels.has(input.value);
+      });
+    } catch (error) {
+      console.error('No se pudo cargar la empresa:', error);
+    }
   }
 
   bindEvents() {
     this.btnNext.addEventListener('click', () => this.goNext());
     this.btnPrev.addEventListener('click', () => this.goPrev());
-    
-    this.form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    this.railSteps.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        if (index < this.currentStep || (index === this.currentStep + 1 && this.validateStep())) {
+          this.currentStep = index;
+          this.updateUI();
+        }
+      });
+    });
+    this.form.addEventListener('submit', async event => {
+      event.preventDefault();
+      // Revisar todos los pasos y no depender de controles ocultos.
+      for (let step = 0; step < this.totalSteps - 1; step++) {
+        if (!this.validateStep(step)) {
+          this.currentStep = step;
+          this.updateUI();
+          return;
+        }
+      }
       await this.saveCompany();
     });
   }
 
-  goNext() {
-    // Validación nativa HTML5 antes de avanzar de paso
-    if (!this.form.reportValidity()) return;
+  validateStep(index = this.currentStep) {
+    const step = this.stepSteps[index];
+    for (const control of step.querySelectorAll('input[required], select[required], textarea[required]')) {
+      if (!control.checkValidity()) {
+        // Si está oculto, primero hacerlo visible para que el navegador pueda enfocarlo.
+        this.currentStep = index;
+        this.updateUI();
+        control.reportValidity();
+        return false;
+      }
+    }
+    if (index === 2 && !step.querySelector('input[name="canales[]"]:checked')) {
+      this.currentStep = index;
+      this.updateUI();
+      alert('Selecciona al menos un canal para continuar.');
+      return false;
+    }
+    return true;
+  }
 
+  goNext() {
+    if (!this.validateStep()) return;
     if (this.currentStep < this.totalSteps - 1) {
       this.currentStep++;
       this.updateUI();
@@ -45,54 +102,30 @@ export default class OnboardingController {
   }
 
   updateUI() {
-    // Mostrar solo el paso actual
-    this.stepSteps.forEach((stepEl, index) => {
-      stepEl.style.display = (index === this.currentStep) ? 'block' : 'none';
+    this.stepSteps.forEach((step, index) => {
+      step.style.display = index === this.currentStep ? 'block' : 'none';
     });
-
-    // Actualizar barra de progreso (Rail)
-    this.railSteps.forEach((railEl, index) => {
-      railEl.classList.toggle('active', index === this.currentStep);
-      if (index < this.currentStep) railEl.classList.add('done');
-      else railEl.classList.remove('done');
+    this.railSteps.forEach((rail, index) => {
+      rail.classList.toggle('active', index === this.currentStep);
+      rail.classList.toggle('done', index < this.currentStep);
     });
-
-    // Actualizar textos
     this.container.querySelector('#ui-step-number').textContent = this.currentStep + 1;
-
-    // Lógica de botones
-    this.btnPrev.style.display = (this.currentStep === 0) ? 'none' : 'block';
-    
-    if (this.currentStep === this.totalSteps - 1) {
-      this.btnNext.style.display = 'none';
-      this.btnSubmit.style.display = 'block';
-    } else {
-      this.btnNext.style.display = 'block';
-      this.btnSubmit.style.display = 'none';
-    }
+    this.btnPrev.style.display = this.currentStep === 0 ? 'none' : 'block';
+    this.btnNext.style.display = this.currentStep === this.totalSteps - 1 ? 'none' : 'block';
+    this.btnSubmit.style.display = this.currentStep === this.totalSteps - 1 ? 'block' : 'none';
   }
 
   async saveCompany() {
     try {
       this.btnSubmit.disabled = true;
       this.btnSubmit.textContent = 'Guardando...';
-
-      // Capturar todos los datos del formulario
-      const formData = new FormData(this.form);
-      const data = Object.fromEntries(formData.entries());
-      
-      // Capturar checkboxes (canales) que Object.fromEntries ignora si hay varios
-      const canalesChecks = this.form.querySelectorAll('input[name="canales[]"]:checked');
-      data.canales = Array.from(canalesChecks).map(cb => cb.value).join(',');
-
-      // Llamada al Backend
-      const response = await ApiClient.request('/empresa', 'POST', data);
-      
-      if (response.status === 'success') {
-        appRouter.navigate('/dashboard');
-      }
+      const data = Object.fromEntries(new FormData(this.form).entries());
+      data.canales = Array.from(this.form.querySelectorAll('input[name="canales[]"]:checked'))
+        .map(input => input.value).join(',');
+      await ApiClient.request('/empresa', 'POST', data);
+      appRouter.navigate(this.isEditing ? '/perfil' : '/dashboard');
     } catch (error) {
-      alert("Error: " + error.message);
+      alert(`No se pudo guardar la empresa: ${error.message}`);
     } finally {
       this.btnSubmit.disabled = false;
       this.btnSubmit.textContent = 'Finalizar configuración ✅';

@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . '/../config/database.php';
 
 class AuthController {
@@ -24,6 +23,7 @@ class AuthController {
         session_regenerate_id(true);
         $_SESSION['id_usuario'] = (int)$usuario['id_usuario'];
         $_SESSION['nombre'] = $usuario['nombre'];
+        $_SESSION['correo'] = $usuario['correo'];
 
         echo json_encode([
             'status' => 'success',
@@ -78,7 +78,7 @@ class AuthController {
             if ($e->getCode() == 23000) {
                 $this->responderError('Este correo ya está registrado.', 409);
             } else {
-                $this->responderError('Error en la base de datos: ' . $e->getMessage(), 500);
+                $this->responderError('No se pudo registrar la cuenta. Verifica la base de datos.', 500);
             }
         }
     }
@@ -89,7 +89,8 @@ class AuthController {
                 'status' => 'success',
                 'user' => [
                     'id' => 'mysql-' . $_SESSION['id_usuario'],
-                    'name' => $_SESSION['nombre']
+                    'name' => $_SESSION['nombre'],
+                    'email' => $_SESSION['correo'] ?? ''
                 ]
             ]);
         } else {
