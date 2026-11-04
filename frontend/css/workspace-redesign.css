@@ -826,3 +826,1284 @@
 .file-upload-box input[type="file"]::file-selector-button:hover {
   background: #e2e8f0;
 }
+
+
+
+/* =========================================================
+   6. ESTACIÓN DE TRABAJO FULL-SCREEN (#/crear)
+   Usa el 100% de la pantalla; Panel Derecho 100% Inmóvil
+   ========================================================= */
+
+/* Cuando el Estudio IA está activo, quitamos el padding exterior y bloqueamos el scroll global */
+@media (min-width: 1081px) {
+  .dashboard-shell:has(.ws-studio-app) {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .dashboard-shell:has(.ws-studio-app) .workspace {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .dashboard-shell:has(.ws-studio-app) .workspace-body {
+    flex: 1;
+    padding: 0 !important;
+    overflow: hidden;
+    display: flex;
+  }
+}
+
+.ws-studio-app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--ws-bg);
+  overflow: hidden;
+}
+
+/* Barra superior de herramientas del Estudio */
+.ws-studio-topbar {
+  min-height: 66px;
+  padding: 10px 28px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--ws-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.ws-studio-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ws-studio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ws-ink);
+  box-shadow: 0 0 0 4px #e5e7eb;
+}
+
+.ws-studio-title h1 {
+  margin: 0;
+  font: 800 18px/1 'Manrope', sans-serif;
+  letter-spacing: -0.03em;
+  color: var(--ws-ink);
+}
+
+.ws-studio-sep {
+  color: #d0d5dd;
+}
+
+.ws-tone-indicator {
+  font-size: 12px;
+  color: var(--ws-muted);
+  background: var(--ws-pill);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.ws-tone-indicator strong {
+  color: var(--ws-ink);
+}
+
+/* Selector superior de los 5 canales */
+.ws-TopChannelPicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--ws-pill);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.ws-TopChannelPicker .platform-button {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #525866;
+  font: 700 12px/1 'Manrope', sans-serif;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s ease;
+}
+
+.ws-TopChannelPicker .platform-button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.ws-TopChannelPicker .platform-button:hover:not(.active) {
+  color: var(--ws-ink);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.ws-TopChannelPicker .platform-button.active {
+  background: var(--ws-ink);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(17, 19, 23, 0.14);
+}
+
+/* Botones superiores de guardado */
+.ws-studio-save-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ws-btn-ghost {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid #d0d5dd;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ws-ink);
+  font: 700 12px/1 'Manrope', sans-serif;
+}
+
+.ws-btn-ghost:hover {
+  background: var(--ws-pill);
+}
+
+.ws-btn-solid {
+  min-height: 38px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ws-ink);
+  color: #ffffff;
+  font: 700 12px/1 'Manrope', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ws-btn-solid svg {
+  width: 15px;
+  height: 15px;
+  color: #dff48a;
+}
+
+.ws-btn-solid:hover {
+  background: #272b33;
+}
+
+/* =========================================================
+   ESTRUCTURA DE 3 COLUMNAS DEL ESTUDIO
+   ========================================================= */
+.ws-studio-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) 460px;
+  overflow: hidden;
+}
+
+/* COLUMNA 1: Sub-menú izquierdo de módulos del Estudio */
+.ws-tool-rail {
+  background: #ffffff;
+  border-right: 1px solid var(--ws-line);
+  padding: 22px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.ws-rail-group-label {
+  font: 800 9.5px/1 'Manrope', sans-serif;
+  letter-spacing: 0.16em;
+  color: #9ca3af;
+  padding: 0 10px 8px;
+}
+
+.ws-tool-btn {
+  width: 100%;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  color: var(--ws-ink);
+  transition: all 0.2s ease;
+}
+
+.ws-tool-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--ws-pill);
+  color: var(--ws-ink);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.ws-tool-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ws-tool-btn strong {
+  display: block;
+  font: 800 12.5px/1.25 'Manrope', sans-serif;
+}
+
+.ws-tool-btn small {
+  display: block;
+  font-size: 11px;
+  color: var(--ws-muted);
+  margin-top: 2px;
+}
+
+.ws-tool-btn:hover:not(.active) {
+  background: #f8f9fa;
+  border-color: var(--ws-line);
+}
+
+.ws-tool-btn.active {
+  background: var(--ws-ink);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(17, 19, 23, 0.12);
+}
+
+.ws-tool-btn.active small {
+  color: #cbd5e1;
+}
+
+.ws-tool-btn.active .ws-tool-icon {
+  background: rgba(255, 255, 255, 0.14);
+  color: #dff48a;
+}
+
+/* COLUMNA 2: Área central con scroll propio independiente */
+.ws-work-scroll {
+  height: 100%;
+  overflow-y: auto;
+  padding: 28px 32px 60px;
+}
+
+.ws-panel {
+  display: none;
+  gap: 22px;
+  max-width: 920px;
+  margin: 0 auto;
+  animation: ws-fade-in 0.24s ease both;
+}
+
+.ws-panel.active {
+  display: grid;
+}
+
+.ws-panel-card {
+  background: #ffffff;
+  border: 1px solid var(--ws-line);
+  border-radius: 22px;
+  padding: 26px 28px;
+  box-shadow: 0 8px 24px rgba(17, 19, 23, 0.025);
+}
+
+.ws-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.ws-kicker-sm {
+  display: inline-block;
+  font: 800 10px/1 'Manrope', sans-serif;
+  letter-spacing: 0.14em;
+  color: var(--ws-blue);
+  margin-bottom: 6px;
+}
+
+.ws-panel-head h2 {
+  margin: 0 0 6px;
+  font: 800 20px/1.25 'Manrope', sans-serif;
+  letter-spacing: -0.03em;
+  color: var(--ws-ink);
+}
+
+.ws-panel-head p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ws-muted);
+}
+
+.ws-field-group {
+  margin-bottom: 20px;
+}
+
+.ws-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ws-label {
+  display: block;
+  font: 700 12.5px/1.3 'Manrope', sans-serif;
+  color: var(--ws-ink);
+  margin-bottom: 8px;
+}
+
+.ws-label-row .ws-label {
+  margin-bottom: 0;
+}
+
+.ws-counter {
+  font: 700 11px/1 'Manrope', sans-serif;
+  color: var(--ws-muted);
+}
+
+.ws-select,
+.ws-textarea-brief,
+.ws-textarea-editor {
+  width: 100%;
+  border: 1.5px solid #e2e5ec;
+  border-radius: 15px;
+  background: #fafaf9;
+  padding: 13px 16px;
+  font-size: 13.5px;
+  color: var(--ws-ink);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.ws-select:focus,
+.ws-textarea-brief:focus,
+.ws-textarea-editor:focus {
+  background: #ffffff;
+  border-color: var(--ws-ink);
+  box-shadow: 0 0 0 4px rgba(17, 19, 23, 0.06);
+}
+
+.ws-textarea-editor {
+  font-size: 14px;
+  line-height: 1.75;
+  min-height: 210px;
+  resize: vertical;
+}
+
+/* Chips de plantillas */
+.ws-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ws-chip-btn {
+  border: 1px solid var(--ws-line);
+  background: #fafaf9;
+  border-radius: 12px;
+  padding: 11px 14px;
+  text-align: left;
+  font: 700 12px/1.3 'Manrope', sans-serif;
+  color: #344054;
+  transition: all 0.2s ease;
+}
+
+.ws-chip-btn:hover {
+  background: var(--ws-ink);
+  border-color: var(--ws-ink);
+  color: #ffffff;
+}
+
+/* Botones de acción grandes */
+.ws-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ws-btn-primary-lg {
+  min-height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ws-ink);
+  color: #ffffff;
+  font: 700 13px/1 'Manrope', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.ws-btn-primary-lg svg {
+  width: 17px;
+  height: 17px;
+  color: #dff48a;
+}
+
+.ws-btn-primary-lg:hover {
+  background: #272b33;
+  transform: translateY(-1px);
+}
+
+.ws-btn-outline-lg {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid #d0d5dd;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ws-ink);
+  font: 700 12.5px/1 'Manrope', sans-serif;
+}
+
+.ws-btn-outline-lg:hover {
+  background: var(--ws-pill);
+}
+
+/* Herramientas del editor */
+.ws-inline-tools {
+  display: flex;
+  gap: 6px;
+}
+
+.ws-mini-btn {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--ws-line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #344054;
+  font: 700 11.5px/1 'Manrope', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ws-mini-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ws-mini-btn:hover {
+  background: var(--ws-pill);
+  color: var(--ws-ink);
+}
+
+.ws-mini-btn.danger:hover {
+  background: #fee2e2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.ws-editor-statusbar {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--ws-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ws-muted);
+}
+
+.ws-quick-format {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ws-format-btn {
+  border: 0;
+  background: var(--ws-pill);
+  color: var(--ws-ink);
+  padding: 7px 12px;
+  border-radius: 999px;
+  font: 700 11px/1 'Manrope', sans-serif;
+  transition: background 0.2s, color 0.2s;
+}
+
+.ws-format-btn:hover {
+  background: var(--ws-ink);
+  color: #ffffff;
+}
+
+/* Estudio de Imagen y Variantes */
+.ws-style-selector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ws-style-option {
+  border: 1.5px solid var(--ws-line);
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.ws-style-option.active {
+  border-color: var(--ws-ink);
+  background: var(--ws-pill);
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.swatch-dark { background: #111317; border: 2px solid #d7e86b; }
+.swatch-light { background: #e9f0dc; border: 2px solid #111317; }
+.swatch-blue { background: #1d4ed8; border: 2px solid #ffffff; }
+
+.ws-style-option strong {
+  display: block;
+  font: 800 12px/1.2 'Manrope', sans-serif;
+}
+
+.ws-style-option small {
+  font-size: 10.5px;
+  color: var(--ws-muted);
+}
+
+.ws-preset-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ws-preset-box {
+  border: 1px solid var(--ws-line);
+  background: #fafaf9;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.ws-preset-box:hover {
+  border-color: var(--ws-ink);
+  background: #ffffff;
+}
+
+.ws-preset-box img {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.ws-preset-box strong {
+  display: block;
+  font: 800 12.5px/1.3 'Manrope', sans-serif;
+}
+
+.ws-preset-box small {
+  font-size: 11px;
+  color: var(--ws-muted);
+}
+
+.ws-file-input {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #fafaf9;
+  font-size: 12.5px;
+}
+
+/* Comparador de Variantes A/B/C */
+.ws-variants-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.ws-variant-card {
+  border: 1px solid var(--ws-line);
+  border-radius: 16px;
+  padding: 18px;
+  background: #fafaf9;
+}
+
+.ws-variant-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ws-variant-top span {
+  font: 800 10.5px/1 'Manrope', sans-serif;
+  letter-spacing: 0.1em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--ws-ink);
+  color: #ffffff;
+}
+
+.ws-variant-top small {
+  font-size: 11.5px;
+  color: var(--ws-muted);
+}
+
+.ws-variant-body {
+  margin: 0 0 14px;
+  white-space: pre-wrap;
+  font: 500 13px/1.65 'DM Sans', sans-serif;
+  color: var(--ws-ink);
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--ws-line);
+}
+
+.ws-use-variant-btn {
+  border: 0;
+  background: var(--ws-ink);
+  color: #ffffff;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font: 700 12px/1 'Manrope', sans-serif;
+}
+
+.ws-use-variant-btn:hover {
+  background: var(--ws-blue);
+}
+
+.ws-transform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ws-transform-card {
+  border: 1px solid var(--ws-line);
+  background: #fafaf9;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.ws-transform-card:hover {
+  border-color: var(--ws-ink);
+  background: var(--ws-ink);
+  color: #ffffff;
+}
+
+.ws-transform-card strong {
+  display: block;
+  font: 800 13px/1.3 'Manrope', sans-serif;
+  margin-bottom: 6px;
+}
+
+.ws-transform-card small {
+  font-size: 11.5px;
+  color: var(--ws-muted);
+}
+
+.ws-transform-card:hover small {
+  color: #d0d5dd;
+}
+
+/* =========================================================
+   COLUMNA 3: SIMULADOR DERECHO 100% ESTÁTICO E INMÓVIL
+   ========================================================= */
+.ws-preview-dock {
+  height: 100%;
+  background: #eef0f3;
+  border-left: 1px solid var(--ws-line);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ws-preview-dock-head {
+  height: 54px;
+  padding: 0 22px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--ws-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.ws-preview-dock-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 800 12.5px/1 'Manrope', sans-serif;
+}
+
+.ws-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 4px #dcfce7;
+}
+
+.ws-preview-channel-tag {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--ws-pill);
+  font: 800 10.5px/1 'Manrope', sans-serif;
+  color: var(--ws-ink);
+}
+
+.ws-preview-stage {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+@media (max-width: 1080px) {
+  .ws-studio-body {
+    grid-template-columns: 1fr;
+  }
+  .ws-tool-rail {
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--ws-line);
+  }
+  .ws-rail-group-label {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   7. BIBLIOTECA MULTIMEDIA IA (#/biblioteca)
+   Tarjetas con Imagen + Copy + Prompt + Modal Simulador
+   ========================================================= */
+.ws-lib-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.ws-lib-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ws-lib-counters {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: #ffffff;
+  border: 1px solid var(--ws-line);
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--ws-muted);
+}
+
+.ws-lib-counters strong {
+  font: 800 13px/1 'Manrope', sans-serif;
+  color: var(--ws-ink);
+  margin-right: 3px;
+}
+
+.ws-lib-shell {
+  overflow: hidden;
+}
+
+.ws-lib-toolbar {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--ws-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.ws-lib-tabs {
+  background: var(--ws-pill);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.ws-lib-tabs button {
+  border-radius: 999px;
+  padding: 8px 15px;
+  font: 700 12px/1 'Manrope', sans-serif;
+}
+
+.ws-lib-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ws-lib-select {
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--ws-line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ws-ink);
+  font: 700 12px/1 'Manrope', sans-serif;
+  outline: none;
+}
+
+.ws-lib-search {
+  height: 40px;
+  border-radius: 999px !important;
+  padding: 0 14px;
+  background: var(--ws-pill) !important;
+  border: 1px solid transparent !important;
+}
+
+.ws-lib-search input {
+  width: 210px;
+  font-size: 12.5px;
+}
+
+.ws-view-switcher {
+  display: inline-flex;
+  background: var(--ws-pill);
+  padding: 3px;
+  border-radius: 999px;
+}
+
+.ws-view-btn {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ws-muted);
+  display: grid;
+  place-items: center;
+}
+
+.ws-view-btn.active {
+  background: var(--ws-ink);
+  color: #ffffff;
+}
+
+/* Grid de tarjetas multimedia */
+.ws-lib-grid {
+  padding: 26px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.ws-lib-grid.is-list-view {
+  grid-template-columns: 1fr;
+}
+
+.ws-lib-card {
+  border: 1px solid var(--ws-line);
+  border-radius: 20px;
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
+.ws-lib-grid.is-list-view .ws-lib-card {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.ws-lib-card:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e1;
+  box-shadow: 0 16px 36px rgba(17, 19, 23, 0.06);
+}
+
+/* Miniatura visual o placeholder elegante */
+.ws-card-media {
+  position: relative;
+  height: 210px;
+  background: #141517;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.ws-lib-grid.is-list-view .ws-card-media {
+  width: 260px;
+  height: auto;
+  min-height: 190px;
+  flex-shrink: 0;
+}
+
+.ws-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.ws-lib-card:hover .ws-card-media img {
+  transform: scale(1.04);
+}
+
+.ws-media-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(17, 19, 23, 0.82);
+  backdrop-filter: blur(6px);
+  color: #dff48a;
+  font: 800 9.5px/1 'Manrope', sans-serif;
+  letter-spacing: 0.1em;
+}
+
+.ws-card-media-placeholder {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  display: grid;
+  place-items: center;
+}
+
+.ws-placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+}
+
+.ws-placeholder-inner svg {
+  width: 28px;
+  height: 28px;
+}
+
+.ws-placeholder-inner span {
+  font: 800 9.5px/1 'Manrope', sans-serif;
+  letter-spacing: 0.12em;
+}
+
+/* Cuerpo de la tarjeta */
+.ws-lib-card-body {
+  padding: 18px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.ws-lib-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ws-lib-channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--ws-pill);
+  color: var(--ws-ink);
+  font: 800 11px/1 'Manrope', sans-serif;
+}
+
+.ws-lib-channel svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ws-lib-status {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font: 800 10px/1 'Manrope', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ws-lib-status.is-approved {
+  background: #ecfdf3;
+  color: #067647;
+}
+
+.ws-lib-status.is-draft {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.ws-lib-title {
+  margin: 0 0 4px;
+  font: 800 15.5px/1.35 'Manrope', sans-serif;
+  color: var(--ws-ink);
+  cursor: pointer;
+}
+
+.ws-lib-title:hover {
+  color: var(--ws-blue);
+}
+
+.ws-lib-objective {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--ws-blue);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.ws-lib-excerpt {
+  margin: 0 0 14px;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #4b5563;
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ws-card-prompt {
+  margin-bottom: 14px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-size: 11px;
+  color: #475569;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ws-card-prompt strong {
+  color: var(--ws-ink);
+}
+
+.ws-lib-card-foot {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--ws-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ws-lib-date {
+  font-size: 11px;
+  color: var(--ws-muted);
+  font-weight: 600;
+}
+
+.ws-lib-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.ws-icon-action {
+  border: 1px solid var(--ws-line);
+  background: #ffffff;
+  color: var(--ws-ink);
+  padding: 6px 11px;
+  border-radius: 999px;
+  font: 700 11px/1 'Manrope', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.ws-icon-action:hover {
+  background: var(--ws-pill);
+}
+
+.ws-icon-action.primary {
+  background: var(--ws-ink);
+  border-color: var(--ws-ink);
+  color: #ffffff;
+}
+
+.ws-icon-action.primary:hover {
+  background: var(--ws-blue);
+  border-color: var(--ws-blue);
+}
+
+/* Modal de Inspección y Simulador en Vivo */
+.ws-lib-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.ws-lib-modal[hidden] {
+  display: none !important;
+}
+
+.ws-lib-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 19, 23, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.ws-lib-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(980px, 100%);
+  max-height: 90vh;
+  background: #ffffff;
+  border-radius: 26px;
+  border: 1px solid var(--ws-line);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: ws-fade-in 0.25s ease both;
+}
+
+.ws-lib-modal-head {
+  padding: 20px 26px;
+  border-bottom: 1px solid var(--ws-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ws-lib-modal-head h2 {
+  margin: 0;
+  font: 800 19px/1.2 'Manrope', sans-serif;
+}
+
+.ws-modal-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--ws-pill);
+  color: var(--ws-ink);
+  display: grid;
+  place-items: center;
+}
+
+.ws-lib-modal-body {
+  padding: 26px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 420px);
+  gap: 26px;
+  align-items: start;
+}
+
+.ws-modal-block {
+  margin-bottom: 18px;
+}
+
+.ws-modal-block label {
+  display: block;
+  font: 800 11px/1 'Manrope', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ws-muted);
+  margin-bottom: 8px;
+}
+
+.ws-modal-copy-box {
+  margin: 0;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f8f9fa;
+  border: 1px solid var(--ws-line);
+  white-space: pre-wrap;
+  font: 500 13.5px/1.7 'DM Sans', sans-serif;
+  color: var(--ws-ink);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.ws-modal-prompt-box {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  font-size: 12.5px;
+  color: #334155;
+}
+
+.ws-modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ws-lib-modal-simulator {
+  background: #eef0f3;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1020px) {
+  .ws-lib-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ws-lib-modal-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .ws-lib-grid {
+    grid-template-columns: 1fr;
+  }
+  .ws-lib-grid.is-list-view .ws-lib-card {
+    flex-direction: column;
+  }
+  .ws-lib-grid.is-list-view .ws-card-media {
+    width: 100%;
+  }
+}

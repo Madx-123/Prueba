@@ -1,103 +1,374 @@
-<div class="page-content create-page" id="main-content">
-  <div class="page-title-row">
-    <div>
-      <span class="eyebrow">✨ ESTUDIO CREATIVO</span>
-      <h1>Crear contenido</h1>
-      <p>Prepara el mensaje, perfecciónalo y mira cómo se vería en cada plataforma.</p>
+<div class="ws-studio-app" id="main-content">
+
+  <!-- =========================================================
+       BARRA SUPERIOR DE LA ESTACIÓN DE TRABAJO (FULL WIDTH)
+       ========================================================= -->
+  <header class="ws-studio-topbar">
+    <div class="ws-studio-title">
+      <span class="ws-studio-dot"></span>
+      <h1>Estudio IA</h1>
+      <span class="ws-studio-sep">/</span>
+      <span class="ws-tone-indicator">Tono activo: <strong id="display-tone">Cargando...</strong></span>
     </div>
-  </div>
 
-  <div class="editor-layout">
-    <div class="editor-main">
-      
-      <!-- SECCIÓN 1: CONFIGURACIÓN DE LA CAMPAÑA -->
-      <section class="card form-card">
-        <div class="card-heading compact">
-          <div>
-            <h2><span class="section-icon">📑</span> Tu campaña</h2>
-            <p>Selecciona dónde y cómo quieres comunicar tu idea.</p>
-          </div>
-          <span class="step-small">01 / 02</span>
+    <!-- Selector global de plataforma con iconos vectoriales -->
+    <div class="ws-TopChannelPicker" id="channel-picker" role="group" aria-label="Canal de publicación">
+      <button type="button" class="platform-button active" data-channel="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.9 22V13h3.04l.46-3.51H13.9V7.25c0-1.02.29-1.71 1.76-1.71h1.88V2.4a25 25 0 0 0-2.74-.14c-2.71 0-4.56 1.65-4.56 4.69v2.54H7.2V13h3.04v9h3.66Z"/></svg>
+        <span>Facebook</span>
+      </button>
+
+      <button type="button" class="platform-button" data-channel="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.25"/><circle cx="17.7" cy="6.5" r="1.25" fill="currentColor" stroke="none"/></svg>
+        <span>Instagram</span>
+      </button>
+
+      <button type="button" class="platform-button" data-channel="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 2h-3.5v13.8a3.15 3.15 0 1 1-2.55-3.09V9.1a6.75 6.75 0 1 0 6.05 6.7V8.8c1.44 1.02 3.15 1.57 4.95 1.61V6.87C18.16 6.74 16.39 4.88 16 2Z"/></svg>
+        <span>TikTok</span>
+      </button>
+
+      <button type="button" class="platform-button" data-channel="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M20.2 11.85a8.15 8.15 0 0 1-11.98 7.2L3.2 20.5l1.46-4.88A8.15 8.15 0 1 1 20.2 11.85Z"/><path d="M8.6 8.3c.22-.43.53-.4.75-.4h.54c.15 0 .37.06.55.44l.68 1.64c.08.18.07.35-.03.51l-.51.64c-.16.18-.14.35-.04.49.62.97 1.35 1.62 2.4 2.18.2.11.36.12.53-.08l.7-.83c.2-.23.38-.29.63-.18l1.52.69c.27.12.43.21.45.39.04.43-.22 1.06-.62 1.38-.43.34-.9.51-1.46.42-2.47-.38-5.27-3.12-5.89-5.39-.21-.76-.03-1.32.19-1.9Z" fill="currentColor" stroke="none"/></svg>
+        <span>WhatsApp</span>
+      </button>
+
+      <button type="button" class="platform-button" data-channel="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="m3.7 6.7 8.3 6.1 8.3-6.1"/></svg>
+        <span>Email</span>
+      </button>
+    </div>
+
+    <!-- Acciones globales de guardado siempre accesibles -->
+    <div class="ws-studio-save-actions">
+      <button id="btn-save-draft" class="ws-btn-ghost" type="button">Guardar borrador</button>
+      <button id="btn-save-approved" class="ws-btn-solid" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m4 12 5 5L20 6"/></svg>
+        <span>Aprobar publicación</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       CUERPO DEL ESTUDIO: 3 PANELES (MENÚ | WORKSPACE SCROLL | PREVIEW FIJO)
+       ========================================================= -->
+  <div class="ws-studio-body">
+
+    <!-- 1. SUB-MENÚ DE NAVEGACIÓN DE HERRAMIENTAS IA (ESCALABLE) -->
+    <nav class="ws-tool-rail" aria-label="Módulos del Estudio IA">
+      <div class="ws-rail-group-label">MÓDULOS IA</div>
+
+      <button type="button" class="ws-tool-btn active" data-panel-target="panel-copy">
+        <i class="ws-tool-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3 1.9 5.8L20 10.7l-6.1 1.9L12 18.4l-1.9-5.8L4 10.7l6.1-1.9Z"/>
+          </svg>
+        </i>
+        <div>
+          <strong>Redacción IA</strong>
+          <small>Briefing y copy base</small>
         </div>
+      </button>
 
-        <div class="field-block">
-          <label class="field-label">Canal de publicación</label>
-          <div class="platform-picker" id="channel-picker" role="group">
-            <!-- Los botones mantienen las clases de components.css -->
-            <button class="platform-button active" data-channel="Facebook"><span>Facebook</span></button>
-            <button class="platform-button" data-channel="Instagram"><span>Instagram</span></button>
-            <button class="platform-button" data-channel="TikTok"><span>TikTok</span></button>
-            <button class="platform-button" data-channel="WhatsApp"><span>WhatsApp</span></button>
-            <button class="platform-button" data-channel="Email"><span>Email</span></button>
-          </div>
+      <button type="button" class="ws-tool-btn" data-panel-target="panel-images">
+        <i class="ws-tool-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="m21 15-5-5L5 21"/>
+          </svg>
+        </i>
+        <div>
+          <strong>Estudio de Imagen</strong>
+          <small>Generador visual y carga</small>
         </div>
+      </button>
 
-        <div class="form-grid">
-          <div class="field-block">
-            <label class="field-label" for="input-objective">Objetivo de la publicación</label>
-            <select class="form-input" id="input-objective">
+      <button type="button" class="ws-tool-btn" data-panel-target="panel-variants">
+        <i class="ws-tool-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+          </svg>
+        </i>
+        <div>
+          <strong>Variantes A/B/C</strong>
+          <small>Comparar propuestas</small>
+        </div>
+      </button>
+
+      <button type="button" class="ws-tool-btn" data-panel-target="panel-editor">
+        <i class="ws-tool-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+        </i>
+        <div>
+          <strong>Editor & Formato</strong>
+          <small>Ajuste fino y hashtags</small>
+        </div>
+      </button>
+    </nav>
+
+    <!-- 2. PANEL CENTRAL CON SCROLL INDEPENDIENTE -->
+    <div class="ws-work-scroll">
+
+      <!-- =====================================================
+           PANEL A: REDACCIÓN IA (BRIEFING + GENERACIÓN RÁPIDA)
+           ===================================================== -->
+      <section class="ws-panel active" id="panel-copy">
+        <div class="ws-panel-card">
+          <div class="ws-panel-head">
+            <div>
+              <span class="ws-kicker-sm">MÓDULO 01 · GENERACIÓN DE TEXTO</span>
+              <h2>Configura el briefing de tu publicación</h2>
+              <p>Define el objetivo comercial y describe la idea principal para que ContentAI estructure el mensaje.</p>
+            </div>
+          </div>
+
+          <div class="ws-field-group">
+            <label class="ws-label" for="input-objective">Objetivo de la campaña</label>
+            <select class="ws-select" id="input-objective">
               <option value="Aumentar las ventas">Aumentar las ventas</option>
               <option value="Presentar un producto">Presentar un producto</option>
               <option value="Informar y educar">Informar y educar</option>
               <option value="Fidelizar clientes">Fidelizar clientes</option>
+              <option value="Atraer seguidores">Atraer seguidores</option>
             </select>
           </div>
-          <div class="field-block">
-            <label class="field-label">Tono de tu marca</label>
-            <div class="readonly-field">✨ <span id="display-tone">Cargando...</span></div>
+
+          <div class="ws-field-group">
+            <label class="ws-label">Plantillas rápidas (Clic para autocompletar y generar)</label>
+            <div class="ws-chip-grid">
+              <button type="button" class="ws-chip-btn" data-idea="Promoción especial por tiempo limitado con beneficios exclusivos para clientes que escriban hoy.">Oferta por tiempo limitado</button>
+              <button type="button" class="ws-chip-btn" data-idea="Lanzamiento oficial de nuestro nuevo producto estrella, diseñado para brindar mayor calidad y rapidez.">Lanzamiento de producto</button>
+              <button type="button" class="ws-chip-btn" data-idea="Guía rápida con 3 recomendaciones clave para elegir mejor y aprovechar nuestros servicios al máximo.">Consejo educativo</button>
+              <button type="button" class="ws-chip-btn" data-idea="Conoce cómo trabaja nuestro equipo día a día para entregar cada pedido con dedicación y garantía.">Detrás de cámaras</button>
+            </div>
+          </div>
+
+          <div class="ws-field-group">
+            <div class="ws-label-row">
+              <label class="ws-label" for="input-topic">¿Qué quieres comunicar hoy?</label>
+              <span class="ws-counter" id="topic-counter">0 / 500</span>
+            </div>
+            <textarea class="ws-textarea-brief" id="input-topic" rows="4" maxlength="500" placeholder="Describe tu promoción, producto, horario, precios o mensaje clave..."></textarea>
+          </div>
+
+          <div class="ws-action-bar">
+            <button id="btn-generate" class="ws-btn-primary-lg" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m12 3 1.9 5.8L20 10.7l-6.1 1.9L12 18.4l-1.9-5.8L4 10.7l6.1-1.9Z"/>
+              </svg>
+              <span>Generar copy con IA</span>
+            </button>
+            <button id="btn-quick-variants" class="ws-btn-outline-lg" type="button">
+              <span>Generar 3 variantes A/B/C</span>
+            </button>
           </div>
         </div>
 
-        <div class="field-block">
-          <label class="field-label" for="input-topic">¿Qué deseas comunicar?</label>
-          <textarea class="form-input" id="input-topic" rows="4" maxlength="500" placeholder="Ej. Presenta el nuevo servicio de delivery..."></textarea>
-        </div>
+        <!-- Editor directo integrado debajo para flujo rápido -->
+        <div class="ws-panel-card">
+          <div class="ws-panel-head">
+            <div>
+              <span class="ws-kicker-sm">RESULTADO EN VIVO</span>
+              <h2>Texto activo de la publicación</h2>
+            </div>
+            <div class="ws-inline-tools">
+              <button id="btn-variant" class="ws-mini-btn" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-3 7M20 3v8h-8"/></svg>
+                <span>Alternar variante</span>
+              </button>
+              <button id="btn-copy" class="ws-mini-btn" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                <span>Copiar</span>
+              </button>
+              <button id="btn-clear" class="ws-mini-btn danger" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14"/></svg>
+                <span>Limpiar</span>
+              </button>
+            </div>
+          </div>
 
-        <button id="btn-generate" class="btn btn-primary btn-full generate-btn">
-          ✨ Generar propuesta demo ➔
-        </button>
+          <textarea id="input-text" class="ws-textarea-editor" rows="8" placeholder="El texto generado aparecerá aquí. Todo lo que edites actualizará el simulador de la derecha al instante..."></textarea>
+
+          <div class="ws-editor-statusbar">
+            <span id="word-counter">0 palabras · 0 caracteres</span>
+            <div class="ws-quick-format">
+              <button type="button" class="ws-format-btn" id="btn-insert-bold" title="Poner en negrita el texto seleccionado"><strong>B</strong> Negrita</button>
+              <button type="button" class="ws-format-btn" id="btn-insert-tags"># Insertar hashtags de marca</button>
+              <button type="button" class="ws-format-btn" id="btn-insert-cta">+ Añadir llamada a la acción</button>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- SECCIÓN 2: EDITOR -->
-      <section class="card form-card">
-        <div class="card-heading compact">
-          <div>
-            <h2><span class="section-icon">✍️</span> Editor de publicación</h2>
-            <p>Puedes mejorar el borrador antes de guardarlo.</p>
+      <!-- =====================================================
+           PANEL B: ESTUDIO DE IMAGEN IA
+           ===================================================== -->
+      <section class="ws-panel" id="panel-images">
+        <div class="ws-panel-card">
+          <div class="ws-panel-head">
+            <div>
+              <span class="ws-kicker-sm">MÓDULO 02 · GENERACIÓN VISUAL IA</span>
+              <h2>Diseña o adjunta la imagen de tu publicación</h2>
+              <p>Genera una pieza gráfica personalizada con la identidad de tu empresa o sube una fotografía real de tu producto.</p>
+            </div>
           </div>
-          <span class="step-small">02 / 02</span>
+
+          <div class="ws-field-group">
+            <label class="ws-label" for="input-image-prompt">Titular o descripción visual (Prompt de Imagen)</label>
+            <textarea class="ws-textarea-brief" id="input-image-prompt" rows="3" placeholder="Ej. 20% de descuento en toda nuestra línea hoy · Calidad garantizada..."></textarea>
+          </div>
+
+          <div class="ws-field-group">
+            <label class="ws-label">Estilo visual del generador</label>
+            <div class="ws-style-selector" id="image-style-selector">
+              <button type="button" class="ws-style-option active" data-img-style="dark">
+                <span class="swatch swatch-dark"></span>
+                <div>
+                  <strong>Nocturno Ejecutivo</strong>
+                  <small>Fondo negro + acento lima</small>
+                </div>
+              </button>
+              <button type="button" class="ws-style-option" data-img-style="editorial">
+                <span class="swatch swatch-light"></span>
+                <div>
+                  <strong>Editorial Minimal</strong>
+                  <small>Fondo crema + tipografía Serif</small>
+                </div>
+              </button>
+              <button type="button" class="ws-style-option" data-img-style="Cobalt">
+                <span class="swatch swatch-blue"></span>
+                <div>
+                  <strong>Azul Comercial</strong>
+                  <small>Alto impacto promocional</small>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="ws-action-bar">
+            <button type="button" id="btn-generate-image" class="ws-btn-primary-lg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="3"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="m21 15-5-5L5 21"/>
+              </svg>
+              <span>Generar arte visual en el simulador</span>
+            </button>
+            <button type="button" id="btn-remove-image" class="ws-btn-outline-lg" style="display:none;">
+              <span>Quitar imagen actual</span>
+            </button>
+          </div>
         </div>
 
-        <textarea id="input-text" class="content-textarea" placeholder="Tu texto comercial aparecerá aquí..." spellcheck="true"></textarea>
-        
-        <div class="editor-utility">
-          <button id="btn-variant" class="text-button">🔄 Otra variante</button>
-          <button id="btn-copy" class="text-button">📋 Copiar texto</button>
-          <button id="btn-clear" class="text-button danger">🗑️ Limpiar</button>
-        </div>
+        <div class="ws-panel-card">
+          <div class="ws-panel-head">
+            <div>
+              <span class="ws-kicker-sm">RECURSOS LOCALES Y PLANTILLAS</span>
+              <h2>Subir fotografía propia o elegir recurso base</h2>
+            </div>
+          </div>
 
-        <div class="editor-footer">
-          <span>ℹ️ Los cambios no se guardan hasta que pulses un botón.</span>
-          <div>
-            <button id="btn-save-draft" class="btn btn-outline">Guardar borrador</button>
-            <button id="btn-save-approved" class="btn btn-primary">✅ Aprobar y guardar</button>
+          <div class="ws-preset-row">
+            <button type="button" class="ws-preset-box" data-preset="editorial">
+              <img src="./assets/images/cafe-editorial.jpg" alt="Fotografía de producto">
+              <div>
+                <strong>Fotografía de Producto</strong>
+                <small>Usar imagen de muestra comercial</small>
+              </div>
+            </button>
+
+            <button type="button" class="ws-preset-box" data-preset="comunidad">
+              <img src="./assets/images/community.svg" alt="Arte de comunidad">
+              <div>
+                <strong>Arte de Comunidad</strong>
+                <small>Usar diseño vectorial de fidelización</small>
+              </div>
+            </button>
+          </div>
+
+          <div class="ws-field-group" style="margin-top: 20px;">
+            <label class="ws-label" for="input-upload-image">Subir fotografía desde tu computadora (JPG, PNG, WEBP, SVG)</label>
+            <input type="file" id="input-upload-image" class="ws-file-input" accept="image/*">
           </div>
         </div>
       </section>
+
+      <!-- =====================================================
+           PANEL C: LABORATORIO DE VARIANTES A/B/C
+           ===================================================== -->
+      <section class="ws-panel" id="panel-variants">
+        <div class="ws-panel-card">
+          <div class="ws-panel-head">
+            <div>
+              <span class="ws-kicker-sm">MÓDULO 03 · COMPARADOR DE PROPUESTAS</span>
+              <h2>Laboratorio de Variantes A / B / C</h2>
+              <p>Compara 3 enfoques distintos para tu publicación y aplica con un clic el que mejor conecte con tus clientes.</p>
+            </div>
+            <button type="button" id="btn-refresh-variants" class="ws-mini-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-3 7M20 3v8h-8"/></svg>
+              <span>Regenerar las 3 variantes</span>
+            </button>
+          </div>
+
+          <div id="variants-list-container" class="ws-variants-grid">
+            <!-- Se inyectan dinámicamente desde CreatorController.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           PANEL D: EDITOR AVANZADO Y ESTRUCTURA DEL MENSAJE
+           ===================================================== -->
+      <section class="ws-panel" id="panel-editor">
+        <div class="ws-panel-card">
+          <div class="ws-panel-head">
+            <div>
+              <span class="ws-kicker-sm">MÓDULO 04 · AJUSTE FINO Y REESTRUCTURACIÓN</span>
+              <h2>Transformaciones rápidas del copy</h2>
+              <p>Modifica la estructura del texto actual sin perder la idea central de tu negocio.</p>
+            </div>
+          </div>
+
+          <div class="ws-transform-grid">
+            <button type="button" class="ws-transform-card" data-transform="directo">
+              <strong>Versión concisa y directa</strong>
+              <small>Ideal para lectura rápida en móviles</small>
+            </button>
+            <button type="button" class="ws-transform-card" data-transform="storytelling">
+              <strong>Enfoque cercano (Storytelling)</strong>
+              <small>Conecta emocionalmente con tu comunidad</small>
+            </button>
+            <button type="button" class="ws-transform-card" data-transform="urgencia">
+              <strong>Enfoque comercial de acción</strong>
+              <small>Resalta disponibilidad y llamada a escribir</small>
+            </button>
+          </div>
+        </div>
+      </section>
+
     </div>
 
-    <!-- PANEL DE VISTA PREVIA -->
-    <aside class="preview-panel">
-      <div class="card preview-card">
-        <div class="card-heading compact">
-          <div>
-            <h2>📱 Vista previa</h2>
-            <p>Así podría verse en la plataforma.</p>
-          </div>
+    <!-- 3. PANEL DERECHO: SIMULADOR 100% ESTÁTICO (NO SE MUEVE CON EL SCROLL) -->
+    <aside class="ws-preview-dock" aria-label="Vista previa estática en tiempo real">
+      <div class="ws-preview-dock-head">
+        <div class="ws-preview-dock-title">
+          <span class="ws-live-dot"></span>
+          <strong>Vista previa en vivo</strong>
         </div>
-        <!-- El HTML del mockup se inyectará aquí -->
-        <div id="live-preview" class="live-preview"></div>
+        <span class="ws-preview-channel-tag" id="preview-active-channel">Facebook</span>
+      </div>
+
+      <div class="ws-preview-stage" id="live-preview">
+        <!-- Aquí se dibuja el mockup de la red social -->
       </div>
     </aside>
+
   </div>
 </div>

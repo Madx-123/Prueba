@@ -41,11 +41,11 @@ export class Router {
       let targetContainer = this.appContainer;
       let layoutHtml = null;
       if (route.requiresLayout && !document.getElementById('module-content')) {
-        const layoutRes = await fetch('./js/modules/layout/layout.html');
+        const layoutRes = await fetch('./js/modules/layout/layout.html', { cache: 'no-store' });
         if (!layoutRes.ok) throw new Error('No se encontró layout.html');
         layoutHtml = await layoutRes.text();
       }
-      const response = await fetch(route.template);
+      const response = await fetch(route.template, { cache: 'no-store' });
       if (!response.ok) throw new Error(`No se encontró la vista: ${route.template}`);
       const html = await response.text();
       if (navigationId !== this.navigationId) return;
